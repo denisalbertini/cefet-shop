@@ -4,6 +4,7 @@
         "psr-4": {
             "": [
                 "src/",
+                "src/constantes",
                 "src/tipos"
             ]
         }
