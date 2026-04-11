@@ -1,0 +1,28 @@
+<?php declare(strict_types=1);
+
+describe('Porcentagem', function () {
+  it('deveria lançar um erro ao instanciar com valor 0', function () {
+    expect(function () {
+      new Porcentagem(0);
+    })->toThrow(MensagemErro::VALOR_INVALIDO_PORCENTAGEM);
+  });
+
+  it('deveria lançar um erro ao instanciar com valor negativo', function () {
+    expect(function () {
+      new Porcentagem(-1);
+    })->toThrow(MensagemErro::VALOR_INVALIDO_PORCENTAGEM);
+  });
+
+  it('deveria lançar um erro ao instanciar com valor maior que 100', function () {
+    expect(function () {
+      new Porcentagem(101);
+    })->toThrow(MensagemErro::VALOR_INVALIDO_PORCENTAGEM);
+  });
+
+  it('deveria devolver o valor instanciado corretamente', function () {
+    $valor = 14.55;
+    $porcentagem = new Porcentagem($valor);
+
+    expect($porcentagem->getValor())->toBe($valor);
+  });
+});
