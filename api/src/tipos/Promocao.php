@@ -1,0 +1,25 @@
+<?php declare(strict_types=1);
+
+class Promocao
+{
+  private string $nome;
+
+  public function __construct(string $nome)
+  {
+    $this->setNome($nome);
+  }
+
+  public function getNome()
+  {
+    return $this->nome;
+  }
+
+  private function setNome(string $nome)
+  {
+    if (mb_strlen($nome) < 3) {
+      throw new DomainException(MensagemErro::NOME_INVALIDO_PROMOCAO);
+    }
+
+    $this->nome = $nome;
+  }
+}
