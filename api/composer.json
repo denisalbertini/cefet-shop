@@ -2,8 +2,16 @@
     "name": "g7/api",
     "autoload": {
         "psr-4": {
-            "": "src/"
+            "": [
+                "src/",
+                "src/tipos"
+            ]
         }
+    },
+    "scripts": {
+        "start": "php -S localhost:3000",
+        "test": "kahlan",
+        "dump": "composer dump-autoload"
     },
     "require": {
         "phputil/router": "^0.3.6",
