@@ -1,0 +1,15 @@
+{
+    "name": "g7/api",
+    "autoload": {
+        "psr-4": {
+            "": "src/"
+        }
+    },
+    "require": {
+        "phputil/router": "^0.3.6",
+        "phputil/cors": "^0.5.3"
+    },
+    "require-dev": {
+        "kahlan/kahlan": "^6.1"
+    }
+}
