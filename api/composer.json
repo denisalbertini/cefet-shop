@@ -5,7 +5,8 @@
             "": [
                 "src/",
                 "src/constantes",
-                "src/tipos"
+                "src/tipos",
+                "src/produtos"
             ]
         }
     },

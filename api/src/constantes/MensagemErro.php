@@ -12,4 +12,10 @@ class MensagemErro
     public const string PERIODO_SEMESTRE = 'O semestre de um Período deve estar no intervalo (0,20].';
 
     public const string URL_VALOR = 'O valor da Url é inválido.';
+
+    public const string PRODUTO_NOME = 'O nome de um Produto não pode ter menos de 3 caracteres.';
+    public const string PRODUTO_DESCRICAO = 'A descrição de um Produto não pode ter menos de 3 caracteres';
+    public const string PRODUTO_ESTOQUE = 'O estoque de um Produto não pode ser menor que 0.';
+    public const string PRODUTO_QUANTIDADE_TOTAL_VENDIDA = 'A quantidade total vendida de um Produto não pode ser menor que 0.';
+    public const string PRODUTO_PROMOCAO = 'Um Produto só pode receber promoção que ofereça desconto de 5 a 20%.';
 }
