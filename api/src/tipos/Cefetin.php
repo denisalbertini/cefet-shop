@@ -9,6 +9,11 @@ class Cefetin
         $this->setValorCentavos($valorCentavos);
     }
 
+    public function getValorCentavos()
+    {
+        return $this->valorCentavos;
+    }
+
     private function setValorCentavos(int $valor)
     {
         if ($valor < 0) {
@@ -21,6 +26,10 @@ class Cefetin
     public function getValorFormatado(): string
     {
         $valorCentavosString = (string) $this->valorCentavos;
+
+        if (mb_strlen($valorCentavosString) < 3) {
+            $valorCentavosString = str_pad($valorCentavosString, 3, '0', STR_PAD_LEFT);
+        }
 
         $parteInteira = substr($valorCentavosString, 0, -2);
         $parteDecimal = substr($valorCentavosString, -2);
