@@ -4,7 +4,12 @@ describe('Periodo', function () {
     it('deveria lançar um erro ao instanciar com valores inválidos', function () {
         expect(function () {
             new Periodo(2013, 0);
-        })->toThrow(MensagemErro::PERIODO_ANO . PHP_EOL . MensagemErro::PERIODO_SEMESTRE);
+        })->toThrow(
+            FormatadorMensagem::formatarMensagemErro([
+                MensagemErro::PERIODO_ANO,
+                MensagemErro::PERIODO_SEMESTRE,
+            ]),
+        );
     });
 
     it('deveria lançar um erro ao instanciar com ano maior que o atual', function () {

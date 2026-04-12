@@ -13,13 +13,12 @@ describe('Produto', function () {
                 new Cefetin(1),
             );
         })->toThrow(
-            MensagemErro::PRODUTO_NOME .
-                PHP_EOL .
-                MensagemErro::PRODUTO_DESCRICAO .
-                PHP_EOL .
-                MensagemErro::PRODUTO_ESTOQUE .
-                PHP_EOL .
+            FormatadorMensagem::formatarMensagemErro([
+                MensagemErro::PRODUTO_NOME,
+                MensagemErro::PRODUTO_DESCRICAO,
+                MensagemErro::PRODUTO_ESTOQUE,
                 MensagemErro::PRODUTO_QUANTIDADE_TOTAL_VENDIDA,
+            ]),
         );
     });
 

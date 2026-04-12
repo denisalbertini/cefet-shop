@@ -110,15 +110,7 @@ class Produto
         }
 
         if (sizeof($erros) > 0) {
-            throw new DomainException(
-                array_reduce($erros, function ($carry, $item) {
-                    if (!$carry) {
-                        return $item;
-                    }
-
-                    return $carry . PHP_EOL . $item;
-                }),
-            );
+            throw new DomainException(FormatadorMensagem::formatarMensagemErro($erros));
         }
     }
 
