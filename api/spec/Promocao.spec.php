@@ -3,13 +3,13 @@
 describe('Promocao', function () {
     it('deveria lançar um erro com nome de menos de 3 caracteres', function () {
         expect(function () {
-            new Promocao('ab');
+            new Promocao('ab', new Porcentagem(1));
         })->toThrow(MensagemErro::PROMOCAO_VALOR);
     });
 
     it('deveria retornar o nome instanciado corretamente', function () {
         $nome = 'Nova Promoção';
-        $promocao = new Promocao($nome);
+        $promocao = new Promocao($nome, new Porcentagem(1));
 
         expect($promocao->getNome())->toBe($nome);
     });
