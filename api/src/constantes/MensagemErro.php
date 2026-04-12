@@ -18,4 +18,7 @@ class MensagemErro
     public const string PRODUTO_ESTOQUE = 'O estoque de um Produto não pode ser menor que 0.';
     public const string PRODUTO_QUANTIDADE_TOTAL_VENDIDA = 'A quantidade total vendida de um Produto não pode ser menor que 0.';
     public const string PRODUTO_PROMOCAO = 'Um Produto só pode receber promoção que ofereça desconto de 5 a 20%.';
+
+    public const string PAGINACAO_PAGINA = 'A página de uma Paginação não pode menor ou igual a 0.';
+    public const string PAGINACAO_LIMIT = 'O limit de uma Paginação não pode ser menor ou igual a 0.';
 }
