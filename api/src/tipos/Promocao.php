@@ -2,24 +2,24 @@
 
 class Promocao
 {
-  private string $nome;
+    private string $nome;
 
-  public function __construct(string $nome)
-  {
-    $this->setNome($nome);
-  }
-
-  public function getNome()
-  {
-    return $this->nome;
-  }
-
-  private function setNome(string $nome)
-  {
-    if (mb_strlen($nome) < 3) {
-      throw new DomainException(MensagemErro::NOME_INVALIDO_PROMOCAO);
+    public function __construct(string $nome)
+    {
+        $this->setNome($nome);
     }
 
-    $this->nome = $nome;
-  }
+    public function getNome()
+    {
+        return $this->nome;
+    }
+
+    private function setNome(string $nome)
+    {
+        if (mb_strlen($nome) < 3) {
+            throw new DomainException(MensagemErro::PROMOCAO_VALOR);
+        }
+
+        $this->nome = $nome;
+    }
 }

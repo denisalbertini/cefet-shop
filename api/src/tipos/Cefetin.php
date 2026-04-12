@@ -2,31 +2,31 @@
 
 class Cefetin
 {
-  private int $valorCentavos;
+    private int $valorCentavos;
 
-  public function __construct(int $valorCentavos)
-  {
-    $this->setValorCentavos($valorCentavos);
-  }
-
-  private function setValorCentavos(int $valor)
-  {
-    if ($valor < 0) {
-      throw new DomainException(MensagemErro::VALOR_INVALIDO_CEFETIN);
+    public function __construct(int $valorCentavos)
+    {
+        $this->setValorCentavos($valorCentavos);
     }
 
-    $this->valorCentavos = $valor;
-  }
+    private function setValorCentavos(int $valor)
+    {
+        if ($valor < 0) {
+            throw new DomainException(MensagemErro::CEFETIN_VALOR);
+        }
 
-  public function getValorFormatado(): string
-  {
-    $valorCentavosString = (string) $this->valorCentavos;
+        $this->valorCentavos = $valor;
+    }
 
-    $parteInteira = substr($valorCentavosString, 0, -2);
-    $parteDecimal = substr($valorCentavosString, -2);
+    public function getValorFormatado(): string
+    {
+        $valorCentavosString = (string) $this->valorCentavos;
 
-    $valorFormatado = "$parteInteira,$parteDecimal";
+        $parteInteira = substr($valorCentavosString, 0, -2);
+        $parteDecimal = substr($valorCentavosString, -2);
 
-    return $valorFormatado;
-  }
+        $valorFormatado = "$parteInteira,$parteDecimal";
+
+        return $valorFormatado;
+    }
 }
