@@ -85,7 +85,7 @@ describe('Produto', function () {
             new Porcentagem(0.1),
         );
         $precoPromocional = new Cefetin(
-            (int) ($preco->getValorCentavos() * (1 - $promocao->getDesconto())),
+            (int) ($preco->valorCentavos * (1 - $promocao->getDesconto())),
         )->getValorFormatado();
 
         $produto = new Produto(
@@ -100,14 +100,14 @@ describe('Produto', function () {
             $promocao,
         );
 
-        expect($produto->getId())->toBe($id);
-        expect($produto->getNome())->toBe($nome);
-        expect($produto->getDescricao())->toBe($descricao);
-        expect($produto->getEstoque())->toBe($estoque);
-        expect($produto->getQuantidadeTotalVendida())->toBe($quantidadeTotalVendida);
-        expect($produto->getLancamento())->toBe($lancamento->getValorFormatado());
-        expect($produto->getFoto())->toBe($foto->getValor());
-        expect($produto->getPreco())->toBe($preco->getValorFormatado());
+        expect($produto->id)->toBe($id);
+        expect($produto->nome)->toBe($nome);
+        expect($produto->descricao)->toBe($descricao);
+        expect($produto->estoque)->toBe($estoque);
+        expect($produto->quantidadeTotalVendida)->toBe($quantidadeTotalVendida);
+        expect($produto->lancamento->getValorFormatado())->toBe($lancamento->getValorFormatado());
+        expect($produto->foto->valor)->toBe($foto->valor);
+        expect($produto->preco->getValorFormatado())->toBe($preco->getValorFormatado());
         expect($produto->estaEmPromocao())->toBe(true);
         expect($produto->getPrecoPromocional())->toBe($precoPromocional);
     });

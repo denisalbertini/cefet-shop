@@ -2,10 +2,10 @@
 
 class Promocao
 {
-    private string $id;
-    private string $nome;
+    public string $id;
+    public string $nome;
 
-    public function __construct(string $id, string $nome, private Porcentagem $desconto)
+    public function __construct(string $id, string $nome, public Porcentagem $desconto)
     {
         $this->validarDados($id, $nome);
 
@@ -13,19 +13,9 @@ class Promocao
         $this->nome = $nome;
     }
 
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function getNome()
-    {
-        return $this->nome;
-    }
-
     public function getDesconto()
     {
-        return $this->desconto->getValor();
+        return $this->desconto->valor;
     }
 
     private function validarDados(string $id, string $nome)

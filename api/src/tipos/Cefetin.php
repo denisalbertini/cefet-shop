@@ -2,16 +2,11 @@
 
 class Cefetin
 {
-    private int $valorCentavos;
+    public int $valorCentavos;
 
     public function __construct(int $valorCentavos)
     {
         $this->setValorCentavos($valorCentavos);
-    }
-
-    public function getValorCentavos()
-    {
-        return $this->valorCentavos;
     }
 
     private function setValorCentavos(int $valor)

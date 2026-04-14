@@ -2,11 +2,11 @@
 
 class Produto
 {
-    private string $id;
-    private string $nome;
-    private string $descricao;
-    private int $estoque;
-    private int $quantidadeTotalVendida;
+    public string $id;
+    public string $nome;
+    public string $descricao;
+    public int $estoque;
+    public int $quantidadeTotalVendida;
 
     public function __construct(
         string $id,
@@ -14,10 +14,10 @@ class Produto
         string $descricao,
         int $estoque,
         int $quantidadeTotalVendida,
-        private Periodo $lancamento,
-        private Url $foto,
-        private Cefetin $preco,
-        private Promocao|null $promocao = null,
+        public Periodo $lancamento,
+        public Url $foto,
+        public Cefetin $preco,
+        public Promocao|null $promocao = null,
     ) {
         $this->validarDados($id, $nome, $descricao, $estoque, $quantidadeTotalVendida, $promocao);
 
@@ -26,46 +26,6 @@ class Produto
         $this->descricao = $descricao;
         $this->estoque = $estoque;
         $this->quantidadeTotalVendida = $quantidadeTotalVendida;
-    }
-
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function getNome()
-    {
-        return $this->nome;
-    }
-
-    public function getDescricao()
-    {
-        return $this->descricao;
-    }
-
-    public function getEstoque()
-    {
-        return $this->estoque;
-    }
-
-    public function getQuantidadeTotalVendida()
-    {
-        return $this->quantidadeTotalVendida;
-    }
-
-    public function getLancamento()
-    {
-        return $this->lancamento->getValorFormatado();
-    }
-
-    public function getFoto()
-    {
-        return $this->foto->getValor();
-    }
-
-    public function getPreco()
-    {
-        return $this->preco->getValorFormatado();
     }
 
     public function estaEmPromocao()
@@ -80,7 +40,7 @@ class Produto
         }
 
         $precoPromocional = new Cefetin(
-            (int) ($this->preco->getValorCentavos() * (1 - $this->promocao->getDesconto())),
+            (int) ($this->preco->valorCentavos * (1 - $this->promocao->getDesconto())),
         );
 
         return $precoPromocional->getValorFormatado();

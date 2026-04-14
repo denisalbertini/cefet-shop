@@ -2,16 +2,11 @@
 
 class Porcentagem
 {
-    private float $valor;
+    public float $valor;
 
     public function __construct(float $valor)
     {
         $this->setValor($valor);
-    }
-
-    public function getValor()
-    {
-        return $this->valor;
     }
 
     private function setValor(float $valor)

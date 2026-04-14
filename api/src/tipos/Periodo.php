@@ -2,8 +2,8 @@
 
 class Periodo
 {
-    private int $ano;
-    private int $semestre;
+    public int $ano;
+    public int $semestre;
 
     public function __construct(int $ano, int $semestre)
     {

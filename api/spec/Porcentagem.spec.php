@@ -23,6 +23,6 @@ describe('Porcentagem', function () {
         $valor = 14.55;
         $porcentagem = new Porcentagem($valor);
 
-        expect($porcentagem->getValor())->toBe($valor);
+        expect($porcentagem->valor)->toBe($valor);
     });
 });

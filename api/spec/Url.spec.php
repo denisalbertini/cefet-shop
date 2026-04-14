@@ -11,6 +11,6 @@ describe('Url', function () {
         $valor = 'http://url.com';
         $url = new Url($valor);
 
-        expect($url->getValor())->toBe($valor);
+        expect($url->valor)->toBe($valor);
     });
 });

@@ -17,7 +17,7 @@ describe('Promocao', function () {
         $nome = 'Nova Promoção';
         $promocao = new Promocao($id, $nome, new Porcentagem(1));
 
-        expect($promocao->getId())->toBe($id);
-        expect($promocao->getNome())->toBe($nome);
+        expect($promocao->id)->toBe($id);
+        expect($promocao->nome)->toBe($nome);
     });
 });
