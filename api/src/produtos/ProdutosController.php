@@ -2,7 +2,17 @@
 
 class ProdutosController
 {
-    public function __construct(private ProdutosService $produtosService) {}
+    private ProdutosView $produtosView;
+
+    public function __construct(private ProdutosService $produtosService)
+    {
+        $this->produtosView = new ProdutosView($this);
+    }
+
+    public function getView()
+    {
+        return $this->produtosView;
+    }
 
     public function buscar(int $pagina, int $limit): array
     {

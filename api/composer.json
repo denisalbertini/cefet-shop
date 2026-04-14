@@ -12,6 +12,9 @@
             ]
         }
     },
+    "config": {
+        "process-timeout": 0
+    },
     "scripts": {
         "start": "php -S localhost:3000",
         "test": "kahlan",

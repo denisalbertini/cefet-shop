@@ -27,4 +27,6 @@ class MensagemErro
     public const string DATABASE_CONNECTION = 'Não foi possível conectar ao banco de dados.';
 
     public const string PRODUTOS_REPOSITORY_NOT_FOUND = 'Produto não encontrado.';
+
+    public const string PRODUTOS_VIEW_ID = 'ID do produto não recebido.';
 }
