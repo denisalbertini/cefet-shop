@@ -26,4 +26,10 @@ describe('ProdutosRepositoryBdr', function () {
 
         expect(get_class($produto))->toBe(Produto::class);
     });
+
+    it('deveria lançar um erro ao não encontrar o produto por id', function () {
+        expect(function () {
+            $this->repository->buscarPorId('abc');
+        })->toThrow(MensagemErro::PRODUTOS_REPOSITORY_NOT_FOUND);
+    });
 });

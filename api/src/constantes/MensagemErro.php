@@ -25,4 +25,6 @@ class MensagemErro
     public const string ID = 'ID inválido.';
 
     public const string DATABASE_CONNECTION = 'Não foi possível conectar ao banco de dados.';
+
+    public const string PRODUTOS_REPOSITORY_NOT_FOUND = 'Produto não encontrado.';
 }

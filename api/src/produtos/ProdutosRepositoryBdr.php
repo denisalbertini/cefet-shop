@@ -41,6 +41,10 @@ class ProdutosRepositoryBdr implements ProdutosRepository
 
         $linha = $ps->fetch();
 
+        if (!$linha) {
+            throw new RepositoryException(MensagemErro::PRODUTOS_REPOSITORY_NOT_FOUND);
+        }
+
         return Produto::hidratar($linha);
     }
 }
