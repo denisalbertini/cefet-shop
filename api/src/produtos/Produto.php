@@ -2,12 +2,14 @@
 
 class Produto
 {
+    private string $id;
     private string $nome;
     private string $descricao;
     private int $estoque;
     private int $quantidadeTotalVendida;
 
     public function __construct(
+        string $id,
         string $nome,
         string $descricao,
         int $estoque,
@@ -17,12 +19,18 @@ class Produto
         private Cefetin $preco,
         private Promocao|null $promocao = null,
     ) {
-        $this->validarDados($nome, $descricao, $estoque, $quantidadeTotalVendida, $promocao);
+        $this->validarDados($id, $nome, $descricao, $estoque, $quantidadeTotalVendida, $promocao);
 
+        $this->id = $id;
         $this->nome = $nome;
         $this->descricao = $descricao;
         $this->estoque = $estoque;
         $this->quantidadeTotalVendida = $quantidadeTotalVendida;
+    }
+
+    public function getId()
+    {
+        return $this->id;
     }
 
     public function getNome()
@@ -79,6 +87,7 @@ class Produto
     }
 
     private function validarDados(
+        string $id,
         string $nome,
         string $descricao,
         int $estoque,
@@ -86,6 +95,10 @@ class Produto
         Promocao|null $promocao,
     ) {
         $erros = [];
+
+        if (!preg_match(Regex::ID, $id)) {
+            array_push($erros, MensagemErro::ID);
+        }
 
         if (mb_strlen($nome) < 3) {
             array_push($erros, MensagemErro::PRODUTO_NOME);

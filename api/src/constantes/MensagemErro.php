@@ -21,4 +21,6 @@ class MensagemErro
 
     public const string PAGINACAO_PAGINA = 'A página de uma Paginação não pode menor ou igual a 0.';
     public const string PAGINACAO_LIMIT = 'O limit de uma Paginação não pode ser menor ou igual a 0.';
+
+    public const string ID = 'ID inválido.';
 }
