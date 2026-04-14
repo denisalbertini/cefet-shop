@@ -22,6 +22,11 @@ class Paginacao
         return $this->limit;
     }
 
+    public function getOffset()
+    {
+        return ($this->pagina - 1) * $this->limit;
+    }
+
     private function validarDados(int $pagina, int $limit)
     {
         $erros = [];

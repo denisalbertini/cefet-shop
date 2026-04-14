@@ -136,4 +136,48 @@ class Produto
     {
         $this->promocao = null;
     }
+
+    public static function hidratar(array $atributos)
+    {
+        $id = $atributos['id'];
+        $nome = $atributos['nome'];
+        $descricao = $atributos['descricao'];
+        $estoque = (int) $atributos['estoque'];
+        $quantidadeTotalVendida = (int) $atributos['quantidade_total_vendida'];
+
+        $lancamentoDividido = explode('-', $atributos['lancamento']);
+        $lancamentoAno = (int) $lancamentoDividido[0];
+        $lancamentoSemestre = (int) $lancamentoDividido[1];
+        $lancamento = new Periodo($lancamentoAno, $lancamentoSemestre);
+
+        $foto = new Url($atributos['foto']);
+
+        $preco = new Cefetin($atributos['preco']);
+
+        $promocao = null;
+        $promocaoId = $atributos['promocao_id'];
+
+        if ($promocaoId) {
+            $promocaoNome = $atributos['promocao_nome'];
+            $promocaoDesconto = (float) $atributos['promocao_desconto'];
+
+            $promocao = new Promocao(
+                $promocaoId,
+                $promocaoNome,
+                new Porcentagem($promocaoDesconto),
+            );
+        }
+
+        return new self(
+            $id,
+            $nome,
+            $descricao,
+            $estoque,
+            $quantidadeTotalVendida,
+            $lancamento,
+            $foto,
+            $preco,
+            $promocao,
+        );
+    }
 }
