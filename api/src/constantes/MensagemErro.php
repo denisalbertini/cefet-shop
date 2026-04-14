@@ -9,7 +9,7 @@ class MensagemErro
     public const string PROMOCAO_VALOR = 'O nome de uma Promoção não deve ter menos de 3 caracteres.';
 
     public const string PERIODO_ANO = 'O ano de um Período não pode ser menor que 2014 e maior que o ano atual.';
-    public const string PERIODO_SEMESTRE = 'O semestre de um Período deve estar no intervalo (0,20].';
+    public const string PERIODO_SEMESTRE = 'O semestre de um Período deve ser 1 ou 2.';
 
     public const string URL_VALOR = 'O valor da Url é inválido.';
 

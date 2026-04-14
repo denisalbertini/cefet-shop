@@ -18,17 +18,11 @@ describe('Periodo', function () {
         })->toThrow(MensagemErro::PERIODO_ANO);
     });
 
-    it('deveria lançar um erro ao instanciar com semestre maior que 20', function () {
-        expect(function () {
-            new Periodo(2014, 21);
-        })->toThrow(MensagemErro::PERIODO_SEMESTRE);
-    });
-
     it('deveria retornar o valor formatado ao instanciar corretamente', function () {
         $ano = 2014;
-        $semestre = 1;
+        $semestre = 2;
         $periodo = new Periodo($ano, $semestre);
 
-        expect($periodo->getValorFormatado())->toBe("$ano.$semestre");
+        expect($periodo->getValorFormatado())->toBe("$ano-$semestre");
     });
 });

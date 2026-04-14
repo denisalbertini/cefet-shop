@@ -13,7 +13,7 @@ CREATE TABLE produto (
   descricao TINYTEXT NOT NULL,
   estoque INT NOT NULL,
   quantidade_total_vendida INT NOT NULL,
-  lancamento VARCHAR(7) NOT NULL,
+  lancamento CHAR(6) NOT NULL,
   foto TINYTEXT NOT NULL,
   preco INT NOT NULL,
   promocao_id CHAR(36),

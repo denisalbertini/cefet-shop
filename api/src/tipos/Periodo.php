@@ -21,7 +21,7 @@ class Periodo
             array_push($erros, MensagemErro::PERIODO_ANO);
         }
 
-        if ($semestre <= 0 || $semestre > 20) {
+        if (!in_array($semestre, [1, 2], true)) {
             array_push($erros, MensagemErro::PERIODO_SEMESTRE);
         }
 
@@ -32,6 +32,6 @@ class Periodo
 
     public function getValorFormatado()
     {
-        return "$this->ano.$this->semestre";
+        return "$this->ano-$this->semestre";
     }
 }
