@@ -28,12 +28,12 @@ class Produto
         $this->quantidadeTotalVendida = $quantidadeTotalVendida;
     }
 
-    public function estaEmPromocao()
+    public function estaEmPromocao(): bool
     {
         return $this->promocao !== null;
     }
 
-    public function getPrecoPromocional()
+    public function getPrecoPromocional(): string|null
     {
         if (!$this->promocao) {
             return null;
@@ -53,7 +53,7 @@ class Produto
         int $estoque,
         int $quantidadeTotalVendida,
         Promocao|null $promocao,
-    ) {
+    ): void {
         $erros = [];
 
         if (!preg_match(Regex::ID, $id)) {
@@ -87,23 +87,26 @@ class Produto
         }
     }
 
-    public function aplicarPromocao(Promocao $promocao)
+    public function aplicarPromocao(Promocao $promocao): void
     {
         $this->promocao = $promocao;
     }
 
-    public function removerPromocao()
+    public function removerPromocao(): void
     {
         $this->promocao = null;
     }
 
-    public static function hidratar(array $atributos)
+    /**
+     * @param array<string, string|int> $atributos
+     */
+    public static function hidratar(array $atributos): self
     {
         $id = $atributos['id'];
         $nome = $atributos['nome'];
         $descricao = $atributos['descricao'];
-        $estoque = (int) $atributos['estoque'];
-        $quantidadeTotalVendida = (int) $atributos['quantidade_total_vendida'];
+        $estoque = $atributos['estoque'];
+        $quantidadeTotalVendida = $atributos['quantidade_total_vendida'];
 
         $lancamentoDividido = explode('-', $atributos['lancamento']);
         $lancamentoAno = (int) $lancamentoDividido[0];

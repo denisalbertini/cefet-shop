@@ -7,7 +7,7 @@ class ProdutosView
 {
     public function __construct(private ProdutosController $produtosController) {}
 
-    public function listar(HttpRequest $req, HttpResponse $res)
+    public function listar(HttpRequest $req, HttpResponse $res): void
     {
         try {
             $body = (array) $req->body();
@@ -23,7 +23,7 @@ class ProdutosView
         }
     }
 
-    public function buscarPorId(HttpRequest $req, HttpResponse $res)
+    public function buscarPorId(HttpRequest $req, HttpResponse $res): void
     {
         try {
             $id = $req->param('id');
@@ -40,7 +40,7 @@ class ProdutosView
         }
     }
 
-    private function tratarErro(Exception $e, HttpResponse $res)
+    private function tratarErro(Exception $e, HttpResponse $res): void
     {
         $status = match ($e::class) {
             ViewException::class, DomainException::class => 400,

@@ -9,6 +9,9 @@ class ProdutosController
         $this->produtosView = new ProdutosView($this);
     }
 
+    /**
+     * @return ProdutoParaListar[]
+     */
     public function listar(int $pagina, int $limit): array
     {
         return $this->produtosService->listar($pagina, $limit);

@@ -9,7 +9,7 @@ class Cefetin
         $this->setValorCentavos($valorCentavos);
     }
 
-    private function setValorCentavos(int $valor)
+    private function setValorCentavos(int $valor): void
     {
         if ($valor < 0) {
             throw new DomainException(MensagemErro::CEFETIN_VALOR);

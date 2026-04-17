@@ -2,7 +2,10 @@
 
 class FormatadorMensagem
 {
-    public static function formatarMensagemErro(array $erros)
+    /**
+     * @param string[] $erros
+     */
+    public static function formatarMensagemErro(array $erros): string
     {
         return array_reduce($erros, function ($carry, $item) {
             if (!$carry) {

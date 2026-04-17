@@ -13,21 +13,21 @@ class Paginacao
         $this->limit = $limit;
     }
 
-    public function getPagina()
+    public function getPagina(): int
     {
         return $this->pagina;
     }
-    public function getLimit()
+    public function getLimit(): int
     {
         return $this->limit;
     }
 
-    public function getOffset()
+    public function getOffset(): int
     {
         return ($this->pagina - 1) * $this->limit;
     }
 
-    private function validarDados(int $pagina, int $limit)
+    private function validarDados(int $pagina, int $limit): void
     {
         $erros = [];
 

@@ -18,13 +18,15 @@
     "scripts": {
         "start": "php -S localhost:3000",
         "test": "kahlan",
-        "dump": "composer dump-autoload"
+        "dump": "composer dump-autoload",
+        "analyze": "phpstan"
     },
     "require": {
         "phputil/router": "^0.3.6",
         "phputil/cors": "^0.5.3"
     },
     "require-dev": {
-        "kahlan/kahlan": "^6.1"
+        "kahlan/kahlan": "^6.1",
+        "phpstan/phpstan": "^2.1"
     }
 }

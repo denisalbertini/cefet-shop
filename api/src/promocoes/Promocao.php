@@ -13,12 +13,12 @@ class Promocao
         $this->nome = $nome;
     }
 
-    public function getDesconto()
+    public function getDesconto(): float
     {
         return $this->desconto->valor;
     }
 
-    private function validarDados(string $id, string $nome)
+    private function validarDados(string $id, string $nome): void
     {
         $erros = [];
 

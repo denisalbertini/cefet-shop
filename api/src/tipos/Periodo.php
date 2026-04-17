@@ -13,7 +13,7 @@ class Periodo
         $this->semestre = $semestre;
     }
 
-    private function validarDados(int $ano, int $semestre)
+    private function validarDados(int $ano, int $semestre): void
     {
         $erros = [];
 
@@ -30,7 +30,7 @@ class Periodo
         }
     }
 
-    public function getValorFormatado()
+    public function getValorFormatado(): string
     {
         return "$this->ano-$this->semestre";
     }

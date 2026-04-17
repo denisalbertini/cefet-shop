@@ -9,7 +9,7 @@ class Url
         $this->setValor($valor);
     }
 
-    private function setValor(string $valor)
+    private function setValor(string $valor): void
     {
         if (!preg_match(Regex::URL, $valor)) {
             throw new DomainException(MensagemErro::URL_VALOR);

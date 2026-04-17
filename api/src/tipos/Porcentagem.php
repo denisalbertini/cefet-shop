@@ -9,7 +9,7 @@ class Porcentagem
         $this->setValor($valor);
     }
 
-    private function setValor(float $valor)
+    private function setValor(float $valor): void
     {
         if ($valor <= 0 || $valor > 100) {
             throw new DomainException(MensagemErro::PORCENTAGEM_VALOR);
