@@ -16,10 +16,10 @@ $app = new Router();
 $app->use(cors());
 
 $app->get('/produtos', function ($req, $res) use ($produtosController) {
-    $produtosController->getView()->buscar($req, $res);
+    $produtosController->produtosView->listar($req, $res);
 });
 $app->get('/produtos/:id', function ($req, $res) use ($produtosController) {
-    $produtosController->getView()->buscarPorId($req, $res);
+    $produtosController->produtosView->buscarPorId($req, $res);
 });
 
 $app->listen();

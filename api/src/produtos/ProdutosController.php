@@ -2,24 +2,19 @@
 
 class ProdutosController
 {
-    private ProdutosView $produtosView;
+    public readonly ProdutosView $produtosView;
 
     public function __construct(private ProdutosService $produtosService)
     {
         $this->produtosView = new ProdutosView($this);
     }
 
-    public function getView()
+    public function listar(int $pagina, int $limit): array
     {
-        return $this->produtosView;
+        return $this->produtosService->listar($pagina, $limit);
     }
 
-    public function buscar(int $pagina, int $limit): array
-    {
-        return $this->produtosService->buscar($pagina, $limit);
-    }
-
-    public function buscarPorId(string $id): Produto
+    public function buscarPorId(string $id): ProdutoParaDetalhar
     {
         return $this->produtosService->buscarPorId($id);
     }

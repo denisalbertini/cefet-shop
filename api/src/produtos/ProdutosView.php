@@ -7,7 +7,7 @@ class ProdutosView
 {
     public function __construct(private ProdutosController $produtosController) {}
 
-    public function buscar(HttpRequest $req, HttpResponse $res)
+    public function listar(HttpRequest $req, HttpResponse $res)
     {
         try {
             $body = (array) $req->body();
@@ -15,7 +15,7 @@ class ProdutosView
             $pagina = $body['pagina'] ?? 1;
             $limit = $body['limit'] ?? 6;
 
-            $produtos = $this->produtosController->buscar($pagina, $limit);
+            $produtos = $this->produtosController->listar($pagina, $limit);
 
             $res->json($produtos);
         } catch (Exception $e) {

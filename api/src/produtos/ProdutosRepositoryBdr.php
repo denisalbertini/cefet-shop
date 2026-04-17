@@ -4,6 +4,9 @@ class ProdutosRepositoryBdr implements ProdutosRepository
 {
     public function __construct(private PDO $pdo) {}
 
+    /**
+     * @return Produto[]
+     */
     public function buscar(Paginacao $paginacao): array
     {
         $ps = $this->pdo->prepare(
