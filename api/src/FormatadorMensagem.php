@@ -7,12 +7,6 @@ class FormatadorMensagem
      */
     public static function formatarMensagemErro(array $erros): string
     {
-        return array_reduce($erros, function ($carry, $item) {
-            if (!$carry) {
-                return $item;
-            }
-
-            return $carry . PHP_EOL . $item;
-        });
+        return implode(PHP_EOL, $erros);
     }
 }

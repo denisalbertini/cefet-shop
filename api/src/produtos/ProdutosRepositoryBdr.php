@@ -10,9 +10,8 @@ class ProdutosRepositoryBdr implements ProdutosRepository
     public function buscar(Paginacao $paginacao): array
     {
         $ps = $this->pdo->prepare(
-            'SELECT produto.*, promocao.nome AS promocao_nome, promocao.desconto AS promocao_desconto 
-            FROM produto LEFT JOIN promocao ON produto.promocao_id = promocao.id 
-            ORDER BY produto.quantidade_total_vendida DESC 
+            'SELECT * FROM produto_para_hidratar 
+            ORDER BY quantidadeTotalVendida DESC 
             LIMIT ? OFFSET ?',
         );
 
@@ -21,12 +20,15 @@ class ProdutosRepositoryBdr implements ProdutosRepository
 
         $ps->execute();
 
-        $linhas = $ps->fetchAll();
+        $produtosParaHidratar = $ps->fetchAll(
+            PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE,
+            ProdutoParaHidratar::class,
+        );
 
         $produtos = [];
 
-        foreach ($linhas as $linha) {
-            array_push($produtos, Produto::hidratar($linha));
+        foreach ($produtosParaHidratar as $produtoParaHidratar) {
+            array_push($produtos, Produto::hidratar($produtoParaHidratar));
         }
 
         return $produtos;
@@ -35,19 +37,19 @@ class ProdutosRepositoryBdr implements ProdutosRepository
     public function buscarPorId(string $id): Produto
     {
         $ps = $this->pdo->prepare(
-            'SELECT produto.*, promocao.nome AS promocao_nome, promocao.desconto AS promocao_desconto 
-            FROM produto LEFT JOIN promocao ON produto.promocao_id = promocao.id 
-            WHERE produto.id = ?',
+            'SELECT * FROM produto_para_hidratar 
+            WHERE id = ?',
         );
 
         $ps->execute([$id]);
 
-        $linha = $ps->fetch();
+        $ps->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, ProdutoParaHidratar::class);
+        $produtoParaHidratar = $ps->fetch();
 
-        if (!$linha) {
+        if (!$produtoParaHidratar) {
             throw new RepositoryException(MensagemErro::PRODUTOS_REPOSITORY_NOT_FOUND);
         }
 
-        return Produto::hidratar($linha);
+        return Produto::hidratar($produtoParaHidratar);
     }
 }

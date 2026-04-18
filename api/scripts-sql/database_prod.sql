@@ -19,3 +19,17 @@ CREATE TABLE produto (
   promocao_id CHAR(36),
   CONSTRAINT fk_promocao FOREIGN KEY (promocao_id) REFERENCES promocao(id)
 );
+
+CREATE VIEW produto_para_hidratar AS
+SELECT produto.id, 
+  produto.nome, 
+  produto.descricao, 
+  produto.estoque, 
+  produto.quantidade_total_vendida AS quantidadeTotalVendida, 
+  produto.lancamento, 
+  produto.foto, 
+  produto.preco, 
+  promocao.id AS promocaoId, 
+  promocao.nome AS promocaoNome, 
+  promocao.desconto AS promocaoDesconto 
+FROM produto LEFT JOIN promocao ON produto.promocao_id = promocao.id;

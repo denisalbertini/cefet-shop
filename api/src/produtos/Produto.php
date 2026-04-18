@@ -97,33 +97,23 @@ class Produto
         $this->promocao = null;
     }
 
-    /**
-     * @param array<string, string|int> $atributos
-     */
-    public static function hidratar(array $atributos): self
+    public static function hidratar(ProdutoParaHidratar $produtoParaHidratar): self
     {
-        $id = $atributos['id'];
-        $nome = $atributos['nome'];
-        $descricao = $atributos['descricao'];
-        $estoque = $atributos['estoque'];
-        $quantidadeTotalVendida = $atributos['quantidade_total_vendida'];
-
-        $lancamentoDividido = explode('-', $atributos['lancamento']);
+        $lancamentoDividido = explode('-', $produtoParaHidratar->lancamento);
         $lancamentoAno = (int) $lancamentoDividido[0];
         $lancamentoSemestre = (int) $lancamentoDividido[1];
         $lancamento = new Periodo($lancamentoAno, $lancamentoSemestre);
 
-        $foto = new Url($atributos['foto']);
+        $foto = new Url($produtoParaHidratar->foto);
 
-        $preco = new Cefetin($atributos['preco']);
+        $preco = new Cefetin($produtoParaHidratar->preco);
 
         $promocao = null;
-        $promocaoId = $atributos['promocao_id'];
+        $promocaoId = $produtoParaHidratar->promocaoId;
+        $promocaoNome = $produtoParaHidratar->promocaoNome;
+        $promocaoDesconto = $produtoParaHidratar->promocaoDesconto;
 
-        if ($promocaoId) {
-            $promocaoNome = $atributos['promocao_nome'];
-            $promocaoDesconto = (float) $atributos['promocao_desconto'];
-
+        if ($promocaoId && $promocaoNome && $promocaoDesconto) {
             $promocao = new Promocao(
                 $promocaoId,
                 $promocaoNome,
@@ -132,11 +122,11 @@ class Produto
         }
 
         return new self(
-            $id,
-            $nome,
-            $descricao,
-            $estoque,
-            $quantidadeTotalVendida,
+            $produtoParaHidratar->id,
+            $produtoParaHidratar->nome,
+            $produtoParaHidratar->descricao,
+            $produtoParaHidratar->estoque,
+            $produtoParaHidratar->quantidadeTotalVendida,
             $lancamento,
             $foto,
             $preco,
