@@ -1,8 +1,8 @@
 import { afterAll, beforeAll, describe, expect, it, Mock, vi } from 'vitest';
-import { CarrinhoParaExibir } from '../carrinhos/CarrinhoParaExibir';
-import { RepositorioCarrinhos } from '../carrinhos/RepositorioCarrinhos';
-import { RepositorioCarrinhosEmHttp } from '../carrinhos/RepositorioCarrinhosEmHttp';
-import { MENSAGEM_ERRO } from '../constantes';
+import { CarrinhoParaExibir } from '../src/carrinhos/CarrinhoParaExibir';
+import { RepositorioCarrinhos } from '../src/carrinhos/RepositorioCarrinhos';
+import { RepositorioCarrinhosEmHttp } from '../src/carrinhos/RepositorioCarrinhosEmHttp';
+import { MENSAGEM_ERRO } from '../src/constantes';
 
 describe('RepositorioCarrinhosEmHttp', () => {
     let repositorio: RepositorioCarrinhos;
