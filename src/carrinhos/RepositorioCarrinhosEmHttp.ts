@@ -14,11 +14,18 @@ export class RepositorioCarrinhosEmHttp implements RepositorioCarrinhos {
     }
 
     async buscar(): Promise<CarrinhoParaExibir> {
-        const res = await fetch(this.path);
+        // const res = await fetch(this.path);
 
-        this.verificarResposta(res);
+        // this.verificarResposta(res);
 
-        return await this.instanciarCarrinhoParaExibir(res);
+        // return await this.instanciarCarrinhoParaExibir(res);
+
+        return Promise.resolve(
+            new CarrinhoParaExibir('20,00', [
+                new ItemParaListar(1, '10,00', 'abc', 'http://placehold.co/400x500', 'produto 1'),
+                new ItemParaListar(1, '10,00', 'def', 'http://placehold.co/400x500', 'produto 2'),
+            ])
+        );
     }
 
     async adicionarItem(produtoId: string, quantidade: number): Promise<CarrinhoParaExibir> {
@@ -37,27 +44,51 @@ export class RepositorioCarrinhosEmHttp implements RepositorioCarrinhos {
         produtoId: string,
         quantidade: number
     ): Promise<CarrinhoParaExibir> {
-        const res = await fetch(this.itensPath, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ produtoId, quantidade }),
-        });
+        // const res = await fetch(this.itensPath, {
+        //     method: 'PATCH',
+        //     headers: { 'Content-Type': 'application/json' },
+        //     body: JSON.stringify({ produtoId, quantidade }),
+        // });
 
-        this.verificarResposta(res);
+        // this.verificarResposta(res);
 
-        return await this.instanciarCarrinhoParaExibir(res);
+        // return await this.instanciarCarrinhoParaExibir(res);
+
+        return Promise.resolve(
+            new CarrinhoParaExibir('110,00', [
+                new ItemParaListar(
+                    10,
+                    '100,00',
+                    produtoId,
+                    'http://placehold.co/400x500',
+                    'produto 1'
+                ),
+            ])
+        );
     }
 
     async removerItem(produtoId: string): Promise<CarrinhoParaExibir> {
-        const res = await fetch(this.itensPath, {
-            method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ produtoId }),
-        });
+        // const res = await fetch(this.itensPath, {
+        //     method: 'DELETE',
+        //     headers: { 'Content-Type': 'application/json' },
+        //     body: JSON.stringify({ produtoId }),
+        // });
 
-        this.verificarResposta(res);
+        // this.verificarResposta(res);
 
-        return await this.instanciarCarrinhoParaExibir(res);
+        // return await this.instanciarCarrinhoParaExibir(res);
+
+        return Promise.resolve(
+            new CarrinhoParaExibir('10,00', [
+                new ItemParaListar(
+                    10,
+                    '100,00',
+                    produtoId,
+                    'http://placehold.co/400x500',
+                    'produto 1'
+                ),
+            ])
+        );
     }
 
     private verificarResposta(res: Response): void {
