@@ -42,6 +42,7 @@ class ProdutosService
             $produto->descricao,
             $produto->preco->getValorFormatado(),
             $produto->getPrecoPromocional(),
+            $produto->estoque,
         );
     }
 }

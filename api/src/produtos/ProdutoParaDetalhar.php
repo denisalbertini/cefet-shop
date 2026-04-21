@@ -10,5 +10,6 @@ class ProdutoParaDetalhar
         public readonly string $descricao,
         public readonly string $preco,
         public readonly string|null $precoPromocional,
+        public readonly int $estoque,
     ) {}
 }

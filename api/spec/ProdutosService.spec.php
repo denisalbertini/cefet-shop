@@ -4,7 +4,7 @@ use Kahlan\Plugin\Double;
 
 describe('ProdutosService', function () {
     beforeAll(function () {
-        $this->produto = new Produto(
+        $produto = new Produto(
             'c28ace4f-59d2-4aef-888a-3cbdaaa15f36',
             'abc',
             'abc',
@@ -16,11 +16,13 @@ describe('ProdutosService', function () {
             new Promocao('9a584336-d188-4882-91c7-a812687d4c68', 'abc', new Porcentagem(0.1)),
         );
 
+        $this->produto = $produto;
+
         $repository = Double::instance([
             'implements' => [ProdutosRepository::class],
             'stubMethods' => [
-                'buscar' => [$this->produto, $this->produto],
-                'buscarPorId' => $this->produto,
+                'buscar' => [$produto, $produto],
+                'buscarPorId' => $produto,
             ],
         ]);
 
@@ -54,6 +56,7 @@ describe('ProdutosService', function () {
             expect($p->descricao)->toBe($this->produto->descricao);
             expect($p->preco)->toBe($this->produto->preco->getValorFormatado());
             expect($p->precoPromocional)->toBe($this->produto->getPrecoPromocional());
+            expect($p->estoque)->toBe($this->produto->estoque);
         });
     });
 });
