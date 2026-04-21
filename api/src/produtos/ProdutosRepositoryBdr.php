@@ -20,10 +20,7 @@ class ProdutosRepositoryBdr implements ProdutosRepository
 
         $ps->execute();
 
-        $produtosParaHidratar = $ps->fetchAll(
-            PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE,
-            ProdutoParaHidratar::class,
-        );
+        $produtosParaHidratar = $ps->fetchAll(PDO::FETCH_CLASS, ProdutoParaHidratar::class);
 
         $produtos = [];
 
@@ -43,7 +40,7 @@ class ProdutosRepositoryBdr implements ProdutosRepository
 
         $ps->execute([$id]);
 
-        $ps->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, ProdutoParaHidratar::class);
+        $ps->setFetchMode(PDO::FETCH_CLASS, ProdutoParaHidratar::class);
         $produtoParaHidratar = $ps->fetch();
 
         if (!$produtoParaHidratar) {

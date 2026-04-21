@@ -2,17 +2,15 @@
 
 class ProdutoParaHidratar
 {
-    public function __construct(
-        public string $id = '',
-        public string $nome = '',
-        public string $descricao = '',
-        public int $estoque = 0,
-        public int $quantidadeTotalVendida = 0,
-        public string $lancamento = '',
-        public string $foto = '',
-        public int $preco = 0,
-        public string|null $promocaoId = null,
-        public string|null $promocaoNome = null,
-        public float|null $promocaoDesconto = null,
-    ) {}
+    public string $id;
+    public string $nome;
+    public string $descricao;
+    public int $estoque;
+    public int $quantidadeTotalVendida;
+    public string $lancamento;
+    public string $foto;
+    public int $preco;
+    public string|null $promocaoId;
+    public string|null $promocaoNome;
+    public float|null $promocaoDesconto;
 }
