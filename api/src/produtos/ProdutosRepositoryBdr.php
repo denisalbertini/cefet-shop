@@ -25,7 +25,9 @@ class ProdutosRepositoryBdr implements ProdutosRepository
         $produtos = [];
 
         foreach ($produtosParaHidratar as $produtoParaHidratar) {
-            array_push($produtos, Produto::hidratar($produtoParaHidratar));
+            if ($produtoParaHidratar instanceof ProdutoParaHidratar) {
+                array_push($produtos, Produto::hidratar($produtoParaHidratar));
+            }
         }
 
         return $produtos;
@@ -43,7 +45,7 @@ class ProdutosRepositoryBdr implements ProdutosRepository
         $ps->setFetchMode(PDO::FETCH_CLASS, ProdutoParaHidratar::class);
         $produtoParaHidratar = $ps->fetch();
 
-        if (!$produtoParaHidratar) {
+        if (!($produtoParaHidratar instanceof ProdutoParaHidratar)) {
             throw new RepositoryException(MensagemErro::PRODUTOS_REPOSITORY_NOT_FOUND);
         }
 
