@@ -88,7 +88,7 @@ export class VisaoCarrinhosEmHtml implements VisaoCarrinhos {
             li = li.parentElement!;
         }
 
-        return (li?.firstElementChild! as HTMLInputElement).value;
+        return (li.firstElementChild! as HTMLInputElement).value;
     }
 
     private criarItemLista(item: ItemParaListar): HTMLElement {
@@ -96,11 +96,19 @@ export class VisaoCarrinhosEmHtml implements VisaoCarrinhos {
 
         const li = template.content.cloneNode(true) as HTMLElement;
 
-        (li.querySelector('.produtoId') as HTMLInputElement).value = item.produtoId;
-        (li.querySelector('.produtoFoto') as HTMLImageElement).src = item.produtoFoto;
-        (li.querySelector('.produtoNome') as HTMLParagraphElement).textContent = item.produtoNome;
-        (li.querySelector('.quantidade') as HTMLInputElement).value = item.quantidade.toString();
-        (li.querySelector('.subTotal') as HTMLSpanElement).textContent = item.subTotal;
+        const inputId = li.querySelector('.produtoId') as HTMLInputElement;
+        const imgFoto = li.querySelector('.produtoFoto') as HTMLImageElement;
+        const paragraphNome = li.querySelector('.produtoNome') as HTMLParagraphElement;
+        const inputQuantidade = li.querySelector('.quantidade') as HTMLInputElement;
+        const spanSubTotal = li.querySelector('.subTotal') as HTMLSpanElement;
+
+        inputId.value = item.produtoId;
+        imgFoto.src = item.produtoFoto;
+        paragraphNome.textContent = item.produtoNome;
+        inputQuantidade.value = item.quantidade.toString();
+        inputQuantidade.min = '1';
+        inputQuantidade.max = item.produtoEstoque < 10 ? item.produtoEstoque.toString() : '10';
+        spanSubTotal.textContent = item.subTotal;
 
         return li;
     }

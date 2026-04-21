@@ -21,6 +21,7 @@ describe('RepositorioCarrinhosEmHttp', () => {
                     produtoId: 'abc',
                     produtoFoto: 'abc',
                     produtoNome: 'abc',
+                    produtoEstoque: 100,
                 },
             ],
         };

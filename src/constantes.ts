@@ -12,6 +12,7 @@ export const MENSAGEM_ERRO = {
         PRODUTO_ID: 'O atributo produtoId de ItemParaListar deve ser do tipo string.',
         PRODUTO_FOTO: 'O atributo produtoFoto de ItemParaListar deve ser do tipo string.',
         PRODUTO_NOME: 'O atributo produtoNome de ItemParaListar deve ser do tipo string.',
+        PRODUTO_ESTOQUE: 'O atributo produtoEstoque de ItemParaListar deve ser do tipo number.',
     },
 
     CARRINHO_PARA_EXIBIR: {

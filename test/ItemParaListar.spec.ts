@@ -6,7 +6,7 @@ import { FormatadorMensagem } from '../src/FormatadorMensagem';
 describe('ItemParaListar', () => {
     it('deveria lançar um erro ao instanciar com valores inválidos', () => {
         expect(() => {
-            new ItemParaListar(undefined, undefined, undefined, undefined, undefined);
+            new ItemParaListar(undefined, undefined, undefined, undefined, undefined, undefined);
         }).toThrow(
             FormatadorMensagem.formatarMensagemErro([
                 MENSAGEM_ERRO.ITEM_PARA_LISTAR.QUANTIDADE,
@@ -14,6 +14,7 @@ describe('ItemParaListar', () => {
                 MENSAGEM_ERRO.ITEM_PARA_LISTAR.PRODUTO_ID,
                 MENSAGEM_ERRO.ITEM_PARA_LISTAR.PRODUTO_FOTO,
                 MENSAGEM_ERRO.ITEM_PARA_LISTAR.PRODUTO_NOME,
+                MENSAGEM_ERRO.ITEM_PARA_LISTAR.PRODUTO_ESTOQUE,
             ])
         );
     });
@@ -24,13 +25,15 @@ describe('ItemParaListar', () => {
         const produtoId = 'abc';
         const produtoFoto = 'abc';
         const produtoNome = 'abc';
+        const produtoEstoque = 0;
 
         const itemParaListar = new ItemParaListar(
             quantidade,
             subTotal,
             produtoId,
             produtoFoto,
-            produtoNome
+            produtoNome,
+            produtoEstoque
         );
 
         expect(itemParaListar.quantidade).toBe(quantidade);
@@ -38,5 +41,6 @@ describe('ItemParaListar', () => {
         expect(itemParaListar.produtoId).toBe(produtoId);
         expect(itemParaListar.produtoFoto).toBe(produtoFoto);
         expect(itemParaListar.produtoNome).toBe(produtoNome);
+        expect(itemParaListar.produtoEstoque).toBe(produtoEstoque);
     });
 });

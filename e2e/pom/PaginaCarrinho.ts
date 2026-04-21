@@ -43,6 +43,10 @@ export class PaginaCarrinho {
         return localizador.first();
     }
 
+    public localizarSegundo(localizador: Locator): Locator {
+        return localizador.nth(1);
+    }
+
     public localizarTexto(texto: string): Locator {
         return this.page.locator(texto);
     }

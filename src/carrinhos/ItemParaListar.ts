@@ -7,21 +7,31 @@ export class ItemParaListar {
     public readonly produtoId: string;
     public readonly produtoFoto: string;
     public readonly produtoNome: string;
+    public readonly produtoEstoque: number;
 
     public constructor(
         quantidade: any,
         subTotal: any,
         produtoId: any,
         produtoFoto: any,
-        produtoNome: any
+        produtoNome: any,
+        produtoEstoque: any
     ) {
-        this.validarDados(quantidade, subTotal, produtoId, produtoFoto, produtoNome);
+        this.validarDados(
+            quantidade,
+            subTotal,
+            produtoId,
+            produtoFoto,
+            produtoNome,
+            produtoEstoque
+        );
 
         this.quantidade = quantidade;
         this.subTotal = subTotal;
         this.produtoId = produtoId;
         this.produtoFoto = produtoFoto;
         this.produtoNome = produtoNome;
+        this.produtoEstoque = produtoEstoque;
     }
 
     private validarDados(
@@ -29,7 +39,8 @@ export class ItemParaListar {
         subTotal: any,
         produtoId: any,
         produtoFoto: any,
-        produtoNome: any
+        produtoNome: any,
+        produtoEstoque: any
     ): void {
         const erros: string[] = [];
 
@@ -51,6 +62,10 @@ export class ItemParaListar {
 
         if (typeof produtoNome !== 'string') {
             erros.push(MENSAGEM_ERRO.ITEM_PARA_LISTAR.PRODUTO_NOME);
+        }
+
+        if (typeof produtoEstoque !== 'number') {
+            erros.push(MENSAGEM_ERRO.ITEM_PARA_LISTAR.PRODUTO_ESTOQUE);
         }
 
         if (erros.length > 0) {
