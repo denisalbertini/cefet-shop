@@ -15,11 +15,7 @@ $app = new Router();
 
 $app->use(cors());
 
-$app->get('/produtos', function ($req, $res) use ($produtosController) {
-    $produtosController->produtosView->listar($req, $res);
-});
-$app->get('/produtos/:id', function ($req, $res) use ($produtosController) {
-    $produtosController->produtosView->buscarPorId($req, $res);
-});
+$app->get('/produtos', [$produtosController, 'listar']);
+$app->get('/produtos/:id', [$produtosController, 'buscarPorId']);
 
 $app->listen();

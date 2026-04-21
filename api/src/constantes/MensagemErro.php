@@ -28,5 +28,5 @@ class MensagemErro
 
     public const string PRODUTOS_REPOSITORY_NOT_FOUND = 'Produto não encontrado.';
 
-    public const string PRODUTOS_VIEW_ID = 'ID do produto não recebido.';
+    public const string PRODUTOS_CONTROLLER_ID = 'ID do produto não recebido.';
 }
