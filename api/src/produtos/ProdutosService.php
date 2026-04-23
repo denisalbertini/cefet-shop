@@ -4,45 +4,37 @@ class ProdutosService
 {
     public function __construct(private ProdutosRepository $produtosRepository) {}
 
-    /**
-     * @return ProdutoParaListar[]
-     */
-    public function listar(int $pagina, int $limit): array
+    public function listar(int $pagina, int $limit): ProdutosPaginados
     {
         $paginacao = new Paginacao($pagina, $limit);
 
         $produtos = $this->produtosRepository->buscar($paginacao);
 
+        $totalProdutos = $this->produtosRepository->contar();
+
+        $paginaAtual = $pagina;
+        $totalPaginas = (int) ceil($totalProdutos / $limit);
+        $temProx = $paginaAtual < $totalPaginas;
+        $temAnt = $paginaAtual > 1;
         $produtosParaListar = [];
 
         foreach ($produtos as $produto) {
-            $produtoParaListar = new ProdutoParaListar(
-                $produto->id,
-                $produto->foto->valor,
-                $produto->nome,
-                $produto->preco->getValorFormatado(),
-                $produto->getPrecoPromocional(),
-            );
-
-            array_push($produtosParaListar, $produtoParaListar);
+            array_push($produtosParaListar, new ProdutoParaListar($produto));
         }
 
-        return $produtosParaListar;
+        return new ProdutosPaginados(
+            $paginaAtual,
+            $totalPaginas,
+            $temProx,
+            $temAnt,
+            $produtosParaListar,
+        );
     }
 
     public function buscarPorId(string $id): ProdutoParaDetalhar
     {
         $produto = $this->produtosRepository->buscarPorId($id);
 
-        return new ProdutoParaDetalhar(
-            $produto->id,
-            $produto->foto->valor,
-            $produto->nome,
-            $produto->lancamento->getValorFormatado(),
-            $produto->descricao,
-            $produto->preco->getValorFormatado(),
-            $produto->getPrecoPromocional(),
-            $produto->estoque,
-        );
+        return new ProdutoParaDetalhar($produto);
     }
 }

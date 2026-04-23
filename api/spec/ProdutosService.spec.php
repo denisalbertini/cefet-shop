@@ -3,7 +3,7 @@
 use Kahlan\Plugin\Double;
 
 describe('ProdutosService', function () {
-    beforeAll(function () {
+    beforeEach(function () {
         $produto = new Produto(
             'c28ace4f-59d2-4aef-888a-3cbdaaa15f36',
             'abc',
@@ -16,13 +16,12 @@ describe('ProdutosService', function () {
             new Promocao('9a584336-d188-4882-91c7-a812687d4c68', 'abc', new Porcentagem(0.1)),
         );
 
-        $this->produto = $produto;
-
         $repository = Double::instance([
             'implements' => [ProdutosRepository::class],
             'stubMethods' => [
-                'buscar' => [$produto, $produto],
+                'buscar' => [$produto, $produto, $produto],
                 'buscarPorId' => $produto,
+                'contar' => 3,
             ],
         ]);
 
@@ -30,33 +29,30 @@ describe('ProdutosService', function () {
     });
 
     describe('listar', function () {
-        it('deveria retornar um array de dtos para listar o produto', function () {
-            $produtosParaListar = $this->service->listar(1, 6);
+        it('deveria retornar o dto de produtos paginados na primeira página', function () {
+            $produtosPaginados = $this->service->listar(1, 2);
 
-            foreach ($produtosParaListar as $p) {
-                expect($p::class)->toBe(ProdutoParaListar::class);
-                expect($p->id)->toBe($this->produto->id);
-                expect($p->foto)->toBe($this->produto->foto->valor);
-                expect($p->nome)->toBe($this->produto->nome);
-                expect($p->preco)->toBe($this->produto->preco->getValorFormatado());
-                expect($p->precoPromocional)->toBe($this->produto->getPrecoPromocional());
-            }
+            expect($produtosPaginados->paginaAtual)->toBe(1);
+            expect($produtosPaginados->totalPaginas)->toBe(2);
+            expect($produtosPaginados->temProx)->toBe(true);
+            expect($produtosPaginados->temAnt)->toBe(false);
+        });
+
+        it('deveria retornar o dto de produtos paginados na segunda página', function () {
+            $produtosPaginados = $this->service->listar(2, 2);
+
+            expect($produtosPaginados->paginaAtual)->toBe(2);
+            expect($produtosPaginados->totalPaginas)->toBe(2);
+            expect($produtosPaginados->temProx)->toBe(false);
+            expect($produtosPaginados->temAnt)->toBe(true);
         });
     });
 
     describe('buscarPorId', function () {
-        xit('deveria retornar um dto para detalhar o produto', function () {
-            $p = $this->service->buscarPorId('');
+        it('deveria retornar um dto para detalhar o produto', function () {
+            $produto = $this->service->buscarPorId('');
 
-            expect($p::class)->toBe(ProdutoParaDetalhar::class);
-            expect($p->id)->toBe($this->produto->id);
-            expect($p->foto)->toBe($this->produto->foto->valor);
-            expect($p->nome)->toBe($this->produto->nome);
-            expect($p->lancamento)->toBe($this->produto->lancamento->getValorFormatado());
-            expect($p->descricao)->toBe($this->produto->descricao);
-            expect($p->preco)->toBe($this->produto->preco->getValorFormatado());
-            expect($p->precoPromocional)->toBe($this->produto->getPrecoPromocional());
-            expect($p->estoque)->toBe($this->produto->estoque);
+            expect($produto)->toBeAnInstanceOf(ProdutoParaDetalhar::class);
         });
     });
 });

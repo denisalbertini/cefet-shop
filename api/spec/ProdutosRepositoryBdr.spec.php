@@ -32,4 +32,10 @@ describe('ProdutosRepositoryBdr', function () {
             $this->repository->buscarPorId('abc');
         })->toThrow(MensagemErro::PRODUTOS_REPOSITORY_NOT_FOUND);
     });
+
+    it('deveria retornar a contagem de produtos', function () {
+        $contagem = $this->repository->contar();
+
+        expect($contagem)->toBe(3);
+    });
 });

@@ -10,14 +10,17 @@ class ProdutosController
     public function listar(HttpRequest $req, HttpResponse $res): void
     {
         try {
-            $body = (array) $req->body();
+            $queries = $req->queries();
 
-            $pagina = is_numeric($body['pagina']) ? (int) $body['pagina'] : 1;
-            $limit = is_numeric($body['limit']) ? (int) $body['limit'] : 6;
+            $paginaQuery = $queries['pagina'];
+            $limitQuery = $queries['limit'];
 
-            $produtos = $this->produtosService->listar($pagina, $limit);
+            $pagina = is_numeric($paginaQuery) ? (int) $paginaQuery : 1;
+            $limit = is_numeric($limitQuery) ? (int) $limitQuery : 6;
 
-            $res->json($produtos);
+            $produtosPaginados = $this->produtosService->listar($pagina, $limit);
+
+            $res->json($produtosPaginados);
         } catch (Exception $e) {
             $this->tratarErro($e, $res);
         }
@@ -43,8 +46,8 @@ class ProdutosController
     private function tratarErro(Exception $e, HttpResponse $res): void
     {
         $status = match ($e::class) {
-            ViewException::class, DomainException::class => 400,
-            RepositoryException::class => 404,
+            DomainException::class => 400,
+            RepositoryException::class => $e->getCode(),
             PDOException::class => 500,
             default => 500,
         };

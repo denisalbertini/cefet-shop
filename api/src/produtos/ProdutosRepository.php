@@ -8,4 +8,6 @@ interface ProdutosRepository
     public function buscar(Paginacao $paginacao): array;
 
     public function buscarPorId(string $id): Produto;
+
+    public function contar(): int;
 }

@@ -27,6 +27,12 @@ class MensagemErro
     public const string DATABASE_CONNECTION = 'Não foi possível conectar ao banco de dados.';
 
     public const string PRODUTOS_REPOSITORY_NOT_FOUND = 'Produto não encontrado.';
+    public const string PRODUTOS_REPOSITORY_COUNT = 'Erro ao contar o número de registros.';
 
     public const string PRODUTOS_CONTROLLER_ID = 'ID do produto não recebido.';
+
+    public const string PRODUTOS_PAGINADOS_PAGINA_ATUAL = 'O atributo paginaAtual de ProdutosPaginados não pode ser menor ou igual a 0.';
+    public const string PRODUTOS_PAGINADOS_TOTAL_PAGINAS = 'O atributo totalPaginas de ProdutosPaginados não pode ser menor ou igual a 0.';
+
+    public const string REPOSITORY_UNEXPECTED = 'Erro inesperado ao executar a consulta.';
 }
