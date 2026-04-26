@@ -109,7 +109,7 @@ describe('Produto', function () {
         expect($produto->foto->valor)->toBe($foto->valor);
         expect($produto->preco->getValorFormatado())->toBe($preco->getValorFormatado());
         expect($produto->estaEmPromocao())->toBe(true);
-        expect($produto->getPrecoPromocional())->toBe($precoPromocional);
+        expect($produto->getPrecoPromocional()->getValorFormatado())->toBe($precoPromocional);
     });
 
     it('deveria aplicar promoção corretamente', function () {

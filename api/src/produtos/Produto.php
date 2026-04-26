@@ -33,7 +33,7 @@ class Produto
         return $this->promocao !== null;
     }
 
-    public function getPrecoPromocional(): string|null
+    public function getPrecoPromocional(): Cefetin|null
     {
         if (!$this->promocao) {
             return null;
@@ -43,7 +43,7 @@ class Produto
             (int) ($this->preco->valorCentavos * (1 - $this->promocao->getDesconto())),
         );
 
-        return $precoPromocional->getValorFormatado();
+        return $precoPromocional;
     }
 
     private function validarDados(
