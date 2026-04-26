@@ -37,10 +37,10 @@ export class RepositorioCarrinhosEmHttp implements RepositorioCarrinhos {
         produtoId: string,
         quantidade: number
     ): Promise<CarrinhoParaExibir> {
-        const res = await fetch(this.itensPath, {
+        const res = await fetch(this.itensPath + produtoId, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ produtoId, quantidade }),
+            body: JSON.stringify({ quantidade }),
         });
 
         this.verificarResposta(res);
@@ -49,10 +49,9 @@ export class RepositorioCarrinhosEmHttp implements RepositorioCarrinhos {
     }
 
     async removerItem(produtoId: string): Promise<CarrinhoParaExibir> {
-        const res = await fetch(this.itensPath, {
+        const res = await fetch(this.itensPath + produtoId, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ produtoId }),
         });
 
         this.verificarResposta(res);
