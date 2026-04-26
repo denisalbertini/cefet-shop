@@ -31,14 +31,12 @@ test.describe('Carrinho', () => {
             await route.fulfill({ json });
         });
 
-        await page.route(API.HOST + 'carrinhos/itens/', async (route) => {
-            const produtoId = JSON.parse(route.request().postData()!).produtoId;
-
+        await page.route(API.HOST + 'carrinhos/itens/*', async (route) => {
             const json = new CarrinhoParaExibir('110,00', [
                 new ItemParaListar(
                     10,
                     '100,00',
-                    produtoId,
+                    'abc',
                     'http://placehold.co/400x500',
                     'produto',
                     15
@@ -75,6 +73,42 @@ test.describe('Carrinho', () => {
         expect(total).not.toBe('');
     });
 
+    test('deveria exibir os atributos de um item corretamente', async () => {
+        const quantidade = await pagina!.obterValorInput(
+            pagina!.localizarPrimeiro(pagina!.localizarQuantidades())
+        );
+        const subTotal = await pagina!.obterConteudoTextual(
+            pagina!.localizarPrimeiro(pagina!.localizarSubTotais())
+        );
+        const produtoId = await pagina!.obterValorInput(
+            pagina!.localizarPrimeiro(pagina!.localizarProdutoIds())
+        );
+        const produtoNome = await pagina!.obterConteudoTextual(
+            pagina!.localizarPrimeiro(pagina!.localizarProdutoNomes())
+        );
+        const imgProdutoFoto = pagina!.localizarPrimeiro(pagina!.localizarProdutoFotos());
+
+        expect(quantidade).toBe('1');
+        expect(subTotal).toBe('10,00');
+        expect(produtoId).toBe('abc');
+        expect(produtoNome).toBe('produto 1');
+        await expect(imgProdutoFoto).toHaveAttribute('src', 'http://placehold.co/400x500');
+    });
+
+    test('deveria limitar a quantidade de um item com estoque maior que 10', async () => {
+        const inputQuantidade = pagina!.localizarPrimeiro(pagina!.localizarQuantidades());
+
+        await expect(inputQuantidade).toHaveAttribute('min', '1');
+        await expect(inputQuantidade).toHaveAttribute('max', '10');
+    });
+
+    test('deveria limitar a quantidade de um item com estoque menor que 10', async () => {
+        const inputQuantidade = pagina!.localizarSegundo(pagina!.localizarQuantidades());
+
+        await expect(inputQuantidade).toHaveAttribute('min', '1');
+        await expect(inputQuantidade).toHaveAttribute('max', '5');
+    });
+
     test('deveria alterar a quantidade de um item', async () => {
         const inputQuantidade = pagina!.localizarPrimeiro(pagina!.localizarQuantidades());
         const quantidade = await pagina!.obterValorInput(inputQuantidade);
@@ -105,23 +139,5 @@ test.describe('Carrinho', () => {
         const contagemId = await pagina!.contar(pagina!.localizarTexto(produtoId));
 
         expect(contagemId).toBe(0);
-    });
-
-    test('deveria permitir aumentar a quantidade de um item até 10, no máximo.', async () => {
-        const inputQuantidade = pagina!.localizarPrimeiro(pagina!.localizarQuantidades());
-
-        await pagina!.preencher(inputQuantidade, '15');
-        await pagina!.pressionarEnter(inputQuantidade);
-
-        await expect(inputQuantidade).not.toHaveValue('10');
-    });
-
-    test('deveria permitir aumentar a quantidade de um item até seu máximo de seu estoque', async () => {
-        const inputQuantidade = pagina!.localizarSegundo(pagina!.localizarQuantidades());
-
-        await pagina!.preencher(inputQuantidade, '10');
-        await pagina!.pressionarEnter(inputQuantidade);
-
-        await expect(inputQuantidade).not.toHaveValue('5');
     });
 });
