@@ -19,7 +19,7 @@ class ProdutoParaDetalhar
         $this->lancamento = $produto->lancamento->getValorFormatado();
         $this->descricao = $produto->descricao;
         $this->preco = $produto->preco->getValorFormatado();
-        $this->precoPromocional = $produto->getPrecoPromocional()->getValorFormatado();
+        $this->precoPromocional = $produto->getPrecoPromocional()?->getValorFormatado();
         $this->estoque = $produto->estoque;
     }
 }
