@@ -1,3 +1,4 @@
+import { CarrinhoAtualizado } from './CarrinhoAtualizado';
 import { CarrinhoParaExibir } from './CarrinhoParaExibir';
 import { RepositorioCarrinhos } from './RepositorioCarrinhos';
 
@@ -8,18 +9,18 @@ export class GestorCarrinhos {
         return this.repositorioCarrinhos.buscar();
     }
 
-    public adicionarItem(produtoId: string, quantidade: number): Promise<CarrinhoParaExibir> {
+    public adicionarItem(produtoId: string, quantidade: number): Promise<void> {
         return this.repositorioCarrinhos.adicionarItem(produtoId, quantidade);
     }
 
     public alterarQuantidadeItem(
         produtoId: string,
         quantidade: number
-    ): Promise<CarrinhoParaExibir> {
+    ): Promise<CarrinhoAtualizado> {
         return this.repositorioCarrinhos.alterarQuantidadeItem(produtoId, quantidade);
     }
 
-    public removerItem(produtoId: string): Promise<CarrinhoParaExibir> {
+    public removerItem(produtoId: string): Promise<CarrinhoAtualizado> {
         return this.repositorioCarrinhos.removerItem(produtoId);
     }
 }

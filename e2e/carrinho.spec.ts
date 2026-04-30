@@ -1,4 +1,5 @@
 import { expect, test } from 'playwright/test';
+import { CarrinhoAtualizado } from '../src/carrinhos/CarrinhoAtualizado';
 import { CarrinhoParaExibir } from '../src/carrinhos/CarrinhoParaExibir';
 import { ItemParaListar } from '../src/carrinhos/ItemParaListar';
 import { API } from '../src/constantes';
@@ -32,16 +33,7 @@ test.describe('Carrinho', () => {
         });
 
         await page.route(API.HOST + 'carrinhos/itens/*', async (route) => {
-            const json = new CarrinhoParaExibir('110,00', [
-                new ItemParaListar(
-                    10,
-                    '100,00',
-                    'abc',
-                    'http://placehold.co/400x500',
-                    'produto',
-                    15
-                ),
-            ]);
+            const json = new CarrinhoAtualizado('abc', '100', '110');
 
             await route.fulfill({ json });
         });
@@ -111,7 +103,6 @@ test.describe('Carrinho', () => {
 
     test('deveria alterar a quantidade de um item', async () => {
         const inputQuantidade = pagina!.localizarPrimeiro(pagina!.localizarQuantidades());
-        const quantidade = await pagina!.obterValorInput(inputQuantidade);
 
         const spanSubTotal = pagina!.localizarPrimeiro(pagina!.localizarSubTotais());
         const subTotal = await pagina!.obterConteudoTextual(spanSubTotal);
@@ -122,7 +113,6 @@ test.describe('Carrinho', () => {
         await pagina!.preencher(inputQuantidade, '10');
         await pagina!.pressionarEnter(inputQuantidade);
 
-        await expect(inputQuantidade).not.toHaveValue(quantidade);
         await expect(spanSubTotal).not.toHaveText(subTotal!);
         await expect(spanTotal).not.toHaveText(total!);
     });

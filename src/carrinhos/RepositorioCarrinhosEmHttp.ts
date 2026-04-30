@@ -1,5 +1,6 @@
 import { API, MENSAGEM_ERRO } from '../constantes';
 import { RepositorioError } from '../error/RepositorioError';
+import { CarrinhoAtualizado } from './CarrinhoAtualizado';
 import { CarrinhoParaExibir } from './CarrinhoParaExibir';
 import { ItemParaListar } from './ItemParaListar';
 import { RepositorioCarrinhos } from './RepositorioCarrinhos';
@@ -21,7 +22,7 @@ export class RepositorioCarrinhosEmHttp implements RepositorioCarrinhos {
         return await this.instanciarCarrinhoParaExibir(res);
     }
 
-    async adicionarItem(produtoId: string, quantidade: number): Promise<CarrinhoParaExibir> {
+    async adicionarItem(produtoId: string, quantidade: number): Promise<void> {
         const res = await fetch(this.itensPath, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -29,14 +30,12 @@ export class RepositorioCarrinhosEmHttp implements RepositorioCarrinhos {
         });
 
         this.verificarResposta(res);
-
-        return await this.instanciarCarrinhoParaExibir(res);
     }
 
     async alterarQuantidadeItem(
         produtoId: string,
         quantidade: number
-    ): Promise<CarrinhoParaExibir> {
+    ): Promise<CarrinhoAtualizado> {
         const res = await fetch(this.itensPath + produtoId, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
@@ -45,18 +44,17 @@ export class RepositorioCarrinhosEmHttp implements RepositorioCarrinhos {
 
         this.verificarResposta(res);
 
-        return await this.instanciarCarrinhoParaExibir(res);
+        return await this.instanciarCarrinhoAtualizado(res);
     }
 
-    async removerItem(produtoId: string): Promise<CarrinhoParaExibir> {
+    async removerItem(produtoId: string): Promise<CarrinhoAtualizado> {
         const res = await fetch(this.itensPath + produtoId, {
             method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' },
         });
 
         this.verificarResposta(res);
 
-        return await this.instanciarCarrinhoParaExibir(res);
+        return await this.instanciarCarrinhoAtualizado(res);
     }
 
     private verificarResposta(res: Response): void {
@@ -91,5 +89,11 @@ export class RepositorioCarrinhosEmHttp implements RepositorioCarrinhos {
         }
 
         return new CarrinhoParaExibir(dados.total, itensParaListar);
+    }
+
+    private async instanciarCarrinhoAtualizado(res: Response): Promise<CarrinhoAtualizado> {
+        const dados = await res.json();
+
+        return new CarrinhoAtualizado(dados.produtoId, dados.subTotal, dados.total);
     }
 }

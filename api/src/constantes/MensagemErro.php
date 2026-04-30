@@ -35,4 +35,10 @@ class MensagemErro
     public const string PRODUTOS_PAGINADOS_TOTAL_PAGINAS = 'O atributo totalPaginas de ProdutosPaginados não pode ser menor ou igual a 0.';
 
     public const string REPOSITORY_UNEXPECTED = 'Erro inesperado ao executar a consulta.';
+
+    public const string ITEM_QUANTIDADE = 'O atributo quantidade de Item não pode ser menor ou igual a 0.';
+
+    public const string CARRINHOS_REPOSITORY_NOT_FOUND = 'Item não encontrado.';
+
+    public const string CARRINHOS_CONTROLLER_QUANTIDADE = 'Valor inesperado recebido para a quantidade do produto.';
 }

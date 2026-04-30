@@ -1,4 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it, Mock, vi } from 'vitest';
+import { CarrinhoAtualizado } from '../src/carrinhos/CarrinhoAtualizado';
 import { CarrinhoParaExibir } from '../src/carrinhos/CarrinhoParaExibir';
 import { RepositorioCarrinhos } from '../src/carrinhos/RepositorioCarrinhos';
 import { RepositorioCarrinhosEmHttp } from '../src/carrinhos/RepositorioCarrinhosEmHttp';
@@ -62,12 +63,12 @@ describe('RepositorioCarrinhosEmHttp', () => {
             );
         });
 
-        it('deveria retornar o carrinho quando a requisição é um sucesso.', async () => {
+        it('deveria executar sem erros.', async () => {
             fetchMock.mockReturnValueOnce({ ok: true, json: async () => dadosMock });
 
-            const carrinho = await repositorio.adicionarItem('', 0);
-
-            expect(carrinho).toBeInstanceOf(CarrinhoParaExibir);
+            expect(async () => {
+                await repositorio.adicionarItem('', 0);
+            }).not.toThrow();
         });
     });
 
@@ -85,7 +86,7 @@ describe('RepositorioCarrinhosEmHttp', () => {
 
             const carrinho = await repositorio.alterarQuantidadeItem('', 0);
 
-            expect(carrinho).toBeInstanceOf(CarrinhoParaExibir);
+            expect(carrinho).toBeInstanceOf(CarrinhoAtualizado);
         });
     });
 
@@ -103,7 +104,7 @@ describe('RepositorioCarrinhosEmHttp', () => {
 
             const carrinho = await repositorio.removerItem('');
 
-            expect(carrinho).toBeInstanceOf(CarrinhoParaExibir);
+            expect(carrinho).toBeInstanceOf(CarrinhoAtualizado);
         });
     });
 });

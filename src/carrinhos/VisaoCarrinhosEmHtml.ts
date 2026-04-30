@@ -1,3 +1,4 @@
+import { CarrinhoAtualizado } from './CarrinhoAtualizado';
 import { CarrinhoParaExibir } from './CarrinhoParaExibir';
 import { ControladoraCarrinhos } from './ControladoraCarrinhos';
 import { ItemParaListar } from './ItemParaListar';
@@ -38,22 +39,16 @@ export class VisaoCarrinhosEmHtml implements VisaoCarrinhos {
         this.escreverTotal(carrinho.total);
     }
 
-    alterarQuantidadeItem(carrinho: CarrinhoParaExibir): void {
-        const item = carrinho.itens[0];
+    alterarQuantidadeItem(carrinho: CarrinhoAtualizado): void {
+        const li = this.buscarItemLista(carrinho.produtoId);
 
-        const li = this.buscarItemLista(item.produtoId);
-
-        (li?.querySelector('.subTotal') as HTMLSpanElement).textContent = item.subTotal;
+        (li?.querySelector('.subTotal') as HTMLSpanElement).textContent = carrinho.subTotal;
 
         this.escreverTotal(carrinho.total);
     }
 
-    removerItem(carrinho: CarrinhoParaExibir): void {
-        const item = carrinho.itens[0];
-
-        console.log(item.produtoId);
-
-        const li = this.buscarItemLista(item.produtoId);
+    removerItem(carrinho: CarrinhoAtualizado): void {
+        const li = this.buscarItemLista(carrinho.produtoId);
 
         li?.remove();
 
@@ -75,8 +70,6 @@ export class VisaoCarrinhosEmHtml implements VisaoCarrinhos {
         const target = event.target as HTMLElement;
 
         const produtoId = this.obterProdutoId(target);
-
-        console.log(produtoId);
 
         this.controladoraCarrinhos.removerItem(produtoId);
     }

@@ -3,8 +3,8 @@ INSERT INTO promocao (id, nome, desconto) VALUES
 (UUID(), 'Liquidação de Verão', 0.1);
 
 INSERT INTO produto (id, nome, descricao, estoque, quantidade_total_vendida, lancamento, foto, preco, promocao_id) VALUES
-(UUID(), 'Camiseta Sistemas', 'Camiseta do curso de Sistemas', 120, 450, '2024-1', 'https://placehold.co/400x500', 5990, NULL),
-(UUID(), 'Calça Engenharia', 'Calça do curso de Engenharia', 80, 320, '2024-2', 'https://placehold.co/400x500', 12990, (SELECT id FROM promocao WHERE nome = 'Black Friday')),
+('84490d7b-5f06-4443-b064-ef1cd76b9ced', 'Camiseta Sistemas', 'Camiseta do curso de Sistemas', 120, 450, '2024-1', 'https://placehold.co/400x500', 5990, NULL),
+('ecfe344b-1437-4774-a4b5-580a2dc4ae7d', 'Calça Engenharia', 'Calça do curso de Engenharia', 8, 320, '2024-2', 'https://placehold.co/400x500', 12990, (SELECT id FROM promocao WHERE nome = 'Black Friday')),
 (UUID(), 'Boné Turismo', 'Boné do cruso de Turismo', 60, 210, '2024-1', 'https://placehold.co/400x500', 6090, (SELECT id FROM promocao WHERE nome = 'Liquidação de Verão')),
 (UUID(), 'Caneca Física', 'Caneca do curso de Física', 40, 180, '2023-2', 'https://placehold.co/400x500', 3090, NULL),
 (UUID(), 'Jaqueta Sistemas', 'Jaqueta do curso de Sistemas', 35, 95, '2024-1', 'https://placehold.co/400x500', 15990, (SELECT id FROM promocao WHERE nome = 'Black Friday')),
