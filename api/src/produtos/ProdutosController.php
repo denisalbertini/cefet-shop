@@ -32,7 +32,7 @@ class ProdutosController
             $id = $req->param('id');
 
             if (!$id) {
-                throw new ViewException(MensagemErro::PRODUTOS_CONTROLLER_ID);
+                throw new ControllerException(MensagemErro::PRODUTOS_CONTROLLER_ID);
             }
 
             $produto = $this->produtosService->buscarPorId($id);
@@ -46,7 +46,7 @@ class ProdutosController
     private function tratarErro(Exception $e, HttpResponse $res): void
     {
         $status = match ($e::class) {
-            DomainException::class => 400,
+            DomainException::class, ControllerException::class => 400,
             RepositoryException::class => $e->getCode(),
             PDOException::class => 500,
             default => 500,
