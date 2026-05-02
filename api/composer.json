@@ -4,15 +4,25 @@
         "psr-4": {
             "": [
                 "src/",
-                "src/util",
-                "src/util/constantes",
-                "src/database",
-                "src/tipos",
-                "src/exception",
-                "src/promocoes",
-                "src/produtos",
                 "src/carrinhos",
-                "src/sessoes"
+                "src/carrinhos/dto",
+                "src/carrinhos/entity",
+                "src/carrinhos/interface",
+                "src/carrinhos/itens",
+                "src/carrinhos/itens/dto",
+                "src/carrinhos/itens/entity",
+                "src/database",
+                "src/exception",
+                "src/produtos",
+                "src/produtos/dto",
+                "src/produtos/entity",
+                "src/produtos/interface",
+                "src/promocoes",
+                "src/promocoes/entity",
+                "src/sessoes",
+                "src/tipos",
+                "src/util",
+                "src/util/constantes"
             ]
         }
     },
