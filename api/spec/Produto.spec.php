@@ -108,7 +108,6 @@ describe('Produto', function () {
         expect($produto->lancamento->getValorFormatado())->toBe($lancamento->getValorFormatado());
         expect($produto->foto->valor)->toBe($foto->valor);
         expect($produto->preco->getValorFormatado())->toBe($preco->getValorFormatado());
-        expect($produto->estaEmPromocao())->toBe(true);
         expect($produto->getPrecoPromocional()->getValorFormatado())->toBe($precoPromocional);
     });
 
@@ -132,7 +131,7 @@ describe('Produto', function () {
 
         $produto->aplicarPromocao($promocao);
 
-        expect($produto->estaEmPromocao())->toBeTruthy();
+        expect($produto->getPrecoPromocional())->toBeTruthy();
     });
 
     it('deveria remover promoção corretamente', function () {
@@ -150,6 +149,6 @@ describe('Produto', function () {
 
         $produto->removerPromocao();
 
-        expect($produto->estaEmPromocao())->toBeFalsy();
+        expect($produto->getPrecoPromocional())->toBeFalsy();
     });
 });

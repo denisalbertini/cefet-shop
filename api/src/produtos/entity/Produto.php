@@ -28,11 +28,6 @@ class Produto
         $this->quantidadeTotalVendida = $quantidadeTotalVendida;
     }
 
-    public function estaEmPromocao(): bool
-    {
-        return $this->promocao !== null;
-    }
-
     public function getPrecoPromocional(): Cefetin|null
     {
         if (!$this->promocao) {
