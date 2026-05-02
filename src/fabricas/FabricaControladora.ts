@@ -1,18 +1,19 @@
 import { ControladoraCarrinhos } from '../carrinhos/ControladoraCarrinhos';
 import { GestorCarrinhos } from '../carrinhos/GestorCarrinhos';
 import { RepositorioCarrinhosEmHttp } from '../carrinhos/RepositorioCarrinhosEmHttp';
-import { ControladoraUsuario } from '../usuarios/ControladoraUsuario';
-import { GestorUsuario } from '../usuarios/GestorUsuario';
-import { RepositorioUsuarioEmHttp } from '../usuarios/RepositorioUsuarioEmHttp';
-import { VisaoUsuarioEmHtml } from '../usuarios/VisaoUsuarioEmHtml';
+import { ControladoraProdutos } from '../produtos/ControladoraProdutos';
+import { GestorProdutos } from '../produtos/GestorProdutos';
+import { RepositorioProdutosEmHttp } from '../produtos/RepositorioProdutosEmHttp';
 
 export class FabricaControladora {
-    static controladoraUsuario(): ControladoraUsuario {
-        const repositorio = new RepositorioUsuarioEmHttp();
-        const gestor = new GestorUsuario(repositorio);
-        const visao = new VisaoUsuarioEmHtml();
-        const controladora = new ControladoraUsuario(gestor, visao);
-        return controladora;
+    static controladoraProdutos(): ControladoraProdutos {
+        const repositorioProdutos = new RepositorioProdutosEmHttp();
+        const gestorProdutos = new GestorProdutos(repositorioProdutos);
+
+        const repositorioCarrinhos = new RepositorioCarrinhosEmHttp();
+        const gestorCarrinhos = new GestorCarrinhos(repositorioCarrinhos);
+
+        return new ControladoraProdutos(gestorProdutos, gestorCarrinhos);
     }
 
     static controladoraCarrinhos(): ControladoraCarrinhos {

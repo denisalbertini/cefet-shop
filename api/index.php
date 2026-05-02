@@ -2,6 +2,7 @@
 
 require_once './vendor/autoload.php';
 
+use phputil\cors\CorsOptions;
 use phputil\router\Router;
 use function phputil\cors\cors;
 
@@ -17,15 +18,18 @@ $carrinhosController = new CarrinhosController($carrinhosService);
 
 $app = new Router();
 
-$app->use(cors());
+$corsOptions = new CorsOptions()->withAllowedHeaders(['Content-Type']);
+
+$app->use(cors($corsOptions));
 
 $app->get('/produtos', [$produtosController, 'listar']);
 $app->get('/produtos/:id', [$produtosController, 'buscarPorId']);
 
 $app->get('/carrinhos', [$carrinhosController, 'buscar']);
-$app->post('carrinhos/itens', [$carrinhosController, 'adicionarItem']);
-$app->patch('carrinhos/itens/:id', [$carrinhosController, 'alterarQuantidadeItem']);
-$app->delete('carrinhos/itens/:id', [$carrinhosController, 'removerItem']);
+$app->get('/carrinhos/itens/quantidade', [$carrinhosController, 'buscarQuantidadeItens']);
+$app->post('/carrinhos/itens', [$carrinhosController, 'adicionarItem']);
+$app->patch('/carrinhos/itens/:id', [$carrinhosController, 'alterarQuantidadeItem']);
+$app->delete('/carrinhos/itens/:id', [$carrinhosController, 'removerItem']);
 
 $app->delete('/sessao', function ($req, $res) {
     session_destroy();

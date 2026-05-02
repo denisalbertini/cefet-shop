@@ -3,7 +3,7 @@ import { CarrinhoAtualizado } from '../src/carrinhos/CarrinhoAtualizado';
 import { CarrinhoParaExibir } from '../src/carrinhos/CarrinhoParaExibir';
 import { RepositorioCarrinhos } from '../src/carrinhos/RepositorioCarrinhos';
 import { RepositorioCarrinhosEmHttp } from '../src/carrinhos/RepositorioCarrinhosEmHttp';
-import { MENSAGEM_ERRO } from '../src/constantes';
+import { MENSAGEM_ERRO } from '../src/util/constantes';
 
 describe('RepositorioCarrinhosEmHttp', () => {
     let repositorio: RepositorioCarrinhos;

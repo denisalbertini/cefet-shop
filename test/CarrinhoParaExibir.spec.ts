@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { CarrinhoParaExibir } from '../src/carrinhos/CarrinhoParaExibir';
-import { MENSAGEM_ERRO } from '../src/constantes';
-import { FormatadorMensagem } from '../src/FormatadorMensagem';
+import { MENSAGEM_ERRO } from '../src/util/constantes';
+import { FormatadorMensagem } from '../src/util/FormatadorMensagem';
 
 describe('CarrinhoParaExibir', () => {
     it('deveria lançar um erro ao instanciar com valores inválidos', () => {

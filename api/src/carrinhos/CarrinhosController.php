@@ -18,6 +18,17 @@ class CarrinhosController
         }
     }
 
+    public function buscarQuantidadeItens(HttpRequest $req, HttpResponse $res): void
+    {
+        try {
+            $quantidade = $this->carrinhosService->buscarQuantidadeItens();
+
+            $res->json(['quantidade' => $quantidade]);
+        } catch (Exception $e) {
+            $this->tratarErro($e, $res);
+        }
+    }
+
     public function adicionarItem(HttpRequest $req, HttpResponse $res): void
     {
         try {
@@ -42,7 +53,7 @@ class CarrinhosController
 
             $this->carrinhosService->adicionarItem($produtoId, (int) $quantidade);
 
-            $res->status(201);
+            $res->status(201)->json(new stdClass());
         } catch (Exception $e) {
             $this->tratarErro($e, $res);
         }

@@ -41,4 +41,6 @@ class MensagemErro
     public const string CARRINHOS_REPOSITORY_NOT_FOUND = 'Item não encontrado.';
 
     public const string CARRINHOS_CONTROLLER_QUANTIDADE = 'Valor inesperado recebido para a quantidade do produto.';
+
+    public const string CARRINHOS_SERVICE_QUANTIDADE = 'O produto não está em estoque.';
 }

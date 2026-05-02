@@ -2,14 +2,14 @@ import { expect, test } from 'playwright/test';
 import { CarrinhoAtualizado } from '../src/carrinhos/CarrinhoAtualizado';
 import { CarrinhoParaExibir } from '../src/carrinhos/CarrinhoParaExibir';
 import { ItemParaListar } from '../src/carrinhos/ItemParaListar';
-import { API } from '../src/constantes';
+import { API } from '../src/util/constantes';
 import { PaginaCarrinho } from './pom/PaginaCarrinho';
 
 test.describe('Carrinho', () => {
     let pagina: PaginaCarrinho | null;
 
     test.beforeEach(async ({ page }) => {
-        await page.route(API.HOST + 'carrinhos/', async (route) => {
+        await page.route(API.HOST + '/carrinhos', async (route) => {
             const json = new CarrinhoParaExibir('20,00', [
                 new ItemParaListar(
                     1,
@@ -32,7 +32,7 @@ test.describe('Carrinho', () => {
             await route.fulfill({ json });
         });
 
-        await page.route(API.HOST + 'carrinhos/itens/*', async (route) => {
+        await page.route(API.HOST + '/carrinhos/itens/*', async (route) => {
             const json = new CarrinhoAtualizado('abc', '100', '110');
 
             await route.fulfill({ json });

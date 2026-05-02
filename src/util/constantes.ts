@@ -1,4 +1,4 @@
-export const API = { HOST: 'http://localhost:3000/' } as const;
+export const API = { HOST: 'http://localhost:3000' } as const;
 
 export const MENSAGEM_ERRO = {
     REPOSITORIO: {

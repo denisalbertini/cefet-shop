@@ -9,8 +9,12 @@ export class GestorCarrinhos {
         return this.repositorioCarrinhos.buscar();
     }
 
-    public adicionarItem(produtoId: string, quantidade: number): Promise<void> {
-        return this.repositorioCarrinhos.adicionarItem(produtoId, quantidade);
+    public buscarQuantidadeItens(): Promise<number> {
+        return this.repositorioCarrinhos.buscarQuantidadeItens();
+    }
+
+    public adicionarItem(produtoId: string, quantidade: string): Promise<void> {
+        return this.repositorioCarrinhos.adicionarItem(produtoId, parseInt(quantidade));
     }
 
     public alterarQuantidadeItem(

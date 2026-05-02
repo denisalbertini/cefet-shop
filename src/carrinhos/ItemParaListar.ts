@@ -1,5 +1,5 @@
-import { MENSAGEM_ERRO } from '../constantes';
-import { FormatadorMensagem } from '../FormatadorMensagem';
+import { FormatadorMensagem } from '../util/FormatadorMensagem';
+import { MENSAGEM_ERRO } from '../util/constantes';
 
 export class ItemParaListar {
     public readonly quantidade: number;

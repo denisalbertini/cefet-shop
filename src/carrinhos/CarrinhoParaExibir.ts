@@ -1,5 +1,5 @@
-import { MENSAGEM_ERRO } from '../constantes';
-import { FormatadorMensagem } from '../FormatadorMensagem';
+import { FormatadorMensagem } from '../util/FormatadorMensagem';
+import { MENSAGEM_ERRO } from '../util/constantes';
 import { ItemParaListar } from './ItemParaListar';
 
 export class CarrinhoParaExibir {

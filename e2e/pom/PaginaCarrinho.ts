@@ -12,15 +12,15 @@ export class PaginaCarrinho {
     }
 
     public localizarProdutoIds(): Locator {
-        return this.page.locator('.produtoId');
+        return this.page.locator('.produto-id');
     }
 
     public localizarProdutoFotos(): Locator {
-        return this.page.locator('.produtoFoto');
+        return this.page.locator('.foto');
     }
 
     public localizarProdutoNomes(): Locator {
-        return this.page.locator('.produtoNome');
+        return this.page.locator('.nome');
     }
 
     public localizarQuantidades(): Locator {
@@ -28,7 +28,7 @@ export class PaginaCarrinho {
     }
 
     public localizarSubTotais(): Locator {
-        return this.page.locator('.subTotal');
+        return this.page.locator('.sub-total');
     }
 
     public localizarTotal(): Locator {

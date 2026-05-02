@@ -22,6 +22,7 @@ class Carrinho
         foreach ($this->itens as $indice => $item) {
             if ($item->produto->id === $produtoId) {
                 array_splice($this->itens, $indice, 1);
+                break;
             }
         }
     }

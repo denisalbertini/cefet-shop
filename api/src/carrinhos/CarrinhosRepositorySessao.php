@@ -16,34 +16,7 @@ class CarrinhosRepositorySessao implements CarrinhosRepository
         $carrinho = $this->sessao->obter($this->chaveCarrinho);
 
         if (!($carrinho instanceof Carrinho)) {
-            $carrinho = new Carrinho([
-                new Item(
-                    1,
-                    new Produto(
-                        '84490d7b-5f06-4443-b064-ef1cd76b9ced',
-                        'Camiseta Sistemas',
-                        'Camiseta do curso de Sistemas',
-                        120,
-                        450,
-                        new Periodo(2014, 1),
-                        new Url('https://placehold.co/400x500'),
-                        new Cefetin(5990),
-                    ),
-                ),
-                new Item(
-                    1,
-                    new Produto(
-                        'ecfe344b-1437-4774-a4b5-580a2dc4ae7d',
-                        'Calça Engenharia',
-                        'Calça do curso de Engenharia',
-                        8,
-                        320,
-                        new Periodo(2014, 2),
-                        new Url('https://placehold.co/400x500'),
-                        new Cefetin(12990),
-                    ),
-                ),
-            ]);
+            $carrinho = new Carrinho([]);
 
             $this->salvar($carrinho);
         }
@@ -51,12 +24,19 @@ class CarrinhosRepositorySessao implements CarrinhosRepository
         return $carrinho;
     }
 
+    public function buscarQuantidadeItens(): int
+    {
+        $carrinho = $this->buscar();
+
+        return sizeof($carrinho->itens);
+    }
+
     public function adicionar(Item $item): void
     {
         $carrinho = $this->buscar();
         $indiceItem = $carrinho->obterIndiceItem($item->produto->id);
 
-        if (!$indiceItem) {
+        if (!is_numeric($indiceItem)) {
             $carrinho->adicionarItem($item);
         } else {
             $carrinho->itens[$indiceItem]->setQuantidade(

@@ -1,5 +1,5 @@
-import { API, MENSAGEM_ERRO } from '../constantes';
 import { RepositorioError } from '../error/RepositorioError';
+import { API, MENSAGEM_ERRO } from '../util/constantes';
 import { CarrinhoAtualizado } from './CarrinhoAtualizado';
 import { CarrinhoParaExibir } from './CarrinhoParaExibir';
 import { ItemParaListar } from './ItemParaListar';
@@ -10,21 +10,32 @@ export class RepositorioCarrinhosEmHttp implements RepositorioCarrinhos {
     private itensPath: string;
 
     public constructor() {
-        this.path = API.HOST + 'carrinhos/';
-        this.itensPath = this.path + 'itens/';
+        this.path = API.HOST + '/carrinhos';
+        this.itensPath = this.path + '/itens';
     }
 
     async buscar(): Promise<CarrinhoParaExibir> {
-        const res = await fetch(this.path);
+        const res = await fetch(this.path, { credentials: 'include' });
 
         this.verificarResposta(res);
 
         return await this.instanciarCarrinhoParaExibir(res);
     }
 
+    async buscarQuantidadeItens(): Promise<number> {
+        const res = await fetch(this.itensPath + '/quantidade', { credentials: 'include' });
+
+        this.verificarResposta(res);
+
+        const dados = await res.json();
+
+        return dados.quantidade;
+    }
+
     async adicionarItem(produtoId: string, quantidade: number): Promise<void> {
         const res = await fetch(this.itensPath, {
             method: 'POST',
+            credentials: 'include',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ produtoId, quantidade }),
         });
@@ -36,8 +47,9 @@ export class RepositorioCarrinhosEmHttp implements RepositorioCarrinhos {
         produtoId: string,
         quantidade: number
     ): Promise<CarrinhoAtualizado> {
-        const res = await fetch(this.itensPath + produtoId, {
+        const res = await fetch(this.itensPath + `/${produtoId}`, {
             method: 'PATCH',
+            credentials: 'include',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ quantidade }),
         });
@@ -48,8 +60,9 @@ export class RepositorioCarrinhosEmHttp implements RepositorioCarrinhos {
     }
 
     async removerItem(produtoId: string): Promise<CarrinhoAtualizado> {
-        const res = await fetch(this.itensPath + produtoId, {
+        const res = await fetch(this.itensPath + `/${produtoId}`, {
             method: 'DELETE',
+            credentials: 'include',
         });
 
         this.verificarResposta(res);

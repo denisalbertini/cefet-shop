@@ -14,9 +14,18 @@ class CarrinhosService
         return new CarrinhoParaExibir($carrinho);
     }
 
+    public function buscarQuantidadeItens(): int
+    {
+        return $this->carrinhosRepository->buscarQuantidadeItens();
+    }
+
     public function adicionarItem(string $produtoId, int $quantidade): void
     {
         $produto = $this->produtosRepository->buscarPorId($produtoId);
+
+        if ($produto->estoque === 0) {
+            throw new DomainException(MensagemErro::CARRINHOS_SERVICE_QUANTIDADE);
+        }
 
         $item = new Item($quantidade, $produto);
 
