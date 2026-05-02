@@ -1,7 +1,7 @@
 import { expect, test } from 'playwright/test';
-import { CarrinhoAtualizado } from '../src/carrinhos/CarrinhoAtualizado';
-import { CarrinhoParaExibir } from '../src/carrinhos/CarrinhoParaExibir';
-import { ItemParaListar } from '../src/carrinhos/ItemParaListar';
+import { CarrinhoAtualizado } from '../src/carrinhos/dto/CarrinhoAtualizado';
+import { CarrinhoParaExibir } from '../src/carrinhos/dto/CarrinhoParaExibir';
+import { ItemParaListar } from '../src/carrinhos/itens/dto/ItemParaListar';
 import { API } from '../src/util/constantes';
 import { PaginaCarrinho } from './pom/PaginaCarrinho';
 

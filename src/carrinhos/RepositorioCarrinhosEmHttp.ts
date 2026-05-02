@@ -1,10 +1,9 @@
 import { RepositorioError } from '../error/RepositorioError';
 import { API, MENSAGEM_ERRO } from '../util/constantes';
-import { CarrinhoAtualizado } from './CarrinhoAtualizado';
-import { CarrinhoParaExibir } from './CarrinhoParaExibir';
-import { ItemParaListar } from './ItemParaListar';
-import { RepositorioCarrinhos } from './RepositorioCarrinhos';
-
+import { CarrinhoAtualizado } from './dto/CarrinhoAtualizado';
+import { CarrinhoParaExibir } from './dto/CarrinhoParaExibir';
+import { RepositorioCarrinhos } from './interface/RepositorioCarrinhos';
+import { ItemParaListar } from './itens/dto/ItemParaListar';
 export class RepositorioCarrinhosEmHttp implements RepositorioCarrinhos {
     private path: string;
     private itensPath: string;

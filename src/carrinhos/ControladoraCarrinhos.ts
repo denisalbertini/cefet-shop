@@ -1,6 +1,6 @@
 import { VisaoError } from '../error/VisaoError';
 import { GestorCarrinhos } from './GestorCarrinhos';
-import { VisaoCarrinhos } from './VisaoCarrinhos';
+import { VisaoCarrinhos } from './interface/VisaoCarrinhos';
 import { VisaoCarrinhosEmHtml } from './VisaoCarrinhosEmHtml';
 
 export class ControladoraCarrinhos {

@@ -1,7 +1,7 @@
 import { afterAll, beforeAll, describe, expect, it, Mock, vi } from 'vitest';
-import { CarrinhoAtualizado } from '../src/carrinhos/CarrinhoAtualizado';
-import { CarrinhoParaExibir } from '../src/carrinhos/CarrinhoParaExibir';
-import { RepositorioCarrinhos } from '../src/carrinhos/RepositorioCarrinhos';
+import { CarrinhoAtualizado } from '../src/carrinhos/dto/CarrinhoAtualizado';
+import { CarrinhoParaExibir } from '../src/carrinhos/dto/CarrinhoParaExibir';
+import { RepositorioCarrinhos } from '../src/carrinhos/interface/RepositorioCarrinhos';
 import { RepositorioCarrinhosEmHttp } from '../src/carrinhos/RepositorioCarrinhosEmHttp';
 import { MENSAGEM_ERRO } from '../src/util/constantes';
 

@@ -1,6 +1,6 @@
-import { FormatadorMensagem } from '../util/FormatadorMensagem';
-import { MENSAGEM_ERRO } from '../util/constantes';
-import { ItemParaListar } from './ItemParaListar';
+import { MENSAGEM_ERRO } from '../../util/constantes';
+import { FormatadorMensagem } from '../../util/FormatadorMensagem';
+import { ItemParaListar } from '../itens/dto/ItemParaListar';
 
 export class CarrinhoParaExibir {
     public readonly total: string;

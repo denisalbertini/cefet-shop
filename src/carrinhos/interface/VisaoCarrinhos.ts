@@ -1,5 +1,5 @@
-import { CarrinhoAtualizado } from './CarrinhoAtualizado';
-import { CarrinhoParaExibir } from './CarrinhoParaExibir';
+import { CarrinhoAtualizado } from '../dto/CarrinhoAtualizado';
+import { CarrinhoParaExibir } from '../dto/CarrinhoParaExibir';
 
 export interface VisaoCarrinhos {
     iniciar(): void;

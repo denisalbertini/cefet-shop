@@ -6,7 +6,7 @@ describe('ProdutosRepositoryBdr', function () {
     beforeAll(function () {
         $this->pdo = Database::getInstancia()->getPdoTest();
 
-        $sql = file_get_contents(__DIR__ . '/../scripts-sql/dados_test_produtos.sql');
+        $sql = file_get_contents(__DIR__ . '/../sql/dados_test_produtos.sql');
 
         $this->pdo->exec($sql);
 

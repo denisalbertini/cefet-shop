@@ -1,6 +1,6 @@
-import { CarrinhoAtualizado } from './CarrinhoAtualizado';
-import { CarrinhoParaExibir } from './CarrinhoParaExibir';
-import { RepositorioCarrinhos } from './RepositorioCarrinhos';
+import { CarrinhoAtualizado } from './dto/CarrinhoAtualizado';
+import { CarrinhoParaExibir } from './dto/CarrinhoParaExibir';
+import { RepositorioCarrinhos } from './interface/RepositorioCarrinhos';
 
 export class GestorCarrinhos {
     public constructor(private repositorioCarrinhos: RepositorioCarrinhos) {}

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { CarrinhoParaExibir } from '../src/carrinhos/CarrinhoParaExibir';
+import { CarrinhoParaExibir } from '../src/carrinhos/dto/CarrinhoParaExibir';
 import { MENSAGEM_ERRO } from '../src/util/constantes';
 import { FormatadorMensagem } from '../src/util/FormatadorMensagem';
 

@@ -4,12 +4,15 @@
         "psr-4": {
             "": [
                 "src/",
-                "src/constantes",
+                "src/util",
+                "src/util/constantes",
+                "src/database",
                 "src/tipos",
                 "src/exception",
                 "src/promocoes",
                 "src/produtos",
-                "src/carrinhos"
+                "src/carrinhos",
+                "src/sessoes"
             ]
         }
     },

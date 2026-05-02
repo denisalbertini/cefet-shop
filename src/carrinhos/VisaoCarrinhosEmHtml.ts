@@ -1,7 +1,7 @@
-import { CarrinhoAtualizado } from './CarrinhoAtualizado';
-import { CarrinhoParaExibir } from './CarrinhoParaExibir';
 import { ControladoraCarrinhos } from './ControladoraCarrinhos';
-import { VisaoCarrinhos } from './VisaoCarrinhos';
+import { CarrinhoAtualizado } from './dto/CarrinhoAtualizado';
+import { CarrinhoParaExibir } from './dto/CarrinhoParaExibir';
+import { VisaoCarrinhos } from './interface/VisaoCarrinhos';
 
 export class VisaoCarrinhosEmHtml implements VisaoCarrinhos {
     public constructor(private controladoraCarrinhos: ControladoraCarrinhos) {}
