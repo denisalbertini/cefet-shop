@@ -20,7 +20,10 @@ class ProdutosRepositoryBdr implements ProdutosRepository
 
         $ps->execute();
 
-        $produtosParaHidratar = $ps->fetchAll(PDO::FETCH_CLASS, ProdutoParaHidratar::class);
+        $produtosParaHidratar = $ps->fetchAll(
+            PDO::FETCH_CLASS,
+            ProdutoParaHidratar::class,
+        );
 
         $produtos = [];
 
@@ -46,7 +49,10 @@ class ProdutosRepositoryBdr implements ProdutosRepository
         $produtoParaHidratar = $ps->fetch();
 
         if (!($produtoParaHidratar instanceof ProdutoParaHidratar)) {
-            throw new RepositoryException(MensagemErro::PRODUTOS_REPOSITORY_NOT_FOUND, 404);
+            throw new RepositoryException(
+                MensagemErro::PRODUTOS_REPOSITORY_NOT_FOUND,
+                404,
+            );
         }
 
         return Produto::hidratar($produtoParaHidratar);
@@ -57,13 +63,19 @@ class ProdutosRepositoryBdr implements ProdutosRepository
         $ps = $this->pdo->query('SELECT COUNT(*) AS total FROM produto');
 
         if (!$ps) {
-            throw new RepositoryException(MensagemErro::REPOSITORY_UNEXPECTED, 500);
+            throw new RepositoryException(
+                MensagemErro::REPOSITORY_UNEXPECTED,
+                500,
+            );
         }
 
         $total = ((array) $ps->fetch(PDO::FETCH_ASSOC))['total'];
 
         if (!is_numeric($total)) {
-            throw new RepositoryException(MensagemErro::PRODUTOS_REPOSITORY_COUNT, 500);
+            throw new RepositoryException(
+                MensagemErro::PRODUTOS_REPOSITORY_COUNT,
+                500,
+            );
         }
 
         return (int) $total;

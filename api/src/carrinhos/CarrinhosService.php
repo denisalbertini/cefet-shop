@@ -24,7 +24,9 @@ class CarrinhosService
         $produto = $this->produtosRepository->buscarPorId($produtoId);
 
         if ($produto->estoque === 0) {
-            throw new DomainException(MensagemErro::CARRINHOS_SERVICE_QUANTIDADE);
+            throw new DomainException(
+                MensagemErro::CARRINHOS_SERVICE_QUANTIDADE,
+            );
         }
 
         $item = new Item($quantidade, $produto);
@@ -32,8 +34,10 @@ class CarrinhosService
         $this->carrinhosRepository->adicionar($item);
     }
 
-    public function alterarQuantidadeItem(string $produtoId, int $quantidade): CarrinhoAtualizado
-    {
+    public function alterarQuantidadeItem(
+        string $produtoId,
+        int $quantidade,
+    ): CarrinhoAtualizado {
         $produto = $this->produtosRepository->buscarPorId($produtoId);
 
         $item = new Item($quantidade, $produto);

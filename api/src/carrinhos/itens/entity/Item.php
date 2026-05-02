@@ -4,8 +4,10 @@ class Item
 {
     public int $quantidade;
 
-    public function __construct(int $quantidade, public readonly Produto $produto)
-    {
+    public function __construct(
+        int $quantidade,
+        public readonly Produto $produto,
+    ) {
         $this->setQuantidade($quantidade);
     }
 
@@ -30,9 +32,12 @@ class Item
 
     public function obterSubTotal(): Cefetin
     {
-        $precoProduto = $this->produto->getPrecoPromocional() ?? $this->produto->preco;
+        $precoProduto =
+            $this->produto->getPrecoPromocional() ?? $this->produto->preco;
 
-        $subtotal = new Cefetin($this->quantidade * $precoProduto->valorCentavos);
+        $subtotal = new Cefetin(
+            $this->quantidade * $precoProduto->valorCentavos,
+        );
 
         return $subtotal;
     }

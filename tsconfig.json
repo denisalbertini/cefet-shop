@@ -1,9 +1,9 @@
 {
-    "include": ["src/**/*"],
-    "compilerOptions": {
-        "strict": true,
-        "module": "nodenext",
-        "skipLibCheck": true,
-        "types": ["vite/client"]
-    }
+  "include": ["src/**/*"],
+  "compilerOptions": {
+    "strict": true,
+    "module": "nodenext",
+    "skipLibCheck": true,
+    "types": ["vite/client"]
+  }
 }

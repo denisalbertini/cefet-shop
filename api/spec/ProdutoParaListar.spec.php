@@ -11,7 +11,11 @@ describe('ProdutoParaListar', function () {
             new Periodo(2014, 1),
             new Url('https://placehold.co/100'),
             new Cefetin(1000),
-            new Promocao('5744ddcb-82f6-4c54-b1fa-1f79ac6c7afe', 'nome', new Porcentagem(0.1)),
+            new Promocao(
+                '5744ddcb-82f6-4c54-b1fa-1f79ac6c7afe',
+                'nome',
+                new Porcentagem(0.1),
+            ),
         );
 
         $produtoParaListar = new ProdutoParaListar($produto);
@@ -19,7 +23,9 @@ describe('ProdutoParaListar', function () {
         expect($produtoParaListar->id)->toBe($produto->id);
         expect($produtoParaListar->foto)->toBe($produto->foto->valor);
         expect($produtoParaListar->nome)->toBe($produto->nome);
-        expect($produtoParaListar->preco)->toBe($produto->preco->getValorFormatado());
+        expect($produtoParaListar->preco)->toBe(
+            $produto->preco->getValorFormatado(),
+        );
         expect($produtoParaListar->precoPromocional)->toBe(
             $produto->getPrecoPromocional()->getValorFormatado(),
         );

@@ -1,9 +1,6 @@
 {
-    "tabWidth": 4,
-    "useTabs": false,
-    "printWidth": 100,
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "es5",
-    "plugins": ["@prettier/plugin-php"]
+  "experimentalTernaries": true,
+  "singleQuote": true,
+  "objectWrap": "collapse",
+  "plugins": ["@prettier/plugin-php"]
 }

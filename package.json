@@ -1,24 +1,24 @@
 {
-    "scripts": {
-        "start": "vite",
-        "build": "vite build",
-        "test": "vitest run",
-        "coverage": "vitest run --coverage",
-        "e2e": "playwright test",
-        "e2e:ui": "playwright test --ui",
-        "format": "prettier --write ."
-    },
-    "packageManager": "pnpm@10.33.0",
-    "dependencies": {
-        "bootstrap": "^5.3.8",
-        "page": "^1.11.6"
-    },
-    "devDependencies": {
-        "@prettier/plugin-php": "^0.25.0",
-        "@types/page": "^1.11.9",
-        "playwright": "^1.59.1",
-        "prettier": "^3.8.3",
-        "vite": "^8.0.8",
-        "vitest": "^4.1.4"
-    }
+  "scripts": {
+    "start": "vite",
+    "build": "vite build",
+    "test": "vitest run",
+    "coverage": "vitest run --coverage",
+    "e2e": "playwright test",
+    "e2e:ui": "playwright test --ui",
+    "format": "prettier --write ."
+  },
+  "packageManager": "pnpm@10.33.0",
+  "dependencies": {
+    "bootstrap": "^5.3.8",
+    "page": "^1.11.6"
+  },
+  "devDependencies": {
+    "@prettier/plugin-php": "^0.25.0",
+    "@types/page": "^1.11.9",
+    "playwright": "^1.59.1",
+    "prettier": "^3.8.3",
+    "vite": "^8.0.8",
+    "vitest": "^4.1.4"
+  }
 }

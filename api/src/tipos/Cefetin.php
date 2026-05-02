@@ -23,7 +23,12 @@ class Cefetin
         $valorCentavosString = (string) $this->valorCentavos;
 
         if (mb_strlen($valorCentavosString) < 3) {
-            $valorCentavosString = str_pad($valorCentavosString, 3, '0', STR_PAD_LEFT);
+            $valorCentavosString = str_pad(
+                $valorCentavosString,
+                3,
+                '0',
+                STR_PAD_LEFT,
+            );
         }
 
         $parteInteira = substr($valorCentavosString, 0, -2);

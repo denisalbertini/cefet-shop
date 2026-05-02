@@ -1,5 +1,5 @@
 export class FormatadorMensagem {
-    public static formatarMensagemErro(erros: string[]) {
-        return erros.join('\n');
-    }
+  public static formatarMensagemErro(erros: string[]) {
+    return erros.join('\n');
+  }
 }

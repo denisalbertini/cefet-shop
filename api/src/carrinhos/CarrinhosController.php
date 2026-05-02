@@ -18,8 +18,10 @@ class CarrinhosController
         }
     }
 
-    public function buscarQuantidadeItens(HttpRequest $req, HttpResponse $res): void
-    {
+    public function buscarQuantidadeItens(
+        HttpRequest $req,
+        HttpResponse $res,
+    ): void {
         try {
             $quantidade = $this->carrinhosService->buscarQuantidadeItens();
 
@@ -44,14 +46,22 @@ class CarrinhosController
             }
 
             if (!is_numeric($quantidade)) {
-                array_push($erros, MensagemErro::CARRINHOS_CONTROLLER_QUANTIDADE);
+                array_push(
+                    $erros,
+                    MensagemErro::CARRINHOS_CONTROLLER_QUANTIDADE,
+                );
             }
 
             if (sizeof($erros) > 0) {
-                throw new ControllerException(FormatadorMensagem::formatarMensagemErro($erros));
+                throw new ControllerException(
+                    FormatadorMensagem::formatarMensagemErro($erros),
+                );
             }
 
-            $this->carrinhosService->adicionarItem($produtoId, (int) $quantidade);
+            $this->carrinhosService->adicionarItem(
+                $produtoId,
+                (int) $quantidade,
+            );
 
             $res->status(201)->json(new stdClass());
         } catch (Exception $e) {
@@ -59,13 +69,18 @@ class CarrinhosController
         }
     }
 
-    public function alterarQuantidadeItem(HttpRequest $req, HttpResponse $res): void
-    {
+    public function alterarQuantidadeItem(
+        HttpRequest $req,
+        HttpResponse $res,
+    ): void {
         try {
             $produtoId = $this->obterParametroProdutoId($req);
             $quantidade = $this->obterAtributoQuantidade($req);
 
-            $carrinho = $this->carrinhosService->alterarQuantidadeItem($produtoId, $quantidade);
+            $carrinho = $this->carrinhosService->alterarQuantidadeItem(
+                $produtoId,
+                $quantidade,
+            );
 
             $res->json($carrinho);
         } catch (Exception $e) {
@@ -104,7 +119,9 @@ class CarrinhosController
         $quantidade = $body['quantidade'];
 
         if (!is_numeric($quantidade)) {
-            throw new ControllerException(MensagemErro::CARRINHOS_CONTROLLER_QUANTIDADE);
+            throw new ControllerException(
+                MensagemErro::CARRINHOS_CONTROLLER_QUANTIDADE,
+            );
         }
 
         return (int) $quantidade;

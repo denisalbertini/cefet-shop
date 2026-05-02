@@ -14,6 +14,8 @@ class ProdutoParaListar
         $this->foto = $produto->foto->valor;
         $this->nome = $produto->nome;
         $this->preco = $produto->preco->getValorFormatado();
-        $this->precoPromocional = $produto->getPrecoPromocional()?->getValorFormatado();
+        $this->precoPromocional = $produto
+            ->getPrecoPromocional()
+            ?->getValorFormatado();
     }
 }

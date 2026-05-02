@@ -2,3 +2,4 @@ node_modules
 dist
 vendor
 e2e-results
+build

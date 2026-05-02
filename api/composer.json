@@ -1,46 +1,46 @@
 {
-    "name": "g7/api",
-    "autoload": {
-        "psr-4": {
-            "": [
-                "src/",
-                "src/carrinhos",
-                "src/carrinhos/dto",
-                "src/carrinhos/entity",
-                "src/carrinhos/interface",
-                "src/carrinhos/itens",
-                "src/carrinhos/itens/dto",
-                "src/carrinhos/itens/entity",
-                "src/database",
-                "src/exception",
-                "src/produtos",
-                "src/produtos/dto",
-                "src/produtos/entity",
-                "src/produtos/interface",
-                "src/promocoes",
-                "src/promocoes/entity",
-                "src/sessoes",
-                "src/tipos",
-                "src/util",
-                "src/util/constantes"
-            ]
-        }
-    },
-    "config": {
-        "process-timeout": 0
-    },
-    "scripts": {
-        "start": "php -S localhost:3000",
-        "test": "kahlan",
-        "dump": "composer dump-autoload",
-        "analyze": "phpstan"
-    },
-    "require": {
-        "phputil/router": "^0.3.6",
-        "phputil/cors": "^0.5.3"
-    },
-    "require-dev": {
-        "kahlan/kahlan": "^6.1",
-        "phpstan/phpstan": "^2.1"
+  "name": "g7/api",
+  "autoload": {
+    "psr-4": {
+      "": [
+        "src/",
+        "src/carrinhos",
+        "src/carrinhos/dto",
+        "src/carrinhos/entity",
+        "src/carrinhos/interface",
+        "src/carrinhos/itens",
+        "src/carrinhos/itens/dto",
+        "src/carrinhos/itens/entity",
+        "src/database",
+        "src/exception",
+        "src/produtos",
+        "src/produtos/dto",
+        "src/produtos/entity",
+        "src/produtos/interface",
+        "src/promocoes",
+        "src/promocoes/entity",
+        "src/sessoes",
+        "src/tipos",
+        "src/util",
+        "src/util/constantes"
+      ]
     }
+  },
+  "config": {
+    "process-timeout": 0
+  },
+  "scripts": {
+    "start": "php -S localhost:3000",
+    "test": "kahlan",
+    "dump": "composer dump-autoload",
+    "analyze": "phpstan"
+  },
+  "require": {
+    "phputil/router": "^0.3.6",
+    "phputil/cors": "^0.5.3"
+  },
+  "require-dev": {
+    "kahlan/kahlan": "^6.1",
+    "phpstan/phpstan": "^2.1"
+  }
 }

@@ -1,90 +1,95 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Produtos</title>
-    </head>
-    <body>
-        <template id="card"
-            ><div class="col">
-                <div class="card">
-                    <input type="hidden" class="produto-id" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Produtos</title>
+  </head>
+  <body>
+    <template id="card"
+      ><div class="col">
+        <div class="card">
+          <input type="hidden" class="produto-id" />
 
-                    <a href="#"
-                        ><img
-                            src="https://placehold.co/400x500"
-                            alt="Produto"
-                            class="card-img-top pointer foto"
-                    /></a>
+          <a href="#"
+            ><img
+              src="https://placehold.co/400x500"
+              alt="Produto"
+              class="card-img-top pointer foto"
+          /></a>
 
-                    <div class="card-body">
-                        <a href="#" class="text-decoration-none text-reset"
-                            ><h5 class="card-title d-flex justify-content-center pointer nome">
-                                Nome do produto
-                            </h5></a
-                        >
+          <div class="card-body">
+            <a href="#" class="text-decoration-none text-reset"
+              ><h5
+                class="card-title d-flex justify-content-center pointer nome"
+              >
+                Nome do produto
+              </h5></a
+            >
 
-                        <p class="card-text d-flex justify-content-center">
-                            C$ <span class="preco-sem-desconto"></span>
-                        </p>
+            <p class="card-text d-flex justify-content-center">
+              C$ <span class="preco-sem-desconto"></span>
+            </p>
 
-                        <p class="card-text d-flex justify-content-center fs-5">
-                            C$ <span class="preco fs-5"></span>
-                        </p>
+            <p class="card-text d-flex justify-content-center fs-5">
+              C$ <span class="preco fs-5"></span>
+            </p>
 
-                        <button class="btn btn-primary w-100 text-center pointer">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="16"
-                                height="16"
-                                fill="currentColor"
-                                class="bi bi-plus-circle"
-                                viewBox="0 0 16 16"
-                            >
-                                <path
-                                    d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"
-                                />
-                                <path
-                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"
-                                />
-                            </svg>
-                            Detalhes
-                        </button>
-                    </div>
-                </div>
-            </div></template
-        >
-
-        <div class="row mt-5">
-            <div class="col-lg-3"></div>
-
-            <div class="col">
-                <div id="listagem" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4"></div>
-            </div>
-
-            <div class="col-lg-3"></div>
+            <button class="btn btn-primary w-100 text-center pointer">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-plus-circle"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"
+                />
+                <path
+                  d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"
+                />
+              </svg>
+              Detalhes
+            </button>
+          </div>
         </div>
+      </div></template
+    >
 
-        <template id="pagina"
-            ><li class="page-item">
-                <a class="page-link pagina-numerada" href="#">Número da página</a>
-            </li></template
-        >
+    <div class="row mt-5">
+      <div class="col-lg-3"></div>
 
-        <nav aria-label="Page navigation" class="my-5">
-            <ul class="pagination justify-content-center">
-                <li id="anterior" class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li id="proximo" class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </body>
+      <div class="col">
+        <div
+          id="listagem"
+          class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4"
+        ></div>
+      </div>
+
+      <div class="col-lg-3"></div>
+    </div>
+
+    <template id="pagina"
+      ><li class="page-item">
+        <a class="page-link pagina-numerada" href="#">Número da página</a>
+      </li></template
+    >
+
+    <nav aria-label="Page navigation" class="my-5">
+      <ul class="pagination justify-content-center">
+        <li id="anterior" class="page-item">
+          <a class="page-link" href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li id="proximo" class="page-item">
+          <a class="page-link" href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </body>
 </html>

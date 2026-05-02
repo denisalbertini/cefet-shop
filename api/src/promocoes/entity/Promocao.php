@@ -5,8 +5,11 @@ class Promocao
     public string $id;
     public string $nome;
 
-    public function __construct(string $id, string $nome, public Porcentagem $desconto)
-    {
+    public function __construct(
+        string $id,
+        string $nome,
+        public Porcentagem $desconto,
+    ) {
         $this->validarDados($id, $nome);
 
         $this->id = $id;
@@ -31,7 +34,9 @@ class Promocao
         }
 
         if (sizeof($erros) > 0) {
-            throw new DomainException(FormatadorMensagem::formatarMensagemErro($erros));
+            throw new DomainException(
+                FormatadorMensagem::formatarMensagemErro($erros),
+            );
         }
     }
 }

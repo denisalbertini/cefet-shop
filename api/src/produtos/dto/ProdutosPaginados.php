@@ -34,7 +34,9 @@ class ProdutosPaginados
         }
 
         if (sizeof($erros) > 0) {
-            throw new DomainException(FormatadorMensagem::formatarMensagemErro($erros));
+            throw new DomainException(
+                FormatadorMensagem::formatarMensagemErro($erros),
+            );
         }
     }
 }

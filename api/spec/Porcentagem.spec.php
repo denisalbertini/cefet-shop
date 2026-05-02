@@ -13,11 +13,14 @@ describe('Porcentagem', function () {
         })->toThrow(MensagemErro::PORCENTAGEM_VALOR);
     });
 
-    it('deveria lançar um erro ao instanciar com valor maior que 100', function () {
-        expect(function () {
-            new Porcentagem(101);
-        })->toThrow(MensagemErro::PORCENTAGEM_VALOR);
-    });
+    it(
+        'deveria lançar um erro ao instanciar com valor maior que 100',
+        function () {
+            expect(function () {
+                new Porcentagem(101);
+            })->toThrow(MensagemErro::PORCENTAGEM_VALOR);
+        },
+    );
 
     it('deveria devolver o valor instanciado corretamente', function () {
         $valor = 14.55;

@@ -19,7 +19,14 @@ class Produto
         public Cefetin $preco,
         public Promocao|null $promocao = null,
     ) {
-        $this->validarDados($id, $nome, $descricao, $estoque, $quantidadeTotalVendida, $promocao);
+        $this->validarDados(
+            $id,
+            $nome,
+            $descricao,
+            $estoque,
+            $quantidadeTotalVendida,
+            $promocao,
+        );
 
         $this->id = $id;
         $this->nome = $nome;
@@ -35,7 +42,8 @@ class Produto
         }
 
         $precoPromocional = new Cefetin(
-            (int) ($this->preco->valorCentavos * (1 - $this->promocao->getDesconto())),
+            (int) ($this->preco->valorCentavos *
+                (1 - $this->promocao->getDesconto())),
         );
 
         return $precoPromocional;
@@ -78,7 +86,9 @@ class Produto
         }
 
         if (sizeof($erros) > 0) {
-            throw new DomainException(FormatadorMensagem::formatarMensagemErro($erros));
+            throw new DomainException(
+                FormatadorMensagem::formatarMensagemErro($erros),
+            );
         }
     }
 
@@ -92,8 +102,9 @@ class Produto
         $this->promocao = null;
     }
 
-    public static function hidratar(ProdutoParaHidratar $produtoParaHidratar): self
-    {
+    public static function hidratar(
+        ProdutoParaHidratar $produtoParaHidratar,
+    ): self {
         $lancamentoDividido = explode('-', $produtoParaHidratar->lancamento);
         $lancamentoAno = (int) $lancamentoDividido[0];
         $lancamentoSemestre = (int) $lancamentoDividido[1];

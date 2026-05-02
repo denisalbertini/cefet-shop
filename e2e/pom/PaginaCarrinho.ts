@@ -1,77 +1,77 @@
 import { Locator, Page } from 'playwright/test';
 
 export class PaginaCarrinho {
-    public constructor(private page: Page) {}
+  public constructor(private page: Page) {}
 
-    public async abrir(): Promise<void> {
-        await this.page.goto('http://localhost:5173/carrinho');
-    }
+  public async abrir(): Promise<void> {
+    await this.page.goto('http://localhost:5173/carrinho');
+  }
 
-    public localizarItens(): Locator {
-        return this.page.locator('.list-group-item');
-    }
+  public localizarItens(): Locator {
+    return this.page.locator('.list-group-item');
+  }
 
-    public localizarProdutoIds(): Locator {
-        return this.page.locator('.produto-id');
-    }
+  public localizarProdutoIds(): Locator {
+    return this.page.locator('.produto-id');
+  }
 
-    public localizarProdutoFotos(): Locator {
-        return this.page.locator('.foto');
-    }
+  public localizarProdutoFotos(): Locator {
+    return this.page.locator('.foto');
+  }
 
-    public localizarProdutoNomes(): Locator {
-        return this.page.locator('.nome');
-    }
+  public localizarProdutoNomes(): Locator {
+    return this.page.locator('.nome');
+  }
 
-    public localizarQuantidades(): Locator {
-        return this.page.locator('.quantidade');
-    }
+  public localizarQuantidades(): Locator {
+    return this.page.locator('.quantidade');
+  }
 
-    public localizarSubTotais(): Locator {
-        return this.page.locator('.sub-total');
-    }
+  public localizarSubTotais(): Locator {
+    return this.page.locator('.sub-total');
+  }
 
-    public localizarTotal(): Locator {
-        return this.page.locator('#total');
-    }
+  public localizarTotal(): Locator {
+    return this.page.locator('#total');
+  }
 
-    public localizarBotoesRemover(): Locator {
-        return this.page.locator('.remover');
-    }
+  public localizarBotoesRemover(): Locator {
+    return this.page.locator('.remover');
+  }
 
-    public localizarPrimeiro(localizador: Locator): Locator {
-        return localizador.first();
-    }
+  public localizarPrimeiro(localizador: Locator): Locator {
+    return localizador.first();
+  }
 
-    public localizarSegundo(localizador: Locator): Locator {
-        return localizador.nth(1);
-    }
+  public localizarSegundo(localizador: Locator): Locator {
+    return localizador.nth(1);
+  }
 
-    public localizarTexto(texto: string): Locator {
-        return this.page.locator(texto);
-    }
+  public localizarTexto(texto: string): Locator {
+    return this.page.locator(texto);
+  }
 
-    public contar(localizador: Locator): Promise<number> {
-        return localizador.count();
-    }
+  public contar(localizador: Locator): Promise<number> {
+    return localizador.count();
+  }
 
-    public obterConteudoTextual(localizador: Locator): Promise<string | null> {
-        return localizador.textContent();
-    }
+  public obterConteudoTextual(localizador: Locator): Promise<string | null> {
+    return localizador.textContent();
+  }
 
-    public obterValorInput(localizador: Locator): Promise<string> {
-        return localizador.inputValue();
-    }
+  public obterValorInput(localizador: Locator): Promise<string> {
+    return localizador.inputValue();
+  }
 
-    public async preencher(localizador: Locator, valor: string): Promise<void> {
-        await localizador.fill(valor);
-    }
+  public async preencher(localizador: Locator, valor: string): Promise<void> {
+    await localizador.fill(valor);
+  }
 
-    public async pressionarEnter(localizador: Locator): Promise<void> {
-        await localizador.press('Enter');
-    }
+  public async pressionarEnter(localizador: Locator): Promise<void> {
+    await localizador.press('Enter');
+  }
 
-    public async clicar(localizador: Locator): Promise<void> {
-        await localizador.click();
-    }
+  public async clicar(localizador: Locator): Promise<void> {
+    await localizador.click();
+  }
 }

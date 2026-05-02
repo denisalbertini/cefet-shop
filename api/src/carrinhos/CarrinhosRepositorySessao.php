@@ -53,7 +53,10 @@ class CarrinhosRepositorySessao implements CarrinhosRepository
         $indiceItem = $carrinho->obterIndiceItem($item->produto->id);
 
         if (!is_numeric($indiceItem)) {
-            throw new RepositoryException(MensagemErro::CARRINHOS_REPOSITORY_NOT_FOUND, 404);
+            throw new RepositoryException(
+                MensagemErro::CARRINHOS_REPOSITORY_NOT_FOUND,
+                404,
+            );
         }
 
         $carrinho->substituirItem($indiceItem, $item);
@@ -69,7 +72,10 @@ class CarrinhosRepositorySessao implements CarrinhosRepository
         $indiceItem = $carrinho->obterIndiceItem($produtoId);
 
         if (!is_numeric($indiceItem)) {
-            throw new RepositoryException(MensagemErro::CARRINHOS_REPOSITORY_NOT_FOUND, 404);
+            throw new RepositoryException(
+                MensagemErro::CARRINHOS_REPOSITORY_NOT_FOUND,
+                404,
+            );
         }
 
         array_splice($carrinho->itens, $indiceItem, 1);

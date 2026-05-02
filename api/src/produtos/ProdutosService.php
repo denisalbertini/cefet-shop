@@ -2,7 +2,9 @@
 
 class ProdutosService
 {
-    public function __construct(private ProdutosRepository $produtosRepository) {}
+    public function __construct(
+        private ProdutosRepository $produtosRepository,
+    ) {}
 
     public function listar(int $pagina, int $limit): ProdutosPaginados
     {

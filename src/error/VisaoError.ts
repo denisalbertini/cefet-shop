@@ -1,7 +1,7 @@
 export class VisaoError {
-    exibirErro(erro: Error) {
-        alert(erro.message);
+  exibirErro(erro: Error) {
+    alert(erro.message);
 
-        console.error(erro);
-    }
+    console.error(erro);
+  }
 }

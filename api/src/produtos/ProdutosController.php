@@ -18,7 +18,10 @@ class ProdutosController
             $pagina = is_numeric($paginaQuery) ? (int) $paginaQuery : 1;
             $limit = is_numeric($limitQuery) ? (int) $limitQuery : 6;
 
-            $produtosPaginados = $this->produtosService->listar($pagina, $limit);
+            $produtosPaginados = $this->produtosService->listar(
+                $pagina,
+                $limit,
+            );
 
             $res->json($produtosPaginados);
         } catch (Exception $e) {
@@ -32,7 +35,9 @@ class ProdutosController
             $id = $req->param('id');
 
             if (!$id) {
-                throw new ControllerException(MensagemErro::PRODUTOS_CONTROLLER_ID);
+                throw new ControllerException(
+                    MensagemErro::PRODUTOS_CONTROLLER_ID,
+                );
             }
 
             $produto = $this->produtosService->buscarPorId($id);
