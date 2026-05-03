@@ -11,10 +11,6 @@ class Url
 
     private function setValor(string $valor): void
     {
-        if (!preg_match(Regex::URL, $valor)) {
-            throw new DomainException(MensagemErro::URL_VALOR);
-        }
-
         $this->valor = $valor;
     }
 }

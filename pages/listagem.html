@@ -4,6 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Produtos</title>
+    <style>
+      .foto {
+        height: 25rem;
+      }
+
+      .card {
+        height: 37em;
+      }
+    </style>
   </head>
   <body>
     <template id="card"
@@ -16,6 +25,7 @@
               src="https://placehold.co/400x500"
               alt="Produto"
               class="card-img-top pointer foto"
+              loading="lazy"
           /></a>
 
           <div class="card-body">
@@ -59,16 +69,16 @@
     >
 
     <div class="row mt-5">
-      <div class="col-lg-3"></div>
+      <div class="col"></div>
 
-      <div class="col">
+      <div class="col-md-8 col-lg-6">
         <div
           id="listagem"
           class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4"
         ></div>
       </div>
 
-      <div class="col-lg-3"></div>
+      <div class="col"></div>
     </div>
 
     <template id="pagina"
