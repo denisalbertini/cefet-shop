@@ -41,8 +41,8 @@ $app->patch('/carrinhos/itens/:id', [
 $app->delete('/carrinhos/itens/:id', [$carrinhosController, 'removerItem']);
 
 $app->delete('/sessao', function ($req, $res) {
-    session_destroy();
-    $res->status(201);
+    new SessaoEmArquivo()->destruir();
+    $res->status(201)->json();
 });
 
 $app->listen();

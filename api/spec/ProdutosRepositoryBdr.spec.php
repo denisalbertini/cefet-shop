@@ -23,7 +23,7 @@ describe('ProdutosRepositoryBdr', function () {
 
     it('deveria retornar um produto por id', function () {
         $produto = $this->repository->buscarPorId(
-            'cdd0d7b7-e417-4f42-b76c-dc6a4506a2e3',
+            '84490d7b-5f06-4443-b064-ef1cd76b9ced',
         );
 
         expect(get_class($produto))->toBe(Produto::class);

@@ -1,5 +1,4 @@
 {
-  "name": "g7/api",
   "autoload": {
     "psr-4": {
       "": [
@@ -20,6 +19,7 @@
         "src/promocoes",
         "src/promocoes/entity",
         "src/sessoes",
+        "src/sessoes/interface",
         "src/tipos",
         "src/util",
         "src/util/constantes"

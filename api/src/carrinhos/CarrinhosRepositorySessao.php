@@ -7,7 +7,7 @@ class CarrinhosRepositorySessao implements CarrinhosRepository
 
     public function __construct()
     {
-        $this->sessao = new Sessao();
+        $this->sessao = new SessaoEmArquivo();
         $this->chaveCarrinho = 'carrinho';
     }
 
