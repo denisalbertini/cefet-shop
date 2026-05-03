@@ -117,7 +117,7 @@ export class VisaoProdutosEmHtml implements VisaoProdutos {
     botaoIrParaCarrinho.addEventListener('click', (event) => {
       event.preventDefault();
 
-      location.href = 'carrinho.html';
+      location.href = '/carrinho';
     });
   }
 
