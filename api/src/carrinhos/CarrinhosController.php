@@ -36,10 +36,10 @@ class CarrinhosController
         try {
             $body = (array) $req->body();
 
-            $erros = [];
-
             $produtoId = $body['produtoId'];
             $quantidade = $body['quantidade'];
+
+            $erros = [];
 
             if (!is_string($produtoId)) {
                 array_push($erros, MensagemErro::PRODUTOS_CONTROLLER_ID);
@@ -50,18 +50,17 @@ class CarrinhosController
                     $erros,
                     MensagemErro::CARRINHOS_CONTROLLER_QUANTIDADE,
                 );
+            } else {
+                $quantidade = (int) $quantidade;
             }
 
-            if (sizeof($erros) > 0) {
+            if (!empty($erros)) {
                 throw new ControllerException(
                     FormatadorMensagem::formatarMensagemErro($erros),
                 );
             }
 
-            $this->carrinhosService->adicionarItem(
-                $produtoId,
-                (int) $quantidade,
-            );
+            $this->carrinhosService->adicionarItem($produtoId, $quantidade);
 
             $res->status(201)->json(new stdClass());
         } catch (Exception $e) {
@@ -74,8 +73,31 @@ class CarrinhosController
         HttpResponse $res,
     ): void {
         try {
-            $produtoId = $this->obterParametroProdutoId($req);
-            $quantidade = $this->obterAtributoQuantidade($req);
+            $produtoId = $req->param('id');
+
+            $body = (array) $req->body();
+            $quantidade = $body['quantidade'];
+
+            $erros = [];
+
+            if (!$produtoId) {
+                array_push($erros, MensagemErro::PRODUTOS_CONTROLLER_ID);
+            }
+
+            if (!is_numeric($quantidade)) {
+                array_push(
+                    $erros,
+                    MensagemErro::CARRINHOS_CONTROLLER_QUANTIDADE,
+                );
+            } else {
+                $quantidade = (int) $quantidade;
+            }
+
+            if (!empty($erros)) {
+                throw new ControllerException(
+                    FormatadorMensagem::formatarMensagemErro($erros),
+                );
+            }
 
             $carrinho = $this->carrinhosService->alterarQuantidadeItem(
                 $produtoId,
@@ -91,7 +113,13 @@ class CarrinhosController
     public function removerItem(HttpRequest $req, HttpResponse $res): void
     {
         try {
-            $produtoId = $this->obterParametroProdutoId($req);
+            $produtoId = $req->param('id');
+
+            if (!$produtoId) {
+                throw new ControllerException(
+                    MensagemErro::PRODUTOS_CONTROLLER_ID,
+                );
+            }
 
             $carrinho = $this->carrinhosService->removerItem($produtoId);
 
@@ -99,32 +127,6 @@ class CarrinhosController
         } catch (Exception $e) {
             $this->tratarErro($e, $res);
         }
-    }
-
-    private function obterParametroProdutoId(HttpRequest $req): string
-    {
-        $produtoId = $req->param('id');
-
-        if (!$produtoId) {
-            throw new ControllerException(MensagemErro::PRODUTOS_CONTROLLER_ID);
-        }
-
-        return $produtoId;
-    }
-
-    private function obterAtributoQuantidade(HttpRequest $req): int
-    {
-        $body = (array) $req->body();
-
-        $quantidade = $body['quantidade'];
-
-        if (!is_numeric($quantidade)) {
-            throw new ControllerException(
-                MensagemErro::CARRINHOS_CONTROLLER_QUANTIDADE,
-            );
-        }
-
-        return (int) $quantidade;
     }
 
     private function tratarErro(Exception $e, HttpResponse $res): void
