@@ -22,11 +22,11 @@ export class GestorCarrinhos {
 
   public alterarQuantidadeItem(
     produtoId: string,
-    quantidade: number,
+    quantidade: string,
   ): Promise<CarrinhoAtualizado> {
     return this.repositorioCarrinhos.alterarQuantidadeItem(
       produtoId,
-      quantidade,
+      parseInt(quantidade),
     );
   }
 

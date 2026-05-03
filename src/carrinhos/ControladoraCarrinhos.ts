@@ -34,7 +34,7 @@ export class ControladoraCarrinhos {
 
   public async alterarQuantidadeItem(
     produtoId: string,
-    quantidade: number,
+    quantidade: string,
   ): Promise<void> {
     try {
       const carrinho = await this.gestorCarrinhos.alterarQuantidadeItem(

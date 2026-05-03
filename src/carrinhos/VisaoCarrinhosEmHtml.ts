@@ -47,7 +47,7 @@ export class VisaoCarrinhosEmHtml implements VisaoCarrinhos {
       quantidade.addEventListener('change', (event) => {
         const input = event.target as HTMLInputElement;
 
-        const novaQuantidade = parseInt(input.value);
+        const novaQuantidade = input.value;
 
         this.controladoraCarrinhos.alterarQuantidadeItem(
           item.produtoId,
