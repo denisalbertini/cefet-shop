@@ -2,47 +2,47 @@
 
 class Paginacao
 {
-    private int $pagina;
-    private int $limit;
+  private int $pagina;
+  private int $limit;
 
-    public function __construct(int $pagina, int $limit)
-    {
-        $this->validarDados($pagina, $limit);
+  public function __construct(int $pagina, int $limit)
+  {
+    $this->validarDados($pagina, $limit);
 
-        $this->pagina = $pagina;
-        $this->limit = $limit;
+    $this->pagina = $pagina;
+    $this->limit = $limit;
+  }
+
+  public function getPagina(): int
+  {
+    return $this->pagina;
+  }
+  public function getLimit(): int
+  {
+    return $this->limit;
+  }
+
+  public function getOffset(): int
+  {
+    return ($this->pagina - 1) * $this->limit;
+  }
+
+  private function validarDados(int $pagina, int $limit): void
+  {
+    $erros = [];
+
+    if ($pagina <= 0) {
+      array_push($erros, MensagemErro::PAGINACAO_PAGINA);
     }
 
-    public function getPagina(): int
-    {
-        return $this->pagina;
-    }
-    public function getLimit(): int
-    {
-        return $this->limit;
+    if ($limit <= 0) {
+      array_push($erros, MensagemErro::PAGINACAO_LIMIT);
     }
 
-    public function getOffset(): int
-    {
-        return ($this->pagina - 1) * $this->limit;
+    if (sizeof($erros) > 0) {
+      throw new DomainException(
+        FormatadorMensagem::formatarMensagemErro($erros),
+      );
     }
-
-    private function validarDados(int $pagina, int $limit): void
-    {
-        $erros = [];
-
-        if ($pagina <= 0) {
-            array_push($erros, MensagemErro::PAGINACAO_PAGINA);
-        }
-
-        if ($limit <= 0) {
-            array_push($erros, MensagemErro::PAGINACAO_LIMIT);
-        }
-
-        if (sizeof($erros) > 0) {
-            throw new DomainException(
-                FormatadorMensagem::formatarMensagemErro($erros),
-            );
-        }
-    }
+  }
 }

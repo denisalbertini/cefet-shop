@@ -14,8 +14,8 @@ $produtosController = new ProdutosController($produtosService);
 
 $carrinhosRepository = new CarrinhosRepositorySessao();
 $carrinhosService = new CarrinhosService(
-    $carrinhosRepository,
-    $produtosRepository,
+  $carrinhosRepository,
+  $produtosRepository,
 );
 $carrinhosController = new CarrinhosController($carrinhosService);
 
@@ -30,19 +30,19 @@ $app->get('/produtos/:id', [$produtosController, 'buscarPorId']);
 
 $app->get('/carrinhos', [$carrinhosController, 'buscar']);
 $app->get('/carrinhos/itens/quantidade', [
-    $carrinhosController,
-    'buscarQuantidadeItens',
+  $carrinhosController,
+  'buscarQuantidadeItens',
 ]);
 $app->post('/carrinhos/itens', [$carrinhosController, 'adicionarItem']);
 $app->patch('/carrinhos/itens/:id', [
-    $carrinhosController,
-    'alterarQuantidadeItem',
+  $carrinhosController,
+  'alterarQuantidadeItem',
 ]);
 $app->delete('/carrinhos/itens/:id', [$carrinhosController, 'removerItem']);
 
 $app->delete('/sessao', function ($req, $res) {
-    new SessaoEmArquivo()->destruir();
-    $res->status(201)->json();
+  new SessaoEmArquivo()->destruir();
+  $res->status(201)->json();
 });
 
 $app->listen();

@@ -2,21 +2,21 @@
 
 class CarrinhoParaExibir
 {
-    public readonly string $total;
+  public readonly string $total;
 
-    /**
-     * @var ItemParaListar[]
-     */
-    public array $itens;
+  /**
+   * @var ItemParaListar[]
+   */
+  public array $itens;
 
-    public function __construct(Carrinho $carrinho)
-    {
-        $this->total = $carrinho->obterTotal()->getValorFormatado();
+  public function __construct(Carrinho $carrinho)
+  {
+    $this->total = $carrinho->obterTotal()->getValorFormatado();
 
-        $this->itens = [];
+    $this->itens = [];
 
-        foreach ($carrinho->itens as $item) {
-            array_push($this->itens, new ItemParaListar($item));
-        }
+    foreach ($carrinho->itens as $item) {
+      array_push($this->itens, new ItemParaListar($item));
     }
+  }
 }

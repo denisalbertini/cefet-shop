@@ -2,91 +2,91 @@
 
 class CarrinhosRepositorySessao implements CarrinhosRepository
 {
-    private Sessao $sessao;
-    private string $chaveCarrinho;
+  private Sessao $sessao;
+  private string $chaveCarrinho;
 
-    public function __construct()
-    {
-        $this->sessao = new SessaoEmArquivo();
-        $this->chaveCarrinho = 'carrinho';
+  public function __construct()
+  {
+    $this->sessao = new SessaoEmArquivo();
+    $this->chaveCarrinho = 'carrinho';
+  }
+
+  public function buscar(): Carrinho
+  {
+    $carrinho = $this->sessao->obter($this->chaveCarrinho);
+
+    if (!($carrinho instanceof Carrinho)) {
+      $carrinho = new Carrinho([]);
+
+      $this->salvar($carrinho);
     }
 
-    public function buscar(): Carrinho
-    {
-        $carrinho = $this->sessao->obter($this->chaveCarrinho);
+    return $carrinho;
+  }
 
-        if (!($carrinho instanceof Carrinho)) {
-            $carrinho = new Carrinho([]);
+  public function buscarQuantidadeItens(): int
+  {
+    $carrinho = $this->buscar();
 
-            $this->salvar($carrinho);
-        }
+    return sizeof($carrinho->itens);
+  }
 
-        return $carrinho;
+  public function adicionar(Item $item): void
+  {
+    $carrinho = $this->buscar();
+    $indiceItem = $carrinho->obterIndiceItem($item->produto->id);
+
+    if (!is_numeric($indiceItem)) {
+      $carrinho->adicionarItem($item);
+    } else {
+      $carrinho->itens[$indiceItem]->setQuantidade(
+        $carrinho->itens[$indiceItem]->quantidade + $item->quantidade,
+      );
     }
 
-    public function buscarQuantidadeItens(): int
-    {
-        $carrinho = $this->buscar();
+    $this->salvar($carrinho);
+  }
 
-        return sizeof($carrinho->itens);
+  public function alterar(Item $item): Carrinho
+  {
+    $carrinho = $this->buscar();
+    $indiceItem = $carrinho->obterIndiceItem($item->produto->id);
+
+    if (!is_numeric($indiceItem)) {
+      throw new RepositoryException(
+        MensagemErro::CARRINHOS_REPOSITORY_NOT_FOUND,
+        404,
+      );
     }
 
-    public function adicionar(Item $item): void
-    {
-        $carrinho = $this->buscar();
-        $indiceItem = $carrinho->obterIndiceItem($item->produto->id);
+    $carrinho->substituirItem($indiceItem, $item);
 
-        if (!is_numeric($indiceItem)) {
-            $carrinho->adicionarItem($item);
-        } else {
-            $carrinho->itens[$indiceItem]->setQuantidade(
-                $carrinho->itens[$indiceItem]->quantidade + $item->quantidade,
-            );
-        }
+    $this->salvar($carrinho);
 
-        $this->salvar($carrinho);
+    return $carrinho;
+  }
+
+  public function removerItem(string $produtoId): Carrinho
+  {
+    $carrinho = $this->buscar();
+    $indiceItem = $carrinho->obterIndiceItem($produtoId);
+
+    if (!is_numeric($indiceItem)) {
+      throw new RepositoryException(
+        MensagemErro::CARRINHOS_REPOSITORY_NOT_FOUND,
+        404,
+      );
     }
 
-    public function alterar(Item $item): Carrinho
-    {
-        $carrinho = $this->buscar();
-        $indiceItem = $carrinho->obterIndiceItem($item->produto->id);
+    array_splice($carrinho->itens, $indiceItem, 1);
 
-        if (!is_numeric($indiceItem)) {
-            throw new RepositoryException(
-                MensagemErro::CARRINHOS_REPOSITORY_NOT_FOUND,
-                404,
-            );
-        }
+    $this->salvar($carrinho);
 
-        $carrinho->substituirItem($indiceItem, $item);
+    return $carrinho;
+  }
 
-        $this->salvar($carrinho);
-
-        return $carrinho;
-    }
-
-    public function removerItem(string $produtoId): Carrinho
-    {
-        $carrinho = $this->buscar();
-        $indiceItem = $carrinho->obterIndiceItem($produtoId);
-
-        if (!is_numeric($indiceItem)) {
-            throw new RepositoryException(
-                MensagemErro::CARRINHOS_REPOSITORY_NOT_FOUND,
-                404,
-            );
-        }
-
-        array_splice($carrinho->itens, $indiceItem, 1);
-
-        $this->salvar($carrinho);
-
-        return $carrinho;
-    }
-
-    private function salvar(Carrinho $carrinho): void
-    {
-        $this->sessao->salvar($this->chaveCarrinho, $carrinho);
-    }
+  private function salvar(Carrinho $carrinho): void
+  {
+    $this->sessao->salvar($this->chaveCarrinho, $carrinho);
+  }
 }

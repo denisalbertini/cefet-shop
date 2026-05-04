@@ -1,4 +1,5 @@
 {
+  "tabWidth": 2,
   "experimentalTernaries": true,
   "singleQuote": true,
   "objectWrap": "collapse",

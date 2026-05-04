@@ -3,41 +3,41 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 describe('ProdutosRepositoryBdr', function () {
-    beforeAll(function () {
-        $this->pdo = Database::getInstancia()->getPdoTest();
+  beforeAll(function () {
+    $this->pdo = Database::getInstancia()->getPdoTest();
 
-        $sql = file_get_contents(__DIR__ . '/../sql/dados_test_produtos.sql');
+    $sql = file_get_contents(__DIR__ . '/../sql/dados_test_produtos.sql');
 
-        $this->pdo->exec($sql);
+    $this->pdo->exec($sql);
 
-        $this->repository = new ProdutosRepositoryBdr($this->pdo);
-    });
+    $this->repository = new ProdutosRepositoryBdr($this->pdo);
+  });
 
-    it('deveria retornar um array de produtos', function () {
-        $produtos = $this->repository->buscar(new Paginacao(1, 6));
+  it('deveria retornar um array de produtos', function () {
+    $produtos = $this->repository->buscar(new Paginacao(1, 6));
 
-        foreach ($produtos as $produto) {
-            expect(get_class($produto))->toBe(Produto::class);
-        }
-    });
+    foreach ($produtos as $produto) {
+      expect(get_class($produto))->toBe(Produto::class);
+    }
+  });
 
-    it('deveria retornar um produto por id', function () {
-        $produto = $this->repository->buscarPorId(
-            '84490d7b-5f06-4443-b064-ef1cd76b9ced',
-        );
+  it('deveria retornar um produto por id', function () {
+    $produto = $this->repository->buscarPorId(
+      '84490d7b-5f06-4443-b064-ef1cd76b9ced',
+    );
 
-        expect(get_class($produto))->toBe(Produto::class);
-    });
+    expect(get_class($produto))->toBe(Produto::class);
+  });
 
-    it('deveria lançar um erro ao não encontrar o produto por id', function () {
-        expect(function () {
-            $this->repository->buscarPorId('abc');
-        })->toThrow(MensagemErro::PRODUTOS_REPOSITORY_NOT_FOUND);
-    });
+  it('deveria lançar um erro ao não encontrar o produto por id', function () {
+    expect(function () {
+      $this->repository->buscarPorId('abc');
+    })->toThrow(MensagemErro::PRODUTOS_REPOSITORY_NOT_FOUND);
+  });
 
-    it('deveria retornar a contagem de produtos', function () {
-        $contagem = $this->repository->contar();
+  it('deveria retornar a contagem de produtos', function () {
+    $contagem = $this->repository->contar();
 
-        expect($contagem)->toBe(3);
-    });
+    expect($contagem)->toBe(3);
+  });
 });

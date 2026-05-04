@@ -2,43 +2,43 @@
 
 class Database
 {
-    private static Database $instancia;
-    private PDO $pdoProd;
-    private PDO $pdoTest;
+  private static Database $instancia;
+  private PDO $pdoProd;
+  private PDO $pdoTest;
 
-    private function __construct()
-    {
-        try {
-            $this->pdoProd = new Pdo(
-                'mysql:dbname=g7_prod;host=localhost;charset=utf8',
-                'root',
-            );
-            $this->pdoTest = new Pdo(
-                'mysql:dbname=g7_test;host=localhost;charset=utf8',
-                'root',
-            );
-        } catch (Exception $e) {
-            http_response_code(500);
-            die(MensagemErro::DATABASE_CONNECTION);
-        }
+  private function __construct()
+  {
+    try {
+      $this->pdoProd = new Pdo(
+        'mysql:dbname=g7_prod;host=localhost;charset=utf8',
+        'root',
+      );
+      $this->pdoTest = new Pdo(
+        'mysql:dbname=g7_test;host=localhost;charset=utf8',
+        'root',
+      );
+    } catch (Exception $e) {
+      http_response_code(500);
+      die(MensagemErro::DATABASE_CONNECTION);
+    }
+  }
+
+  public static function getInstancia(): self
+  {
+    if (!isset(self::$instancia)) {
+      self::$instancia = new self();
     }
 
-    public static function getInstancia(): self
-    {
-        if (!isset(self::$instancia)) {
-            self::$instancia = new self();
-        }
+    return self::$instancia;
+  }
 
-        return self::$instancia;
-    }
+  public function getPdoProd(): PDO
+  {
+    return $this->pdoProd;
+  }
 
-    public function getPdoProd(): PDO
-    {
-        return $this->pdoProd;
-    }
-
-    public function getPdoTest(): PDO
-    {
-        return $this->pdoTest;
-    }
+  public function getPdoTest(): PDO
+  {
+    return $this->pdoTest;
+  }
 }

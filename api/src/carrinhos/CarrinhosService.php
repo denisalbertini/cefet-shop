@@ -2,55 +2,53 @@
 
 class CarrinhosService
 {
-    public function __construct(
-        private CarrinhosRepository $carrinhosRepository,
-        private ProdutosRepository $produtosRepository,
-    ) {}
+  public function __construct(
+    private CarrinhosRepository $carrinhosRepository,
+    private ProdutosRepository $produtosRepository,
+  ) {}
 
-    public function buscar(): CarrinhoParaExibir
-    {
-        $carrinho = $this->carrinhosRepository->buscar();
+  public function buscar(): CarrinhoParaExibir
+  {
+    $carrinho = $this->carrinhosRepository->buscar();
 
-        return new CarrinhoParaExibir($carrinho);
+    return new CarrinhoParaExibir($carrinho);
+  }
+
+  public function buscarQuantidadeItens(): int
+  {
+    return $this->carrinhosRepository->buscarQuantidadeItens();
+  }
+
+  public function adicionarItem(string $produtoId, int $quantidade): void
+  {
+    $produto = $this->produtosRepository->buscarPorId($produtoId);
+
+    if ($produto->estoque === 0) {
+      throw new DomainException(MensagemErro::CARRINHOS_SERVICE_QUANTIDADE);
     }
 
-    public function buscarQuantidadeItens(): int
-    {
-        return $this->carrinhosRepository->buscarQuantidadeItens();
-    }
+    $item = new Item($quantidade, $produto);
 
-    public function adicionarItem(string $produtoId, int $quantidade): void
-    {
-        $produto = $this->produtosRepository->buscarPorId($produtoId);
+    $this->carrinhosRepository->adicionar($item);
+  }
 
-        if ($produto->estoque === 0) {
-            throw new DomainException(
-                MensagemErro::CARRINHOS_SERVICE_QUANTIDADE,
-            );
-        }
+  public function alterarQuantidadeItem(
+    string $produtoId,
+    int $quantidade,
+  ): CarrinhoAtualizado {
+    $produto = $this->produtosRepository->buscarPorId($produtoId);
 
-        $item = new Item($quantidade, $produto);
+    $item = new Item($quantidade, $produto);
 
-        $this->carrinhosRepository->adicionar($item);
-    }
+    $carrinho = $this->carrinhosRepository->alterar($item);
 
-    public function alterarQuantidadeItem(
-        string $produtoId,
-        int $quantidade,
-    ): CarrinhoAtualizado {
-        $produto = $this->produtosRepository->buscarPorId($produtoId);
+    return new CarrinhoAtualizado($carrinho, $produtoId);
+  }
 
-        $item = new Item($quantidade, $produto);
+  public function removerItem(string $produtoId): CarrinhoAtualizado
+  {
+    $carrinho = $this->carrinhosRepository->removerItem($produtoId);
 
-        $carrinho = $this->carrinhosRepository->alterar($item);
-
-        return new CarrinhoAtualizado($carrinho, $produtoId);
-    }
-
-    public function removerItem(string $produtoId): CarrinhoAtualizado
-    {
-        $carrinho = $this->carrinhosRepository->removerItem($produtoId);
-
-        return new CarrinhoAtualizado($carrinho, $produtoId);
-    }
+    return new CarrinhoAtualizado($carrinho, $produtoId);
+  }
 }

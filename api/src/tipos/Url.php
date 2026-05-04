@@ -2,15 +2,15 @@
 
 class Url
 {
-    public string $valor;
+  public string $valor;
 
-    public function __construct(string $valor)
-    {
-        $this->setValor($valor);
-    }
+  public function __construct(string $valor)
+  {
+    $this->setValor($valor);
+  }
 
-    private function setValor(string $valor): void
-    {
-        $this->valor = $valor;
-    }
+  private function setValor(string $valor): void
+  {
+    $this->valor = $valor;
+  }
 }
