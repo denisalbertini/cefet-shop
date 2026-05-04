@@ -57,9 +57,14 @@ class CarrinhosController
         );
       }
 
-      $this->carrinhosService->adicionarItem($produtoId, $quantidade);
+      $quantidadeItensCarrinho = $this->carrinhosService->adicionarItem(
+        $produtoId,
+        $quantidade,
+      );
 
-      $res->status(201)->json(new stdClass());
+      $res
+        ->status(200)
+        ->json(['quantidadeItensCarrinho' => $quantidadeItensCarrinho]);
     } catch (Exception $e) {
       $this->tratarErro($e, $res);
     }

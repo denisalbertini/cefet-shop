@@ -103,8 +103,6 @@ export class VisaoProdutosEmHtml implements VisaoProdutos {
           produto.id,
           quantidade.value,
         );
-
-        this.incrementarValorBadgeCarrinho();
       });
     } else {
       quantidade.setAttribute('disabled', 'true');
@@ -119,6 +117,16 @@ export class VisaoProdutosEmHtml implements VisaoProdutos {
 
       location.href = '/carrinho';
     });
+  }
+
+  atualizarQuantidadeItensCarrinho(quantidade: number): void {
+    const badge = document.getElementById('badge') as HTMLSpanElement;
+
+    badge.textContent = quantidade.toString();
+
+    if (quantidade === 1) {
+      badge.classList.remove('invisible');
+    }
   }
 
   private listarProdutos(produtos: ProdutoParaListar[]): void {
@@ -234,19 +242,6 @@ export class VisaoProdutosEmHtml implements VisaoProdutos {
       pageLinkProx.href = `?pagina=${paginaAtual + 1}&limit=${this.itensPorPagina}`;
     } else {
       pageItemProx.classList.add('disabled');
-    }
-  }
-
-  private incrementarValorBadgeCarrinho(): void {
-    const badge = document.getElementById('badge') as HTMLSpanElement;
-
-    const valor = parseInt(badge.textContent);
-    const novoValor = valor + 1;
-
-    badge.textContent = novoValor.toString();
-
-    if (novoValor === 1) {
-      badge.classList.remove('invisible');
     }
   }
 }

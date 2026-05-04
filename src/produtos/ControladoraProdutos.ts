@@ -36,9 +36,19 @@ export class ControladoraProdutos {
     }
   }
 
-  public adicionarAoCarrinho(produtoId: string, quantidade: string): void {
+  public async adicionarAoCarrinho(
+    produtoId: string,
+    quantidade: string,
+  ): Promise<void> {
     try {
-      this.gestorCarrinhos.adicionarItem(produtoId, quantidade);
+      const quantidadeItensCarrinho = await this.gestorCarrinhos.adicionarItem(
+        produtoId,
+        quantidade,
+      );
+
+      this.visaoProdutos.atualizarQuantidadeItensCarrinho(
+        quantidadeItensCarrinho,
+      );
     } catch (erro: any) {
       this.tratarErro(erro);
     }

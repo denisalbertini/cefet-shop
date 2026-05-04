@@ -19,7 +19,7 @@ class CarrinhosService
     return $this->carrinhosRepository->buscarQuantidadeItens();
   }
 
-  public function adicionarItem(string $produtoId, int $quantidade): void
+  public function adicionarItem(string $produtoId, int $quantidade): int
   {
     $produto = $this->produtosRepository->buscarPorId($produtoId);
 
@@ -29,7 +29,7 @@ class CarrinhosService
 
     $item = new Item($quantidade, $produto);
 
-    $this->carrinhosRepository->adicionar($item);
+    return $this->carrinhosRepository->adicionar($item);
   }
 
   public function alterarQuantidadeItem(
