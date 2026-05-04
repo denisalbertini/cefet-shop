@@ -15,8 +15,8 @@ class ProdutosRepositoryBdr implements ProdutosRepository
             LIMIT ? OFFSET ?',
     );
 
-    $ps->bindValue(1, $paginacao->getLimit(), PDO::PARAM_INT);
-    $ps->bindValue(2, $paginacao->getOffset(), PDO::PARAM_INT);
+    $ps->bindValue(1, $paginacao->obterLimit(), PDO::PARAM_INT);
+    $ps->bindValue(2, $paginacao->obterOffset(), PDO::PARAM_INT);
 
     $ps->execute();
 

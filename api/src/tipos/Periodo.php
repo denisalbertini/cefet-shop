@@ -32,7 +32,7 @@ class Periodo
     }
   }
 
-  public function getValorFormatado(): string
+  public function obterValorFormatado(): string
   {
     return "$this->ano-$this->semestre";
   }

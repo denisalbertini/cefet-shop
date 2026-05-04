@@ -16,7 +16,7 @@ class Promocao
     $this->nome = $nome;
   }
 
-  public function getDesconto(): float
+  public function obterDesconto(): float
   {
     return $this->desconto->valor;
   }

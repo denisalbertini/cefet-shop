@@ -24,10 +24,10 @@ describe('ProdutoParaListar', function () {
     expect($produtoParaListar->foto)->toBe($produto->foto->valor);
     expect($produtoParaListar->nome)->toBe($produto->nome);
     expect($produtoParaListar->preco)->toBe(
-      $produto->preco->getValorFormatado(),
+      $produto->preco->obterValorFormatado(),
     );
     expect($produtoParaListar->precoPromocional)->toBe(
-      $produto->getPrecoPromocional()->getValorFormatado(),
+      $produto->obterPrecoPromocional()->obterValorFormatado(),
     );
   });
 });

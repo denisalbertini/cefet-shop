@@ -23,7 +23,7 @@ class Database
     }
   }
 
-  public static function getInstancia(): self
+  public static function obterInstancia(): self
   {
     if (!isset(self::$instancia)) {
       self::$instancia = new self();
@@ -32,12 +32,12 @@ class Database
     return self::$instancia;
   }
 
-  public function getPdoProd(): PDO
+  public function obterPdoProd(): PDO
   {
     return $this->pdoProd;
   }
 
-  public function getPdoTest(): PDO
+  public function obterPdoTest(): PDO
   {
     return $this->pdoTest;
   }

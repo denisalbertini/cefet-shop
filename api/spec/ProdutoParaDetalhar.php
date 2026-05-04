@@ -24,14 +24,14 @@ describe('ProdutoParaDetalhar', function () {
     expect($produtoParaDetalhar->foto)->toBe($produto->foto->valor);
     expect($produtoParaDetalhar->nome)->toBe($produto->nome);
     expect($produtoParaDetalhar->lancamento)->toBe(
-      $produto->lancamento->getValorFormatado(),
+      $produto->lancamento->obterValorFormatado(),
     );
     expect($produtoParaDetalhar->descricao)->toBe($produto->descricao);
     expect($produtoParaDetalhar->preco)->toBe(
-      $produto->preco->getValorFormatado(),
+      $produto->preco->obterValorFormatado(),
     );
     expect($produtoParaDetalhar->precoPromocional)->toBe(
-      $produto->getPrecoPromocional(),
+      $produto->obterPrecoPromocional(),
     );
     expect($produtoParaDetalhar->estoque)->toBe($produto->estoque);
   });

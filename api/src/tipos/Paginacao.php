@@ -13,16 +13,16 @@ class Paginacao
     $this->limit = $limit;
   }
 
-  public function getPagina(): int
+  public function obterPagina(): int
   {
     return $this->pagina;
   }
-  public function getLimit(): int
+  public function obterLimit(): int
   {
     return $this->limit;
   }
 
-  public function getOffset(): int
+  public function obterOffset(): int
   {
     return ($this->pagina - 1) * $this->limit;
   }

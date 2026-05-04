@@ -19,9 +19,9 @@ describe('Paginacao', function () {
 
     $paginacao = new Paginacao($pagina, $limit);
 
-    expect($paginacao->getPagina())->toBe($pagina);
-    expect($paginacao->getLimit())->toBe($limit);
-    expect($paginacao->getOffset())->toBe($offset);
+    expect($paginacao->obterPagina())->toBe($pagina);
+    expect($paginacao->obterLimit())->toBe($limit);
+    expect($paginacao->obterOffset())->toBe($offset);
   });
 
   it('deveria retornar o offset correto para página maior que 1', function () {
@@ -31,6 +31,6 @@ describe('Paginacao', function () {
 
     $paginacao = new Paginacao($pagina, $limit);
 
-    expect($paginacao->getOffset())->toBe($offset);
+    expect($paginacao->obterOffset())->toBe($offset);
   });
 });

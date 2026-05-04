@@ -28,7 +28,7 @@ describe('Periodo', function () {
       $semestre = 2;
       $periodo = new Periodo($ano, $semestre);
 
-      expect($periodo->getValorFormatado())->toBe("$ano-$semestre");
+      expect($periodo->obterValorFormatado())->toBe("$ano-$semestre");
     },
   );
 });

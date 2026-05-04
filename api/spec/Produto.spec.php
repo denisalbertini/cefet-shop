@@ -85,8 +85,8 @@ describe('Produto', function () {
       new Porcentagem(0.1),
     );
     $precoPromocional = new Cefetin(
-      (int) ($preco->valorCentavos * (1 - $promocao->getDesconto())),
-    )->getValorFormatado();
+      (int) ($preco->valorCentavos * (1 - $promocao->obterDesconto())),
+    )->obterValorFormatado();
 
     $produto = new Produto(
       $id,
@@ -105,14 +105,14 @@ describe('Produto', function () {
     expect($produto->descricao)->toBe($descricao);
     expect($produto->estoque)->toBe($estoque);
     expect($produto->quantidadeTotalVendida)->toBe($quantidadeTotalVendida);
-    expect($produto->lancamento->getValorFormatado())->toBe(
-      $lancamento->getValorFormatado(),
+    expect($produto->lancamento->obterValorFormatado())->toBe(
+      $lancamento->obterValorFormatado(),
     );
     expect($produto->foto->valor)->toBe($foto->valor);
-    expect($produto->preco->getValorFormatado())->toBe(
-      $preco->getValorFormatado(),
+    expect($produto->preco->obterValorFormatado())->toBe(
+      $preco->obterValorFormatado(),
     );
-    expect($produto->getPrecoPromocional()->getValorFormatado())->toBe(
+    expect($produto->obterPrecoPromocional()->obterValorFormatado())->toBe(
       $precoPromocional,
     );
   });
@@ -137,7 +137,7 @@ describe('Produto', function () {
 
     $produto->aplicarPromocao($promocao);
 
-    expect($produto->getPrecoPromocional())->toBeTruthy();
+    expect($produto->obterPrecoPromocional())->toBeTruthy();
   });
 
   it('deveria remover promoção corretamente', function () {
@@ -159,6 +159,6 @@ describe('Produto', function () {
 
     $produto->removerPromocao();
 
-    expect($produto->getPrecoPromocional())->toBeFalsy();
+    expect($produto->obterPrecoPromocional())->toBeFalsy();
   });
 });

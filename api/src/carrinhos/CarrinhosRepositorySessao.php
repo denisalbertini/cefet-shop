@@ -39,7 +39,7 @@ class CarrinhosRepositorySessao implements CarrinhosRepository
     if (!is_numeric($indiceItem)) {
       $carrinho->adicionarItem($item);
     } else {
-      $carrinho->itens[$indiceItem]->setQuantidade(
+      $carrinho->itens[$indiceItem]->definirQuantidade(
         $carrinho->itens[$indiceItem]->quantidade + $item->quantidade,
       );
     }

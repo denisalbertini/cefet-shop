@@ -6,10 +6,10 @@ class Url
 
   public function __construct(string $valor)
   {
-    $this->setValor($valor);
+    $this->definirValor($valor);
   }
 
-  private function setValor(string $valor): void
+  private function definirValor(string $valor): void
   {
     $this->valor = $valor;
   }

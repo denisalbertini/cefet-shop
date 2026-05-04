@@ -11,7 +11,7 @@ class CarrinhoParaExibir
 
   public function __construct(Carrinho $carrinho)
   {
-    $this->total = $carrinho->obterTotal()->getValorFormatado();
+    $this->total = $carrinho->obterTotal()->obterValorFormatado();
 
     $this->itens = [];
 

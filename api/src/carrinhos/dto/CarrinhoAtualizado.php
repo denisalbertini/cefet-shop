@@ -11,10 +11,10 @@ class CarrinhoAtualizado
     $indiceItem = $carrinho->obterIndiceItem($produtoId);
 
     $subTotal = is_numeric($indiceItem)
-      ? $carrinho->itens[$indiceItem]->obterSubTotal()->getValorFormatado()
+      ? $carrinho->itens[$indiceItem]->obterSubTotal()->obterValorFormatado()
       : null;
 
-    $total = $carrinho->obterTotal()->getValorFormatado();
+    $total = $carrinho->obterTotal()->obterValorFormatado();
 
     $this->produtoId = $produtoId;
     $this->subTotal = $subTotal;

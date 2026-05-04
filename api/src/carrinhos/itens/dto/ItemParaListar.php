@@ -12,7 +12,7 @@ class ItemParaListar
   public function __construct(Item $item)
   {
     $this->quantidade = $item->quantidade;
-    $this->subTotal = $item->obterSubTotal()->getValorFormatado();
+    $this->subTotal = $item->obterSubTotal()->obterValorFormatado();
     $this->produtoId = $item->produto->id;
     $this->produtoFoto = $item->produto->foto->valor;
     $this->produtoNome = $item->produto->nome;

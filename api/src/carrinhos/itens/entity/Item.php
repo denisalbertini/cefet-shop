@@ -6,10 +6,10 @@ class Item
 
   public function __construct(int $quantidade, public readonly Produto $produto)
   {
-    $this->setQuantidade($quantidade);
+    $this->definirQuantidade($quantidade);
   }
 
-  public function setQuantidade(int $quantidade): void
+  public function definirQuantidade(int $quantidade): void
   {
     if ($quantidade <= 0) {
       throw new DomainException(MensagemErro::ITEM_QUANTIDADE);
@@ -31,7 +31,7 @@ class Item
   public function obterSubTotal(): Cefetin
   {
     $precoProduto =
-      $this->produto->getPrecoPromocional() ?? $this->produto->preco;
+      $this->produto->obterPrecoPromocional() ?? $this->produto->preco;
 
     $subtotal = new Cefetin($this->quantidade * $precoProduto->valorCentavos);
 

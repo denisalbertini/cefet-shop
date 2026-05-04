@@ -6,10 +6,10 @@ class Cefetin
 
   public function __construct(int $valorCentavos)
   {
-    $this->setValorCentavos($valorCentavos);
+    $this->definirValorCentavos($valorCentavos);
   }
 
-  private function setValorCentavos(int $valor): void
+  private function definirValorCentavos(int $valor): void
   {
     if ($valor < 0) {
       throw new DomainException(MensagemErro::CEFETIN_VALOR);
@@ -18,7 +18,7 @@ class Cefetin
     $this->valorCentavos = $valor;
   }
 
-  public function getValorFormatado(): string
+  public function obterValorFormatado(): string
   {
     $valorCentavosString = (string) $this->valorCentavos;
 

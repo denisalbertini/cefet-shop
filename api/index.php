@@ -6,7 +6,7 @@ use phputil\cors\CorsOptions;
 use phputil\router\Router;
 use function phputil\cors\cors;
 
-$pdo = Database::getInstancia()->getPdoProd();
+$pdo = Database::obterInstancia()->obterPdoProd();
 
 $produtosRepository = new ProdutosRepositoryBdr($pdo);
 $produtosService = new ProdutosService($produtosRepository);

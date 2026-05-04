@@ -35,7 +35,7 @@ class Produto
     $this->quantidadeTotalVendida = $quantidadeTotalVendida;
   }
 
-  public function getPrecoPromocional(): Cefetin|null
+  public function obterPrecoPromocional(): Cefetin|null
   {
     if (!$this->promocao) {
       return null;
@@ -43,7 +43,7 @@ class Produto
 
     $precoPromocional = new Cefetin(
       (int) ($this->preco->valorCentavos *
-        (1 - $this->promocao->getDesconto())),
+        (1 - $this->promocao->obterDesconto())),
     );
 
     return $precoPromocional;
@@ -79,7 +79,7 @@ class Produto
       array_push($erros, MensagemErro::PRODUTO_QUANTIDADE_TOTAL_VENDIDA);
     }
 
-    $desconto = $promocao?->getDesconto();
+    $desconto = $promocao?->obterDesconto();
 
     if ($desconto && ($desconto < 0.05 || $desconto > 0.2)) {
       array_push($erros, MensagemErro::PRODUTO_PROMOCAO);

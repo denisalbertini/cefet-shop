@@ -10,6 +10,6 @@ describe('Cefetin', function () {
   it('deveria retornar o valor formatado corretamente', function () {
     $cefetin = new Cefetin(10453);
 
-    expect($cefetin->getValorFormatado())->toBe('104,53');
+    expect($cefetin->obterValorFormatado())->toBe('104,53');
   });
 });
