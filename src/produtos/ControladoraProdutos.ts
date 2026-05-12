@@ -1,38 +1,53 @@
 import { GestorCarrinhos } from '../carrinhos/GestorCarrinhos';
-import { VisaoError } from '../error/VisaoError';
+import { VisaoBadgeCarrinho } from '../carrinhos/interface/VisaoBadgeCarrinho';
+import { RepositorioError } from '../error/RepositorioError';
 import { GestorProdutos } from './GestorProdutos';
-import { VisaoProdutos } from './interface/VisaoProdutos';
-import { VisaoProdutosEmHtml } from './VisaoProdutosEmHtml';
+import { VisaoDetalheProduto } from './interface/VisaoDetalheProduto';
+import { VisaoListagemProdutos } from './interface/VisaoListagemProdutos';
 
 export class ControladoraProdutos {
-  public readonly visaoProdutos: VisaoProdutos;
-  private visaoError: VisaoError;
+  private gestorProdutos: GestorProdutos;
+  private gestorCarrinhos: GestorCarrinhos;
 
   public constructor(
-    private gestorProdutos: GestorProdutos,
-    private gestorCarrinhos: GestorCarrinhos,
+    private visaoListagemProdutos: VisaoListagemProdutos,
+    private visaoDetalheProduto: VisaoDetalheProduto,
+    private visaoBadgeCarrinho: VisaoBadgeCarrinho,
   ) {
-    this.visaoProdutos = new VisaoProdutosEmHtml(this);
-    this.visaoError = new VisaoError();
+    this.gestorProdutos = new GestorProdutos();
+    this.gestorCarrinhos = new GestorCarrinhos();
+
+    this.configurarVisoes();
+  }
+
+  private configurarVisoes(): void {
+    this.visaoListagemProdutos.definirControladora(this);
+    this.visaoDetalheProduto.definirControladora(this);
   }
 
   public async listar(pagina: number, limit: number): Promise<void> {
-    try {
-      const produtosPaginados = await this.gestorProdutos.listar(pagina, limit);
+    const produtosPaginados = await this.gestorProdutos.listar(pagina, limit);
 
-      this.visaoProdutos.listar(produtosPaginados);
-    } catch (erro: any) {
-      this.tratarErro(erro);
-    }
+    this.visaoListagemProdutos.listar(produtosPaginados);
   }
 
-  public async buscarPorId(id: string): Promise<void> {
+  public async detalhar(id: string): Promise<void> {
     try {
       const produto = await this.gestorProdutos.buscarPorId(id);
 
-      this.visaoProdutos.detalhar(produto);
+      this.visaoDetalheProduto.detalhar(produto);
     } catch (erro: any) {
-      this.tratarErro(erro);
+      if (!(erro instanceof RepositorioError)) {
+        return;
+      }
+
+      switch (erro.status) {
+        case 404:
+          this.visaoDetalheProduto.exibirErro();
+          break;
+        default:
+          break;
+      }
     }
   }
 
@@ -40,21 +55,11 @@ export class ControladoraProdutos {
     produtoId: string,
     quantidade: string,
   ): Promise<void> {
-    try {
-      const quantidadeItensCarrinho = await this.gestorCarrinhos.adicionarItem(
-        produtoId,
-        quantidade,
-      );
+    const quantidadeItensCarrinho = await this.gestorCarrinhos.adicionarItem(
+      produtoId,
+      quantidade,
+    );
 
-      this.visaoProdutos.atualizarQuantidadeItensCarrinho(
-        quantidadeItensCarrinho,
-      );
-    } catch (erro: any) {
-      this.tratarErro(erro);
-    }
-  }
-
-  private tratarErro(erro: Error): void {
-    this.visaoError.exibirErro(erro);
+    this.visaoBadgeCarrinho.atualizar(quantidadeItensCarrinho);
   }
 }

@@ -43,4 +43,12 @@ class MensagemErro
   public const string CARRINHOS_CONTROLLER_QUANTIDADE = 'Valor inesperado recebido para a quantidade do produto.';
 
   public const string CARRINHOS_SERVICE_QUANTIDADE = 'O produto não está em estoque.';
+
+  public const string USUARIOS_REPOSITORY_NOT_FOUND = 'Usuário não encontrado.';
+
+  public const string USUARIOS_SERVICE_LOGIN = 'Identificador ou senha incorretos.';
+  public const string USUARIOS_SERVICE_LOGADO = 'Usuário já está logado.';
+  public const string USUARIOS_SERVICE_NOT_FOUND = 'Não há usuário logado.';
+
+  public const string USUARIOS_CONTROLLER_LOGIN = 'Identificador e/ou senha não recebidos.';
 }

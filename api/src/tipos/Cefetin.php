@@ -38,4 +38,14 @@ class Cefetin
 
     return $valorFormatado;
   }
+
+  public function somar(Cefetin $quantia): void
+  {
+    $this->valorCentavos += $quantia->valorCentavos;
+  }
+
+  public function subtrair(Cefetin $quantia): void
+  {
+    $this->valorCentavos -= $quantia->valorCentavos;
+  }
 }

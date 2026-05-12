@@ -3,7 +3,7 @@ import { CarrinhoAtualizado } from '../src/carrinhos/dto/CarrinhoAtualizado';
 import { CarrinhoParaExibir } from '../src/carrinhos/dto/CarrinhoParaExibir';
 import { RepositorioCarrinhos } from '../src/carrinhos/interface/RepositorioCarrinhos';
 import { RepositorioCarrinhosEmHttp } from '../src/carrinhos/RepositorioCarrinhosEmHttp';
-import { MENSAGEM_ERRO } from '../src/util/constantes';
+import { RepositorioError } from '../src/error/RepositorioError';
 
 describe('RepositorioCarrinhosEmHttp', () => {
   let repositorio: RepositorioCarrinhos;
@@ -38,10 +38,14 @@ describe('RepositorioCarrinhosEmHttp', () => {
 
   describe('buscar', () => {
     it('deveria lançar um erro ao não encontrar o recurso.', async () => {
-      fetchMock.mockReturnValueOnce({ ok: false, status: 404 });
+      fetchMock.mockReturnValueOnce({
+        ok: false,
+        status: 404,
+        text: async () => '',
+      });
 
       await expect(() => repositorio.buscar()).rejects.toThrow(
-        MENSAGEM_ERRO.REPOSITORIO.NOT_FOUND,
+        RepositorioError,
       );
     });
 
@@ -56,10 +60,14 @@ describe('RepositorioCarrinhosEmHttp', () => {
 
   describe('adicionarItem', () => {
     it('deveria lançar um erro ao não encontrar o recurso.', async () => {
-      fetchMock.mockReturnValueOnce({ ok: false, status: 404 });
+      fetchMock.mockReturnValueOnce({
+        ok: false,
+        status: 404,
+        text: async () => '',
+      });
 
       await expect(() => repositorio.adicionarItem('', 0)).rejects.toThrow(
-        MENSAGEM_ERRO.REPOSITORIO.NOT_FOUND,
+        RepositorioError,
       );
     });
 
@@ -74,11 +82,15 @@ describe('RepositorioCarrinhosEmHttp', () => {
 
   describe('alterarQuantidadeItem', () => {
     it('deveria lançar um erro ao não encontrar o recurso.', async () => {
-      fetchMock.mockReturnValueOnce({ ok: false, status: 404 });
+      fetchMock.mockReturnValueOnce({
+        ok: false,
+        status: 404,
+        text: async () => '',
+      });
 
       await expect(() =>
         repositorio.alterarQuantidadeItem('', 0),
-      ).rejects.toThrow(MENSAGEM_ERRO.REPOSITORIO.NOT_FOUND);
+      ).rejects.toThrow(RepositorioError);
     });
 
     it('deveria retornar o carrinho quando a requisição é um sucesso.', async () => {
@@ -92,10 +104,14 @@ describe('RepositorioCarrinhosEmHttp', () => {
 
   describe('removerItem', () => {
     it('deveria lançar um erro ao não encontrar o recurso.', async () => {
-      fetchMock.mockReturnValueOnce({ ok: false, status: 404 });
+      fetchMock.mockReturnValueOnce({
+        ok: false,
+        status: 404,
+        text: async () => '',
+      });
 
       await expect(() => repositorio.removerItem('')).rejects.toThrow(
-        MENSAGEM_ERRO.REPOSITORIO.NOT_FOUND,
+        RepositorioError,
       );
     });
 

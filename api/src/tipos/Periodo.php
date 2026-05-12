@@ -36,4 +36,14 @@ class Periodo
   {
     return "$this->ano-$this->semestre";
   }
+
+  public static function instanciarComString(string $periodo): self
+  {
+    $periodoDividido = explode('-', $periodo);
+
+    $ano = (int) $periodoDividido[0];
+    $semestre = (int) $periodoDividido[1];
+
+    return new self($ano, $semestre);
+  }
 }

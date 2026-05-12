@@ -1,18 +1,21 @@
+import { VISAO_PRODUTOS } from '../util/constantes';
 import { ControladoraProdutos } from './ControladoraProdutos';
-import { ProdutoParaDetalhar } from './dto/ProdutoParaDetalhar';
 import { ProdutosPaginados } from './dto/ProdutosPaginados';
 import { ProdutoParaListar } from './dto/ProdutosParaListar';
-import { VisaoProdutos } from './interface/VisaoProdutos';
+import { VisaoListagemProdutos } from './interface/VisaoListagemProdutos';
 
-export class VisaoProdutosEmHtml implements VisaoProdutos {
-  private itensPorPagina: number;
+export class VisaoListagemProdutosEmDom implements VisaoListagemProdutos {
+  private controladoraProdutos?: ControladoraProdutos;
 
-  public constructor(private controladoraProdutos: ControladoraProdutos) {
-    this.itensPorPagina = 6;
+  definirControladora(controladoraProdutos: ControladoraProdutos): void {
+    this.controladoraProdutos = controladoraProdutos;
   }
 
-  iniciar(): void {
-    this.controladoraProdutos.listar(1, this.itensPorPagina);
+  iniciar(
+    pagina: number = 1,
+    limit: number = VISAO_PRODUTOS.PRODUTOS_POR_PAGINA,
+  ): void {
+    this.controladoraProdutos?.listar(pagina, limit);
   }
 
   listar(produtosPaginados: ProdutosPaginados): void {
@@ -34,99 +37,6 @@ export class VisaoProdutosEmHtml implements VisaoProdutos {
       produtosPaginados.temAnt,
       produtosPaginados.temProx,
     );
-  }
-
-  detalhar(produto: ProdutoParaDetalhar): void {
-    const ancoraCarrinho = document.getElementById(
-      'carrinho',
-    ) as HTMLAnchorElement;
-
-    ancoraCarrinho.classList.remove('invisible');
-
-    const id = document.getElementById('produto-id') as HTMLInputElement;
-    const foto = document.getElementById('foto') as HTMLImageElement;
-    const nome = document.getElementById('nome') as HTMLHeadingElement;
-    const lancamento = document.getElementById(
-      'lancamento',
-    ) as HTMLHeadingElement;
-    const descricao = document.getElementById(
-      'descricao',
-    ) as HTMLParagraphElement;
-    const precoSemDesconto = document.getElementById(
-      'preco-sem-desconto',
-    ) as HTMLSpanElement;
-    const preco = document.getElementById('preco') as HTMLSpanElement;
-    const quantidade = document.getElementById(
-      'quantidade',
-    ) as HTMLInputElement;
-    const botaoAdicionar = document.getElementById(
-      'adicionar',
-    ) as HTMLButtonElement;
-    const botaoEsgotado = document.getElementById(
-      'esgotado',
-    ) as HTMLButtonElement;
-    const botaoIrParaCarrinho = document.getElementById(
-      'ir-para-carrinho',
-    ) as HTMLButtonElement;
-
-    id.value = produto.id;
-    foto.src = produto.foto;
-    nome.textContent = produto.nome;
-    lancamento.textContent = produto.lancamento;
-    descricao.textContent = produto.descricao;
-
-    if (produto.precoPromocional) {
-      precoSemDesconto.textContent = produto.preco;
-      precoSemDesconto.classList.add('text-decoration-line-through');
-      precoSemDesconto.parentElement!.classList.add(
-        'text-decoration-line-through',
-      );
-
-      preco.textContent = produto.precoPromocional;
-    } else {
-      precoSemDesconto.parentElement!.classList.add('invisible');
-
-      preco.textContent = produto.preco;
-    }
-
-    quantidade.value = '1';
-
-    if (produto.estoque > 0) {
-      quantidade.min = '1';
-      quantidade.max =
-        produto.estoque >= 10 ? '10' : produto.estoque.toString();
-
-      botaoAdicionar.addEventListener('click', (event) => {
-        event.preventDefault();
-
-        this.controladoraProdutos.adicionarAoCarrinho(
-          produto.id,
-          quantidade.value,
-        );
-      });
-    } else {
-      quantidade.setAttribute('disabled', 'true');
-
-      botaoAdicionar.classList.add('d-none');
-
-      botaoEsgotado.classList.remove('d-none');
-    }
-
-    botaoIrParaCarrinho.addEventListener('click', (event) => {
-      event.preventDefault();
-
-      location.href = '/carrinho';
-    });
-  }
-
-  atualizarQuantidadeItensCarrinho(quantidade: number): void {
-    const badge = document.getElementById('badge') as HTMLSpanElement;
-
-    badge.textContent = quantidade.toString();
-
-    if (quantidade === 1) {
-      badge.classList.remove('invisible');
-    }
   }
 
   private listarProdutos(produtos: ProdutoParaListar[]): void {
@@ -199,7 +109,7 @@ export class VisaoProdutosEmHtml implements VisaoProdutos {
       }
 
       pageLink.textContent = i.toString();
-      pageLink.href = `?pagina=${i}&limit=${this.itensPorPagina}`;
+      pageLink.href = `?pagina=${i}&limit=${VISAO_PRODUTOS.PRODUTOS_POR_PAGINA}`;
 
       fragmentoPaginas.appendChild(pageItem);
     }
@@ -225,7 +135,7 @@ export class VisaoProdutosEmHtml implements VisaoProdutos {
 
       const pageLinkAnt = pageItemAnt?.querySelector('a') as HTMLAnchorElement;
 
-      pageLinkAnt.href = `?pagina=${paginaAtual - 1}&limit=${this.itensPorPagina}`;
+      pageLinkAnt.href = `?pagina=${paginaAtual - 1}&limit=${VISAO_PRODUTOS.PRODUTOS_POR_PAGINA}`;
     } else {
       pageItemAnt.classList.add('disabled');
     }
@@ -239,7 +149,7 @@ export class VisaoProdutosEmHtml implements VisaoProdutos {
         'a',
       ) as HTMLAnchorElement;
 
-      pageLinkProx.href = `?pagina=${paginaAtual + 1}&limit=${this.itensPorPagina}`;
+      pageLinkProx.href = `?pagina=${paginaAtual + 1}&limit=${VISAO_PRODUTOS.PRODUTOS_POR_PAGINA}`;
     } else {
       pageItemProx.classList.add('disabled');
     }

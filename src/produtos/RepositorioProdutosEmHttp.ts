@@ -1,6 +1,6 @@
-import { RepositorioError } from '../error/RepositorioError';
 import { Paginacao } from '../tipos/Paginacao';
-import { API, MENSAGEM_ERRO } from '../util/constantes';
+import { API } from '../util/constantes';
+import { verificarRespostaRequisicao } from '../util/verificarRespostaRequisicao';
 import { ProdutoParaDetalhar } from './dto/ProdutoParaDetalhar';
 import { ProdutosPaginados } from './dto/ProdutosPaginados';
 import { ProdutoParaListar } from './dto/ProdutosParaListar';
@@ -19,7 +19,7 @@ export class RepositorioProdutosEmHttp implements RepositorioProdutos {
       { credentials: 'include' },
     );
 
-    this.verificarResposta(res);
+    await verificarRespostaRequisicao(res);
 
     const dados = await res.json();
 
@@ -49,7 +49,7 @@ export class RepositorioProdutosEmHttp implements RepositorioProdutos {
   async buscarPorId(id: string): Promise<ProdutoParaDetalhar> {
     const res = await fetch(this.path + `/${id}`, { credentials: 'include' });
 
-    this.verificarResposta(res);
+    await verificarRespostaRequisicao(res);
 
     const dados = await res.json();
 
@@ -63,20 +63,5 @@ export class RepositorioProdutosEmHttp implements RepositorioProdutos {
       dados.precoPromocional,
       dados.estoque,
     );
-  }
-
-  private verificarResposta(res: Response): void {
-    if (res.ok) {
-      return;
-    }
-
-    switch (res.status) {
-      case 404:
-        throw new RepositorioError(MENSAGEM_ERRO.REPOSITORIO.NOT_FOUND);
-      default:
-        throw new RepositorioError(
-          MENSAGEM_ERRO.REPOSITORIO.INTERNAL_SERVER_ERROR,
-        );
-    }
   }
 }

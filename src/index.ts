@@ -1,21 +1,21 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import page from 'page';
-import { FabricaControladora } from './fabricas/FabricaControladora';
+import { buscarHtml } from './util/buscarHtml';
+import { VISAO_PRODUTOS } from './util/constantes';
+import {
+  visaoBadgeCarrinho,
+  visaoCarrinho,
+  visaoDetalheProduto,
+  visaoListagemProdutos,
+  visaoLogin,
+  visaoMenuUsuario,
+} from './visoes';
 
 const main = document.querySelector('main')!;
 
-const controladoraProdutos = FabricaControladora.controladoraProdutos();
-const controladoraCarrinhos = FabricaControladora.controladoraCarrinhos();
-
 page('/', async (ctx) => {
-  const res = await fetch('/pages/listagem.html');
-
-  if (!res.ok) {
-    return;
-  }
-
-  const html = await res.text();
+  const html = await buscarHtml('/pages/listagem.html');
 
   main.innerHTML = html;
 
@@ -23,45 +23,41 @@ page('/', async (ctx) => {
 
   const parametrosPesquisa = new URLSearchParams(queries);
 
-  const pagina = parametrosPesquisa.get('pagina');
-  const limit = parametrosPesquisa.get('limit');
+  const pagina = parseInt(parametrosPesquisa.get('pagina') ?? '1');
+  const limit = parseInt(
+    parametrosPesquisa.get('limit') ??
+      VISAO_PRODUTOS.PRODUTOS_POR_PAGINA.toString(),
+  );
 
-  if (pagina && limit) {
-    controladoraProdutos.listar(parseInt(pagina), parseInt(limit));
-  } else {
-    controladoraProdutos.visaoProdutos.iniciar();
-    controladoraCarrinhos.exibirQuantidadeItens();
-  }
+  visaoMenuUsuario.iniciar();
+  visaoBadgeCarrinho.iniciar();
+  visaoListagemProdutos.iniciar(pagina, limit);
 });
 
 page('/produto/:id', async (ctx) => {
-  const res = await fetch('/pages/produto.html');
-
-  if (!res.ok) {
-    return;
-  }
-
-  const html = await res.text();
+  const html = await buscarHtml('/pages/produto.html');
 
   main.innerHTML = html;
 
-  const id = ctx.params.id;
+  const id = ctx.params.id as string;
 
-  controladoraProdutos.buscarPorId(id);
+  visaoDetalheProduto.iniciar(id);
 });
 
 page('/carrinho', async () => {
-  const res = await fetch('/pages/carrinho.html');
-
-  if (!res.ok) {
-    return;
-  }
-
-  const html = await res.text();
+  const html = await buscarHtml('/pages/carrinho.html');
 
   main.innerHTML = html;
 
-  controladoraCarrinhos.visaoCarrinhos.iniciar();
+  visaoCarrinho.iniciar();
+});
+
+page('/login', async () => {
+  const html = await buscarHtml('/pages/login.html');
+
+  main.innerHTML = html;
+
+  visaoLogin.iniciar();
 });
 
 page();

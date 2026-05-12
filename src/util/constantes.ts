@@ -1,3 +1,5 @@
+export const APP = { HOST: 'http://localhost:5173' } as const;
+
 export const API = { HOST: 'http://localhost:3000' } as const;
 
 export const MENSAGEM_ERRO = {
@@ -28,3 +30,5 @@ export const MENSAGEM_ERRO = {
     ITENS: 'O carrinho não retornou um array de itens.',
   },
 } as const;
+
+export const VISAO_PRODUTOS = { PRODUTOS_POR_PAGINA: 6 } as const;

@@ -36,25 +36,19 @@ class CarrinhosController
     try {
       $body = (array) $req->body();
 
-      $produtoId = $body['produtoId'];
-      $quantidade = $body['quantidade'];
-
-      $erros = [];
+      $produtoId = $body['produtoId'] ?? null;
+      $quantidade = $body['quantidade'] ?? null;
 
       if (!is_string($produtoId)) {
-        array_push($erros, MensagemErro::PRODUTOS_CONTROLLER_ID);
+        throw new ControllerException(MensagemErro::PRODUTOS_CONTROLLER_ID);
       }
 
       if (!is_numeric($quantidade)) {
-        array_push($erros, MensagemErro::CARRINHOS_CONTROLLER_QUANTIDADE);
+        throw new ControllerException(
+          MensagemErro::CARRINHOS_CONTROLLER_QUANTIDADE,
+        );
       } else {
         $quantidade = (int) $quantidade;
-      }
-
-      if (!empty($erros)) {
-        throw new ControllerException(
-          FormatadorMensagem::formatarMensagemErro($erros),
-        );
       }
 
       $quantidadeItensCarrinho = $this->carrinhosService->adicionarItem(
@@ -78,24 +72,19 @@ class CarrinhosController
       $produtoId = $req->param('id');
 
       $body = (array) $req->body();
-      $quantidade = $body['quantidade'];
 
-      $erros = [];
+      $quantidade = $body['quantidade'] ?? null;
 
       if (!$produtoId) {
-        array_push($erros, MensagemErro::PRODUTOS_CONTROLLER_ID);
+        throw new ControllerException(MensagemErro::PRODUTOS_CONTROLLER_ID);
       }
 
       if (!is_numeric($quantidade)) {
-        array_push($erros, MensagemErro::CARRINHOS_CONTROLLER_QUANTIDADE);
+        throw new ControllerException(
+          MensagemErro::CARRINHOS_CONTROLLER_QUANTIDADE,
+        );
       } else {
         $quantidade = (int) $quantidade;
-      }
-
-      if (!empty($erros)) {
-        throw new ControllerException(
-          FormatadorMensagem::formatarMensagemErro($erros),
-        );
       }
 
       $carrinho = $this->carrinhosService->alterarQuantidadeItem(

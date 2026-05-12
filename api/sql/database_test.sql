@@ -33,3 +33,82 @@ SELECT produto.id,
   promocao.nome AS promocaoNome, 
   promocao.desconto AS promocaoDesconto 
 FROM produto LEFT JOIN promocao ON produto.promocao_id = promocao.id;
+
+CREATE TABLE usuario (
+  id CHAR(36) PRIMARY KEY DEFAULT UUID(),
+  nome VARCHAR(50) NOT NULL,
+  sobrenome VARCHAR(100) NOT NULL,
+  matricula CHAR(11) NOT NULL UNIQUE,
+  email VARCHAR(100) NOT NULL UNIQUE,
+  senha VARCHAR(50) NOT NULL, 
+  papel ENUM('gestor','funcionario','aluno') NOT NULL, 
+  saldo INT
+) ENGINE=MEMORY;
+
+CREATE TABLE curso (
+  id CHAR(36) PRIMARY KEY DEFAULT UUID(),
+  nome VARCHAR(100) NOT NULL
+) ENGINE=MEMORY;
+
+CREATE TABLE disciplina (
+  id CHAR(36) PRIMARY KEY DEFAULT UUID(),
+  nome VARCHAR(100) NOT NULL,
+  curso_id CHAR(36) NOT NULL,
+  CONSTRAINT fk_curso FOREIGN KEY (curso_id) REFERENCES curso(id)
+) ENGINE=MEMORY;
+
+CREATE TABLE disciplina_cursada (
+  id CHAR(36) PRIMARY KEY DEFAULT UUID(),
+  periodo CHAR(6) NOT NULL,
+  media_final DECIMAL(3, 1) NOT NULL,
+  disciplina_id CHAR(36) NOT NULL,
+  usuario_id CHAR(36) NOT NULL,
+  CONSTRAINT fk_disciplina FOREIGN KEY (disciplina_id) REFERENCES disciplina(id),
+  CONSTRAINT fk_usuario_disciplina FOREIGN KEY (usuario_id) REFERENCES usuario(id)
+) ENGINE=MEMORY;
+
+CREATE TABLE carrinho (
+  id CHAR(36) PRIMARY KEY DEFAULT UUID(),
+  usuario_id CHAR(36) NOT NULL,
+  CONSTRAINT fk_usuario_carrinho FOREIGN KEY (usuario_id) REFERENCES usuario(id)
+) ENGINE=MEMORY;
+
+CREATE TABLE compra (
+  id CHAR(36) PRIMARY KEY DEFAULT UUID(),
+  numero_compra INT NOT NULL,
+  timestamp INT NOT NULL,
+  usuario_id CHAR(36),
+  CONSTRAINT fk_usuario_compra FOREIGN KEY (usuario_id) REFERENCES usuario(id)
+) ENGINE=MEMORY;
+
+CREATE TABLE item (
+  id CHAR(36) PRIMARY KEY DEFAULT UUID(),
+  quantidade INT NOT NULL,
+  produto_id CHAR(36) NOT NULL,
+  carrinho_id CHAR(36) NOT NULL,
+  compra_id CHAR(36),
+  CONSTRAINT fk_produto FOREIGN KEY (produto_id) REFERENCES produto(id),
+  CONSTRAINT fk_carrinho FOREIGN KEY (carrinho_id) REFERENCES carrinho(id),
+  CONSTRAINT fk_compra FOREIGN KEY (compra_id) REFERENCES compra(id)
+) ENGINE=MEMORY;
+
+CREATE VIEW usuario_para_hidratar AS 
+SELECT u.id, 
+  u.nome, 
+  u.sobrenome, 
+  u.matricula, 
+  u.email, 
+  u.senha, 
+  u.papel, 
+  u.saldo, 
+  c.id AS cursoId, 
+  c.nome AS cursoNome, 
+  d.id AS disciplinaId, 
+  d.nome AS disciplinaNome, 
+  dc.id AS disciplinaCursadaId, 
+  dc.periodo AS disciplinaCursadaPeriodo, 
+  dc.media_final AS disciplinaCursadaMediaFinal 
+FROM usuario u 
+LEFT JOIN disciplina_cursada dc ON u.id = dc.usuario_id 
+LEFT JOIN disciplina d ON dc.disciplina_id = d.id 
+LEFT JOIN curso c ON d.curso_id = c.id;

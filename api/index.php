@@ -8,16 +8,22 @@ use function phputil\cors\cors;
 
 $pdo = Database::obterInstancia()->obterPdoProd();
 
-$produtosRepository = new ProdutosRepositoryBdr($pdo);
-$produtosService = new ProdutosService($produtosRepository);
-$produtosController = new ProdutosController($produtosService);
+$sessao = new SessaoEmArquivo();
 
+$produtosRepository = new ProdutosRepositoryBdr($pdo);
 $carrinhosRepository = new CarrinhosRepositorySessao();
+$usuariosRepository = new UsuariosRepositoryBdr($pdo);
+
+$produtosService = new ProdutosService($produtosRepository);
 $carrinhosService = new CarrinhosService(
   $carrinhosRepository,
   $produtosRepository,
 );
+$usuariosService = new UsuariosService($usuariosRepository, $sessao);
+
+$produtosController = new ProdutosController($produtosService);
 $carrinhosController = new CarrinhosController($carrinhosService);
+$usuariosController = new UsuariosController($usuariosService);
 
 $app = new Router();
 
@@ -39,6 +45,10 @@ $app->patch('/carrinhos/itens/:id', [
   'alterarQuantidadeItem',
 ]);
 $app->delete('/carrinhos/itens/:id', [$carrinhosController, 'removerItem']);
+
+$app->post('/usuarios/login', [$usuariosController, 'login']);
+$app->get('/usuarios/logout', [$usuariosController, 'logout']);
+$app->get('/usuarios', [$usuariosController, 'buscarUsuarioLogado']);
 
 $app->delete('/sessao', function ($req, $res) {
   new SessaoEmArquivo()->destruir();

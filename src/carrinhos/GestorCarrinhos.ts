@@ -1,9 +1,12 @@
 import { CarrinhoAtualizado } from './dto/CarrinhoAtualizado';
 import { CarrinhoParaExibir } from './dto/CarrinhoParaExibir';
 import { RepositorioCarrinhos } from './interface/RepositorioCarrinhos';
+import { RepositorioCarrinhosEmHttp } from './RepositorioCarrinhosEmHttp';
 
 export class GestorCarrinhos {
-  public constructor(private repositorioCarrinhos: RepositorioCarrinhos) {}
+  public constructor(
+    private repositorioCarrinhos: RepositorioCarrinhos = new RepositorioCarrinhosEmHttp(),
+  ) {}
 
   public buscar(): Promise<CarrinhoParaExibir> {
     return this.repositorioCarrinhos.buscar();

@@ -2,9 +2,12 @@ import { Paginacao } from '../tipos/Paginacao';
 import { ProdutoParaDetalhar } from './dto/ProdutoParaDetalhar';
 import { ProdutosPaginados } from './dto/ProdutosPaginados';
 import { RepositorioProdutos } from './interface/RepositorioProdutos';
+import { RepositorioProdutosEmHttp } from './RepositorioProdutosEmHttp';
 
 export class GestorProdutos {
-  public constructor(private repositorioProdutos: RepositorioProdutos) {}
+  public constructor(
+    private repositorioProdutos: RepositorioProdutos = new RepositorioProdutosEmHttp(),
+  ) {}
 
   public async listar(
     pagina: number,

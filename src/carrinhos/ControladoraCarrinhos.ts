@@ -1,64 +1,56 @@
-import { VisaoError } from '../error/VisaoError';
 import { GestorCarrinhos } from './GestorCarrinhos';
-import { VisaoCarrinhos } from './interface/VisaoCarrinhos';
-import { VisaoCarrinhosEmHtml } from './VisaoCarrinhosEmHtml';
+import { VisaoBadgeCarrinho } from './interface/VisaoBadgeCarrinho';
+import { VisaoCarrinho } from './interface/VisaoCarrinho';
 
 export class ControladoraCarrinhos {
-  public readonly visaoCarrinhos: VisaoCarrinhos;
-  private visaoError: VisaoError;
+  private gestorCarrinhos: GestorCarrinhos;
 
-  public constructor(private gestorCarrinhos: GestorCarrinhos) {
-    this.visaoCarrinhos = new VisaoCarrinhosEmHtml(this);
-    this.visaoError = new VisaoError();
+  public constructor(
+    private visaoCarrinho: VisaoCarrinho,
+    private visaoBadgeCarrinho: VisaoBadgeCarrinho,
+  ) {
+    this.gestorCarrinhos = new GestorCarrinhos();
+
+    this.configurarVisoes();
+  }
+
+  private configurarVisoes(): void {
+    this.visaoCarrinho.definirControladora(this);
+    this.visaoBadgeCarrinho.definirControladora(this);
   }
 
   public async exibir(): Promise<void> {
-    try {
-      const carrinho = await this.gestorCarrinhos.buscar();
+    const carrinho = await this.gestorCarrinhos.buscar();
 
-      this.visaoCarrinhos.exibir(carrinho);
-    } catch (erro: any) {
-      this.tratarErro(erro);
-    }
+    this.visaoCarrinho.exibir(carrinho);
   }
 
   public async exibirQuantidadeItens(): Promise<void> {
-    try {
-      const quantidade = await this.gestorCarrinhos.buscarQuantidadeItens();
+    const quantidade = await this.gestorCarrinhos.buscarQuantidadeItens();
 
-      this.visaoCarrinhos.exibirQuantidadeItens(quantidade);
-    } catch (erro: any) {
-      this.tratarErro(erro);
-    }
+    this.visaoBadgeCarrinho.exibir(quantidade);
   }
 
   public async alterarQuantidadeItem(
     produtoId: string,
     quantidade: string,
   ): Promise<void> {
-    try {
-      const carrinho = await this.gestorCarrinhos.alterarQuantidadeItem(
-        produtoId,
-        quantidade,
-      );
+    const carrinho = await this.gestorCarrinhos.alterarQuantidadeItem(
+      produtoId,
+      quantidade,
+    );
 
-      this.visaoCarrinhos.alterarQuantidadeItem(carrinho);
-    } catch (erro: any) {
-      this.tratarErro(erro);
-    }
+    this.visaoCarrinho.alterarQuantidadeItem(carrinho);
   }
 
   public async removerItem(produtoId: string): Promise<void> {
-    try {
-      const carrinho = await this.gestorCarrinhos.removerItem(produtoId);
+    const carrinho = await this.gestorCarrinhos.removerItem(produtoId);
 
-      this.visaoCarrinhos.removerItem(carrinho);
-    } catch (erro: any) {
-      this.tratarErro(erro);
-    }
+    this.visaoCarrinho.removerItem(carrinho);
+    this.visaoBadgeCarrinho.decrementar();
   }
 
-  private tratarErro(erro: Error): void {
-    this.visaoError.exibirErro(erro);
+  public exibirCarrinhoVazio(): void {
+    this.visaoCarrinho.exibirCarrinhoVazio();
   }
 }

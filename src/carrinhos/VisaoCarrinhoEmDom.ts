@@ -1,13 +1,18 @@
+import { buscarHtml } from '../util/buscarHtml';
 import { ControladoraCarrinhos } from './ControladoraCarrinhos';
 import { CarrinhoAtualizado } from './dto/CarrinhoAtualizado';
 import { CarrinhoParaExibir } from './dto/CarrinhoParaExibir';
-import { VisaoCarrinhos } from './interface/VisaoCarrinhos';
+import { VisaoCarrinho } from './interface/VisaoCarrinho';
 
-export class VisaoCarrinhosEmHtml implements VisaoCarrinhos {
-  public constructor(private controladoraCarrinhos: ControladoraCarrinhos) {}
+export class VisaoCarrinhoEmDom implements VisaoCarrinho {
+  private controladoraCarrinhos?: ControladoraCarrinhos;
+
+  definirControladora(controladora: ControladoraCarrinhos): void {
+    this.controladoraCarrinhos = controladora;
+  }
 
   iniciar(): void {
-    this.controladoraCarrinhos.exibir();
+    this.controladoraCarrinhos?.exibir();
   }
 
   exibir(carrinho: CarrinhoParaExibir): void {
@@ -49,7 +54,7 @@ export class VisaoCarrinhosEmHtml implements VisaoCarrinhos {
 
         const novaQuantidade = input.value;
 
-        this.controladoraCarrinhos.alterarQuantidadeItem(
+        this.controladoraCarrinhos?.alterarQuantidadeItem(
           item.produtoId,
           novaQuantidade,
         );
@@ -60,7 +65,7 @@ export class VisaoCarrinhosEmHtml implements VisaoCarrinhos {
       botaoRemover.addEventListener('click', (event) => {
         event.preventDefault();
 
-        this.controladoraCarrinhos.removerItem(item.produtoId);
+        this.controladoraCarrinhos?.removerItem(item.produtoId);
       });
 
       fragmento.appendChild(li);
@@ -71,13 +76,12 @@ export class VisaoCarrinhosEmHtml implements VisaoCarrinhos {
     this.escreverTotal(carrinho.total);
   }
 
-  exibirQuantidadeItens(quantidade: number): void {
-    const badge = document.getElementById('badge') as HTMLSpanElement;
+  async exibirCarrinhoVazio(): Promise<void> {
+    const main = document.querySelector('main')!;
 
-    if (quantidade !== 0) {
-      badge.textContent = quantidade.toString();
-      badge.classList.remove('invisible');
-    }
+    const html = await buscarHtml('/pages/carrinho-vazio.html');
+
+    main.innerHTML = html;
   }
 
   alterarQuantidadeItem(carrinho: CarrinhoAtualizado): void {
@@ -95,8 +99,6 @@ export class VisaoCarrinhosEmHtml implements VisaoCarrinhos {
     li?.remove();
 
     this.escreverTotal(carrinho.total);
-
-    this.decrementarValorBadgeCarrinho();
   }
 
   private escreverTotal(total: string): void {
@@ -116,32 +118,5 @@ export class VisaoCarrinhosEmHtml implements VisaoCarrinhos {
     }
 
     return li;
-  }
-
-  private decrementarValorBadgeCarrinho(): void {
-    const badge = document.getElementById('badge') as HTMLSpanElement;
-
-    const valor = parseInt(badge.textContent);
-    const novoValor = valor - 1;
-
-    badge.textContent = novoValor.toString();
-
-    if (novoValor === 0) {
-      badge.classList.add('invisible');
-      this.exibirCarrinhoVazio();
-    }
-  }
-
-  private async exibirCarrinhoVazio(): Promise<void> {
-    const main = document.querySelector('main')!;
-
-    const res = await fetch('/pages/carrinho-vazio.html');
-
-    if (!res.ok) {
-      console.log('ué');
-      return;
-    }
-
-    main.innerHTML = await res.text();
   }
 }

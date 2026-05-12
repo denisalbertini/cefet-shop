@@ -3,6 +3,8 @@
     "psr-4": {
       "": [
         "src/",
+        "src/alunos",
+        "src/alunos/entity",
         "src/carrinhos",
         "src/carrinhos/dto",
         "src/carrinhos/entity",
@@ -10,8 +12,18 @@
         "src/carrinhos/itens",
         "src/carrinhos/itens/dto",
         "src/carrinhos/itens/entity",
+        "src/cursos",
+        "src/cursos/entity",
         "src/database",
+        "src/disciplinas",
+        "src/disciplinas/entity",
+        "src/disciplinas-cursadas",
+        "src/disciplinas-cursadas/entity",
         "src/exception",
+        "src/funcionarios",
+        "src/funcionarios/entity",
+        "src/gestores",
+        "src/gestores/entity",
         "src/produtos",
         "src/produtos/dto",
         "src/produtos/entity",
@@ -21,6 +33,10 @@
         "src/sessoes",
         "src/sessoes/interface",
         "src/tipos",
+        "src/usuarios",
+        "src/usuarios/dto",
+        "src/usuarios/interface",
+        "src/usuarios/entity",
         "src/util",
         "src/util/constantes"
       ]

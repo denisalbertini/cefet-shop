@@ -1,5 +1,5 @@
-import { RepositorioError } from '../error/RepositorioError';
-import { API, MENSAGEM_ERRO } from '../util/constantes';
+import { API } from '../util/constantes';
+import { verificarRespostaRequisicao } from '../util/verificarRespostaRequisicao';
 import { CarrinhoAtualizado } from './dto/CarrinhoAtualizado';
 import { CarrinhoParaExibir } from './dto/CarrinhoParaExibir';
 import { RepositorioCarrinhos } from './interface/RepositorioCarrinhos';
@@ -16,7 +16,7 @@ export class RepositorioCarrinhosEmHttp implements RepositorioCarrinhos {
   async buscar(): Promise<CarrinhoParaExibir> {
     const res = await fetch(this.path, { credentials: 'include' });
 
-    this.verificarResposta(res);
+    await verificarRespostaRequisicao(res);
 
     return await this.instanciarCarrinhoParaExibir(res);
   }
@@ -26,7 +26,7 @@ export class RepositorioCarrinhosEmHttp implements RepositorioCarrinhos {
       credentials: 'include',
     });
 
-    this.verificarResposta(res);
+    await verificarRespostaRequisicao(res);
 
     const dados = await res.json();
 
@@ -41,7 +41,7 @@ export class RepositorioCarrinhosEmHttp implements RepositorioCarrinhos {
       body: JSON.stringify({ produtoId, quantidade }),
     });
 
-    this.verificarResposta(res);
+    await verificarRespostaRequisicao(res);
 
     const dados = await res.json();
 
@@ -59,7 +59,7 @@ export class RepositorioCarrinhosEmHttp implements RepositorioCarrinhos {
       body: JSON.stringify({ quantidade }),
     });
 
-    this.verificarResposta(res);
+    await verificarRespostaRequisicao(res);
 
     return await this.instanciarCarrinhoAtualizado(res);
   }
@@ -70,24 +70,9 @@ export class RepositorioCarrinhosEmHttp implements RepositorioCarrinhos {
       credentials: 'include',
     });
 
-    this.verificarResposta(res);
+    await verificarRespostaRequisicao(res);
 
     return await this.instanciarCarrinhoAtualizado(res);
-  }
-
-  private verificarResposta(res: Response): void {
-    if (res.ok) {
-      return;
-    }
-
-    switch (res.status) {
-      case 404:
-        throw new RepositorioError(MENSAGEM_ERRO.REPOSITORIO.NOT_FOUND);
-      default:
-        throw new RepositorioError(
-          MENSAGEM_ERRO.REPOSITORIO.INTERNAL_SERVER_ERROR,
-        );
-    }
   }
 
   private async instanciarCarrinhoParaExibir(
