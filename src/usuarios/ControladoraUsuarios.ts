@@ -34,7 +34,7 @@ export class ControladoraUsuarios {
   async logout(): Promise<void> {
     await this.gestorUsuarios.logout();
 
-    this.visaoLogin.redirecionar();
+    this.visaoMenuUsuario.recarregar();
   }
 
   async exibirMenu(): Promise<void> {

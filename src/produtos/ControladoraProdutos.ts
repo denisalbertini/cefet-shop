@@ -16,13 +16,6 @@ export class ControladoraProdutos {
   ) {
     this.gestorProdutos = new GestorProdutos();
     this.gestorCarrinhos = new GestorCarrinhos();
-
-    this.configurarVisoes();
-  }
-
-  private configurarVisoes(): void {
-    this.visaoListagemProdutos.definirControladora(this);
-    this.visaoDetalheProduto.definirControladora(this);
   }
 
   public async listar(pagina: number, limit: number): Promise<void> {

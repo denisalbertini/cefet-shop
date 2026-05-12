@@ -1,3 +1,4 @@
+import { navegarPara } from '../util/navegarPara';
 import { ControladoraProdutos } from './ControladoraProdutos';
 import { ProdutoParaDetalhar } from './dto/ProdutoParaDetalhar';
 import { VisaoDetalheProduto } from './interface/VisaoDetalheProduto';
@@ -92,7 +93,7 @@ export class VisaoDetalheProdutoEmDom implements VisaoDetalheProduto {
     botaoIrParaCarrinho.addEventListener('click', (event) => {
       event.preventDefault();
 
-      location.href = '/carrinho';
+      navegarPara('/carrinho');
     });
   }
 

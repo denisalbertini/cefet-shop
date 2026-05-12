@@ -1,4 +1,5 @@
 import { Papel } from '../enum/Papel';
+import { navegarPara } from '../util/navegarPara';
 import { ControladoraUsuarios } from './ControladoraUsuarios';
 import { VisaoMenuUsuario } from './interface/VisaoMenuUsuario';
 import { UsuarioParaExibir } from './types/UsuarioParaExibir';
@@ -31,7 +32,7 @@ export class VisaoMenuUsuarioEmDom implements VisaoMenuUsuario {
       botaoCompras.addEventListener('click', (event) => {
         event.preventDefault();
 
-        location.href = '/compras';
+        navegarPara('/compras');
       });
     }
 
@@ -43,7 +44,7 @@ export class VisaoMenuUsuarioEmDom implements VisaoMenuUsuario {
       botaoRelatorios.addEventListener('click', (event) => {
         event.preventDefault();
 
-        location.href = '/relatorios';
+        navegarPara('/relatorios');
       });
 
       const itemRelatorios = document.getElementById('item-relatorios');
@@ -74,7 +75,11 @@ export class VisaoMenuUsuarioEmDom implements VisaoMenuUsuario {
     botaoLogin.addEventListener('click', (event) => {
       event.preventDefault();
 
-      location.href = '/login';
+      navegarPara('/login');
     });
+  }
+
+  recarregar(): void {
+    location.reload();
   }
 }

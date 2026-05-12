@@ -1,3 +1,4 @@
+import { navegarPara } from '../util/navegarPara';
 import { ControladoraUsuarios } from './ControladoraUsuarios';
 import { VisaoLogin } from './interface/VisaoLogin';
 
@@ -36,7 +37,7 @@ export class VisaoLoginEmDom implements VisaoLogin {
   }
 
   redirecionar(): void {
-    location.href = '/';
+    navegarPara('/');
   }
 
   exibirErro(erro: string): void {

@@ -4,4 +4,5 @@ export interface VisaoMenuUsuario {
   iniciar(): void;
   exibir(usuario: UsuarioParaExibir): void;
   configurarOpcaoLogin(): void;
+  recarregar(): void;
 }

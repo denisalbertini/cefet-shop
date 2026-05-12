@@ -10,13 +10,6 @@ export class ControladoraCarrinhos {
     private visaoBadgeCarrinho: VisaoBadgeCarrinho,
   ) {
     this.gestorCarrinhos = new GestorCarrinhos();
-
-    this.configurarVisoes();
-  }
-
-  private configurarVisoes(): void {
-    this.visaoCarrinho.definirControladora(this);
-    this.visaoBadgeCarrinho.definirControladora(this);
   }
 
   public async exibir(): Promise<void> {

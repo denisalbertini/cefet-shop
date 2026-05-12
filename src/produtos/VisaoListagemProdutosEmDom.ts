@@ -1,4 +1,5 @@
 import { VISAO_PRODUTOS } from '../util/constantes';
+import { navegarPara } from '../util/navegarPara';
 import { ControladoraProdutos } from './ControladoraProdutos';
 import { ProdutosPaginados } from './dto/ProdutosPaginados';
 import { ProdutoParaListar } from './dto/ProdutosParaListar';
@@ -83,7 +84,7 @@ export class VisaoListagemProdutosEmDom implements VisaoListagemProdutos {
       botaoDetalhes?.addEventListener('click', (event) => {
         event.preventDefault();
 
-        location.href = href;
+        navegarPara(href);
       });
 
       fragmentoCards.appendChild(col);
