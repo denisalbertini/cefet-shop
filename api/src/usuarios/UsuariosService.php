@@ -19,7 +19,7 @@ class UsuariosService
       $identificador,
     );
 
-    if ($usuario->senha !== $senha) {
+    if (!password_verify($senha, $usuario->senha)) {
       throw new DomainException(MensagemErro::USUARIOS_SERVICE_LOGIN);
     }
 

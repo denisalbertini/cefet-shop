@@ -116,23 +116,23 @@ INSERT INTO produto (id, nome, descricao, estoque, quantidade_total_vendida, lan
 
 INSERT INTO usuario (id, nome, sobrenome, matricula, email, senha, papel, saldo) VALUES 
 (
+  'd4314882-012b-4b84-9626-4208f4ed8264', 
+  'Aluno', 
+  'do Cefet', 
+  '1111111GSIS', 
+  'aluno@cefet-rj.br', 
+  '$argon2id$v=19$m=65536,t=4,p=1$UVZ0SURZd0lPRkg0SUdFaA$IIrRCT+vCvGzM/27nqNwGRagl46XIo+JdcVH3uzChtQ', 
+  'aluno', 
+  100000
+),
+(
   '00f614f0-b866-4406-b1f3-15fd32a04384', 
   'Funcionário', 
   'do Cefet', 
   '2222222GSIS', 
   'funcionario@cefet-rj.br', 
+  '$argon2id$v=19$m=65536,t=4,p=1$Y09VdllnUEpvOHN4eW43Yg$pfgf2msCuEQ7Ol8KNAwXiFVA4OEjOQvy8zkAxAsU6tA', 
   'funcionario', 
-  'funcionario', 
-  100000
-),
-(
-  'd4314882-012b-4b84-9626-4208f4ed8264', 
-  'Aluno', 
-  'do Cefet', 
-  '3333333GSIS', 
-  'aluno@cefet-rj.br', 
-  'aluno', 
-  'aluno', 
   100000
 );
 
