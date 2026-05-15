@@ -13,6 +13,8 @@ $sessao = new SessaoEmArquivo();
 $produtosRepository = new ProdutosRepositoryBdr($pdo);
 $carrinhosRepository = new CarrinhosRepositorySessao($sessao);
 $usuariosRepository = new UsuariosRepositoryBdr($pdo);
+$itensRepository = new ItensRepositoryBdr($pdo, $produtosRepository);
+$comprasRepository = new ComprasRepositoryBdr($pdo);
 
 $produtosService = new ProdutosService($produtosRepository);
 $carrinhosService = new CarrinhosService(
@@ -20,10 +22,19 @@ $carrinhosService = new CarrinhosService(
   $produtosRepository,
 );
 $usuariosService = new UsuariosService($usuariosRepository, $sessao);
+$comprasService = new ComprasService(
+  $sessao,
+  $usuariosRepository,
+  $carrinhosRepository,
+  $itensRepository,
+  $produtosRepository,
+  $comprasRepository,
+);
 
 $produtosController = new ProdutosController($produtosService);
 $carrinhosController = new CarrinhosController($carrinhosService);
 $usuariosController = new UsuariosController($usuariosService);
+$comprasController = new ComprasController($comprasService);
 
 $app = new Router();
 
@@ -49,6 +60,8 @@ $app->delete('/carrinhos/itens/:id', [$carrinhosController, 'removerItem']);
 $app->post('/usuarios/login', [$usuariosController, 'login']);
 $app->get('/usuarios/logout', [$usuariosController, 'logout']);
 $app->get('/usuarios', [$usuariosController, 'buscarUsuarioLogado']);
+
+$app->post('/compras', [$comprasController, 'registrar']);
 
 $app->delete('/sessao', function ($req, $res) {
   new SessaoEmArquivo()->destruir();
