@@ -12,10 +12,6 @@ class ProdutosService
 
     $totalProdutos = $this->produtosRepository->contar();
 
-    $paginaAtual = $pagina;
-    $totalPaginas = (int) ceil($totalProdutos / $limit);
-    $temProx = $paginaAtual < $totalPaginas;
-    $temAnt = $paginaAtual > 1;
     $produtosParaListar = [];
 
     foreach ($produtos as $produto) {
@@ -23,10 +19,9 @@ class ProdutosService
     }
 
     return new ProdutosPaginados(
-      $paginaAtual,
-      $totalPaginas,
-      $temProx,
-      $temAnt,
+      $pagina,
+      $totalProdutos,
+      $limit,
       $produtosParaListar,
     );
   }

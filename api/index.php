@@ -11,7 +11,7 @@ $pdo = Database::obterInstancia()->obterPdoProd();
 $sessao = new SessaoEmArquivo();
 
 $produtosRepository = new ProdutosRepositoryBdr($pdo);
-$carrinhosRepository = new CarrinhosRepositorySessao();
+$carrinhosRepository = new CarrinhosRepositorySessao($sessao);
 $usuariosRepository = new UsuariosRepositoryBdr($pdo);
 
 $produtosService = new ProdutosService($produtosRepository);

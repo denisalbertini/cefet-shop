@@ -101,42 +101,4 @@ class Produto
   {
     $this->promocao = null;
   }
-
-  public static function hidratar(
-    ProdutoParaHidratar $produtoParaHidratar,
-  ): self {
-    $lancamentoDividido = explode('-', $produtoParaHidratar->lancamento);
-    $lancamentoAno = (int) $lancamentoDividido[0];
-    $lancamentoSemestre = (int) $lancamentoDividido[1];
-    $lancamento = new Periodo($lancamentoAno, $lancamentoSemestre);
-
-    $foto = new Url($produtoParaHidratar->foto);
-
-    $preco = new Cefetin($produtoParaHidratar->preco);
-
-    $promocao = null;
-    $promocaoId = $produtoParaHidratar->promocaoId;
-    $promocaoNome = $produtoParaHidratar->promocaoNome;
-    $promocaoDesconto = $produtoParaHidratar->promocaoDesconto;
-
-    if ($promocaoId && $promocaoNome && $promocaoDesconto) {
-      $promocao = new Promocao(
-        $promocaoId,
-        $promocaoNome,
-        new Porcentagem($promocaoDesconto),
-      );
-    }
-
-    return new self(
-      $produtoParaHidratar->id,
-      $produtoParaHidratar->nome,
-      $produtoParaHidratar->descricao,
-      $produtoParaHidratar->estoque,
-      $produtoParaHidratar->quantidadeTotalVendida,
-      $lancamento,
-      $foto,
-      $preco,
-      $promocao,
-    );
-  }
 }

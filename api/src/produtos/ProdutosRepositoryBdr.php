@@ -11,8 +11,8 @@ class ProdutosRepositoryBdr implements ProdutosRepository
   {
     $ps = $this->pdo->prepare(
       'SELECT * FROM produto_para_hidratar 
-            ORDER BY quantidadeTotalVendida DESC 
-            LIMIT ? OFFSET ?',
+       ORDER BY quantidadeTotalVendida DESC 
+       LIMIT ? OFFSET ?',
     );
 
     $ps->bindValue(1, $paginacao->obterLimit(), PDO::PARAM_INT);
@@ -20,6 +20,9 @@ class ProdutosRepositoryBdr implements ProdutosRepository
 
     $ps->execute();
 
+    /**
+     * @var ProdutoParaHidratar[]
+     */
     $produtosParaHidratar = $ps->fetchAll(
       PDO::FETCH_CLASS,
       ProdutoParaHidratar::class,
@@ -28,9 +31,7 @@ class ProdutosRepositoryBdr implements ProdutosRepository
     $produtos = [];
 
     foreach ($produtosParaHidratar as $produtoParaHidratar) {
-      if ($produtoParaHidratar instanceof ProdutoParaHidratar) {
-        array_push($produtos, Produto::hidratar($produtoParaHidratar));
-      }
+      array_push($produtos, $this->hidratar($produtoParaHidratar));
     }
 
     return $produtos;
@@ -55,27 +56,24 @@ class ProdutosRepositoryBdr implements ProdutosRepository
       );
     }
 
-    return Produto::hidratar($produtoParaHidratar);
+    return $this->hidratar($produtoParaHidratar);
   }
 
   public function contar(): int
   {
+    /**
+     * @var PDOStatement
+     */
     $ps = $this->pdo->query('SELECT COUNT(*) AS total FROM produto');
 
-    if (!$ps) {
-      throw new RepositoryException(MensagemErro::REPOSITORY_UNEXPECTED, 500);
-    }
+    /**
+     * @var int[]
+     */
+    $linha = $ps->fetch(PDO::FETCH_ASSOC);
 
-    $total = ((array) $ps->fetch(PDO::FETCH_ASSOC))['total'];
+    $total = $linha['total'];
 
-    if (!is_numeric($total)) {
-      throw new RepositoryException(
-        MensagemErro::PRODUTOS_REPOSITORY_COUNT,
-        500,
-      );
-    }
-
-    return (int) $total;
+    return $total;
   }
 
   public function atualizarPosCompra(Produto $produto): void
@@ -89,5 +87,42 @@ class ProdutosRepositoryBdr implements ProdutosRepository
       $produto->quantidadeTotalVendida,
       $produto->id,
     ]);
+  }
+
+  private function hidratar(ProdutoParaHidratar $produtoParaHidratar): Produto
+  {
+    $lancamentoDividido = explode('-', $produtoParaHidratar->lancamento);
+    $lancamentoAno = (int) $lancamentoDividido[0];
+    $lancamentoSemestre = (int) $lancamentoDividido[1];
+    $lancamento = new Periodo($lancamentoAno, $lancamentoSemestre);
+
+    $foto = new Url($produtoParaHidratar->foto);
+
+    $preco = new Cefetin($produtoParaHidratar->preco);
+
+    $promocao = null;
+    $promocaoId = $produtoParaHidratar->promocaoId;
+    $promocaoNome = $produtoParaHidratar->promocaoNome;
+    $promocaoDesconto = $produtoParaHidratar->promocaoDesconto;
+
+    if ($promocaoId && $promocaoNome && $promocaoDesconto) {
+      $promocao = new Promocao(
+        $promocaoId,
+        $promocaoNome,
+        new Porcentagem($promocaoDesconto),
+      );
+    }
+
+    return new Produto(
+      $produtoParaHidratar->id,
+      $produtoParaHidratar->nome,
+      $produtoParaHidratar->descricao,
+      $produtoParaHidratar->estoque,
+      $produtoParaHidratar->quantidadeTotalVendida,
+      $lancamento,
+      $foto,
+      $preco,
+      $promocao,
+    );
   }
 }

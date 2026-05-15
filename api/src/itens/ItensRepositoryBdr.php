@@ -27,14 +27,15 @@ class ItensRepositoryBdr implements ItensRepository
 
     $ps->execute([$id]);
 
+    /**
+     * @var ItemParaHidratar[]
+     */
     $linhas = $ps->fetchAll(PDO::FETCH_CLASS, ItemParaHidratar::class);
 
     $itens = [];
 
     foreach ($linhas as $l) {
-      if ($l instanceof ItemParaHidratar) {
-        array_push($itens, $this->hidratar($l));
-      }
+      array_push($itens, $this->hidratar($l));
     }
 
     return $itens;
