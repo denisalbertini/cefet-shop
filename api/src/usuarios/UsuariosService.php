@@ -9,7 +9,7 @@ class UsuariosService
 
   public function login(string $identificador, string $senha): void
   {
-    $logado = is_string($this->sessao->obter('uid'));
+    $logado = is_string($this->sessao->obter(ChaveSessao::USUARIO));
 
     if ($logado) {
       throw new DomainException(MensagemErro::USUARIOS_SERVICE_LOGADO);
@@ -23,12 +23,12 @@ class UsuariosService
       throw new DomainException(MensagemErro::USUARIOS_SERVICE_LOGIN);
     }
 
-    $this->sessao->salvar('uid', $usuario->id);
+    $this->sessao->salvar(ChaveSessao::USUARIO, $usuario->id);
   }
 
   public function logout(): void
   {
-    $logado = is_string($this->sessao->obter('uid'));
+    $logado = is_string($this->sessao->obter(ChaveSessao::USUARIO));
 
     if (!$logado) {
       throw new DomainException(MensagemErro::USUARIOS_SERVICE_NOT_FOUND);
@@ -39,7 +39,7 @@ class UsuariosService
 
   public function buscarUsuarioLogado(): UsuarioParaExibir
   {
-    $id = $this->sessao->obter('uid');
+    $id = $this->sessao->obter(ChaveSessao::USUARIO);
 
     $logado = is_string($id);
 

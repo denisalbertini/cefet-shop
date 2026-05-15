@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-class Aluno extends UsuarioComprador
+class Aluno extends Usuario
 {
   /**
    * @var DisciplinaCursada[]

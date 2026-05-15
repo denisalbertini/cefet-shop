@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-class Funcionario extends UsuarioComprador
+class Funcionario extends Usuario
 {
   public function __construct(
     string $id,

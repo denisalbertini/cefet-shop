@@ -51,4 +51,9 @@ class Carrinho
 
     return $indice;
   }
+
+  public function esvaziar(): void
+  {
+    array_splice($this->itens, 0);
+  }
 }

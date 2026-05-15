@@ -50,6 +50,13 @@ class UsuariosRepositoryBdr implements UsuariosRepository
     return $this->hidratar($linhas);
   }
 
+  public function atualizarSaldo(Usuario $usuario): void
+  {
+    $ps = $this->pdo->prepare('UPDATE usuario SET saldo = ? WHERE id = ?');
+
+    $ps->execute([$usuario->saldo->valorCentavos, $usuario->id]);
+  }
+
   /**
    * @param UsuarioParaHidratar[] $linhas
    */
@@ -65,22 +72,6 @@ class UsuariosRepositoryBdr implements UsuariosRepository
     $senha = $primeiraLinha->senha;
     $papel = $primeiraLinha->papel;
     $saldo = $primeiraLinha->saldo;
-
-    if ($papel === Papel::GESTOR) {
-      return new Gestor(
-        $id,
-        $nome,
-        $sobrenome,
-        $matricula,
-        $email,
-        $senha,
-        $papel,
-      );
-    }
-
-    if (!$saldo) {
-      throw new RepositoryException(MensagemErro::REPOSITORY_UNEXPECTED, 500);
-    }
 
     $saldoCefetin = new Cefetin($saldo);
 

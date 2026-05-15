@@ -2,9 +2,10 @@
 
 class Item
 {
+  public string $id;
   public int $quantidade;
 
-  public function __construct(int $quantidade, public readonly Produto $produto)
+  public function __construct(int $quantidade, public Produto $produto)
   {
     $this->definirQuantidade($quantidade);
   }

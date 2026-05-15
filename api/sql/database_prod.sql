@@ -17,7 +17,7 @@ CREATE TABLE produto (
   foto TINYTEXT NOT NULL,
   preco INT NOT NULL,
   promocao_id CHAR(36),
-  CONSTRAINT fk_promocao FOREIGN KEY (promocao_id) REFERENCES promocao(id)
+  CONSTRAINT fk_produto_promocao FOREIGN KEY (promocao_id) REFERENCES promocao(id)
 );
 
 CREATE VIEW produto_para_hidratar AS
@@ -41,8 +41,8 @@ CREATE TABLE usuario (
   matricula CHAR(11) NOT NULL UNIQUE,
   email VARCHAR(100) NOT NULL UNIQUE,
   senha VARCHAR(50) NOT NULL, 
-  papel ENUM('gestor','funcionario','aluno') NOT NULL, 
-  saldo INT
+  papel ENUM('aluno', 'funcionario') NOT NULL, 
+  saldo INT NOT NULL
 );
 
 CREATE TABLE curso (
@@ -54,7 +54,7 @@ CREATE TABLE disciplina (
   id CHAR(36) PRIMARY KEY DEFAULT UUID(),
   nome VARCHAR(100) NOT NULL,
   curso_id CHAR(36) NOT NULL,
-  CONSTRAINT fk_curso FOREIGN KEY (curso_id) REFERENCES curso(id)
+  CONSTRAINT fk_disciplina_curso FOREIGN KEY (curso_id) REFERENCES curso(id)
 );
 
 CREATE TABLE disciplina_cursada (
@@ -63,33 +63,25 @@ CREATE TABLE disciplina_cursada (
   media_final DECIMAL(3, 1) NOT NULL,
   disciplina_id CHAR(36) NOT NULL,
   usuario_id CHAR(36) NOT NULL,
-  CONSTRAINT fk_disciplina FOREIGN KEY (disciplina_id) REFERENCES disciplina(id),
-  CONSTRAINT fk_usuario_disciplina FOREIGN KEY (usuario_id) REFERENCES usuario(id)
-);
-
-CREATE TABLE carrinho (
-  id CHAR(36) PRIMARY KEY DEFAULT UUID(),
-  usuario_id CHAR(36) NOT NULL,
-  CONSTRAINT fk_usuario_carrinho FOREIGN KEY (usuario_id) REFERENCES usuario(id)
+  CONSTRAINT fk_dc_disciplina FOREIGN KEY (disciplina_id) REFERENCES disciplina(id),
+  CONSTRAINT fk_dc_usuario FOREIGN KEY (usuario_id) REFERENCES usuario(id)
 );
 
 CREATE TABLE compra (
   id CHAR(36) PRIMARY KEY DEFAULT UUID(),
-  numero_compra INT NOT NULL,
+  numero_compra INT NOT NULL UNIQUE,
   timestamp INT NOT NULL,
-  usuario_id CHAR(36),
-  CONSTRAINT fk_usuario_compra FOREIGN KEY (usuario_id) REFERENCES usuario(id)
+  usuario_id CHAR(36) NOT NULL,
+  CONSTRAINT fk_compra_usuario FOREIGN KEY (usuario_id) REFERENCES usuario(id)
 );
 
 CREATE TABLE item (
   id CHAR(36) PRIMARY KEY DEFAULT UUID(),
   quantidade INT NOT NULL,
   produto_id CHAR(36) NOT NULL,
-  carrinho_id CHAR(36) NOT NULL,
-  compra_id CHAR(36),
-  CONSTRAINT fk_produto FOREIGN KEY (produto_id) REFERENCES produto(id),
-  CONSTRAINT fk_carrinho FOREIGN KEY (carrinho_id) REFERENCES carrinho(id),
-  CONSTRAINT fk_compra FOREIGN KEY (compra_id) REFERENCES compra(id)
+  compra_id CHAR(36) NOT NULL,
+  CONSTRAINT fk_item_produto FOREIGN KEY (produto_id) REFERENCES produto(id),
+  CONSTRAINT fk_item_compra FOREIGN KEY (compra_id) REFERENCES compra(id)
 );
 
 CREATE VIEW usuario_para_hidratar AS 

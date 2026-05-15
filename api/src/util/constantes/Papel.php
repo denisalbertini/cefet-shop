@@ -2,7 +2,6 @@
 
 class Papel
 {
-  public const string GESTOR = 'gestor';
-  public const string FUNCIONARIO = 'funcionario';
   public const string ALUNO = 'aluno';
+  public const string FUNCIONARIO = 'funcionario';
 }

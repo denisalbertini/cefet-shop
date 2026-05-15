@@ -10,10 +10,21 @@ abstract class Usuario
     public string $email,
     public string $senha,
     public string $papel,
+    public Cefetin $saldo,
   ) {}
 
   public function obterNomeCompleto(): string
   {
     return "$this->nome $this->sobrenome";
+  }
+
+  public function creditar(Cefetin $quantia): void
+  {
+    $this->saldo->somar($quantia);
+  }
+
+  public function debitar(Cefetin $quantia): void
+  {
+    $this->saldo->subtrair($quantia);
   }
 }

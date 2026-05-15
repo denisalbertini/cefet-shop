@@ -116,16 +116,6 @@ INSERT INTO produto (id, nome, descricao, estoque, quantidade_total_vendida, lan
 
 INSERT INTO usuario (id, nome, sobrenome, matricula, email, senha, papel, saldo) VALUES 
 (
-  '7e7a7a26-8e57-4ea9-b21b-36c11b1ca4a8', 
-  'Gestor', 
-  'do Cefet', 
-  '1111111GSIS', 
-  'gestor@cefet-rj.br', 
-  'gestor', 
-  'gestor', 
-  NULL
-),
-(
   '00f614f0-b866-4406-b1f3-15fd32a04384', 
   'Funcionário', 
   'do Cefet', 

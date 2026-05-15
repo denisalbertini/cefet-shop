@@ -9,7 +9,7 @@ class UsuarioParaHidratar
   public string $email;
   public string $senha;
   public string $papel;
-  public int|null $saldo;
+  public int $saldo;
   public string|null $cursoId;
   public string|null $cursoNome;
   public string|null $disciplinaId;

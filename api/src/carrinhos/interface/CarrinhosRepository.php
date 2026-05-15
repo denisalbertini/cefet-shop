@@ -7,4 +7,5 @@ interface CarrinhosRepository
   public function adicionar(Item $item): int;
   public function alterar(Item $item): Carrinho;
   public function removerItem(string $produtoId): Carrinho;
+  public function salvar(Carrinho $carrinho): void;
 }

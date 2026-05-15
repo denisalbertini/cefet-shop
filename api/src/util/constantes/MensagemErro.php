@@ -51,4 +51,8 @@ class MensagemErro
   public const string USUARIOS_SERVICE_NOT_FOUND = 'Não há usuário logado.';
 
   public const string USUARIOS_CONTROLLER_LOGIN = 'Identificador e/ou senha não recebidos.';
+
+  public const string COMPRAS_SERVICE_SALDO_INSUFICIENTE = 'Você não possui saldo suficiente para realizar essa compra. Remova um ou mais itens.';
+  public const string COMPRAS_SERVICE_ITEM_ALTERADO = 'A quantidade de um ou mais itens foi alterada devido à falta de estoque. Revise o carrinho e tente finalizar a compra novamente.';
+  public const string COMPRAS_SERVICE_ITEM_REMOVIDO = 'Um ou mais itens foram removidos do carrinho devido à falta de estoque. Revise o carrinho e tente finalizar a compra novamente.';
 }

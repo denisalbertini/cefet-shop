@@ -77,4 +77,17 @@ class ProdutosRepositoryBdr implements ProdutosRepository
 
     return (int) $total;
   }
+
+  public function atualizarPosCompra(Produto $produto): void
+  {
+    $ps = $this->pdo->prepare(
+      'UPDATE produto SET estoque = ?, quantidade_total_vendida = ? WHERE id = ?',
+    );
+
+    $ps->execute([
+      $produto->estoque,
+      $produto->quantidadeTotalVendida,
+      $produto->id,
+    ]);
+  }
 }

@@ -2,18 +2,11 @@
 
 class CarrinhosRepositorySessao implements CarrinhosRepository
 {
-  private Sessao $sessao;
-  private string $chaveCarrinho;
-
-  public function __construct()
-  {
-    $this->sessao = new SessaoEmArquivo();
-    $this->chaveCarrinho = 'carrinho';
-  }
+  public function __construct(private Sessao $sessao) {}
 
   public function buscar(): Carrinho
   {
-    $carrinho = $this->sessao->obter($this->chaveCarrinho);
+    $carrinho = $this->sessao->obter(ChaveSessao::CARRINHO);
 
     if (!($carrinho instanceof Carrinho)) {
       $carrinho = new Carrinho([]);
@@ -87,8 +80,8 @@ class CarrinhosRepositorySessao implements CarrinhosRepository
     return $carrinho;
   }
 
-  private function salvar(Carrinho $carrinho): void
+  public function salvar(Carrinho $carrinho): void
   {
-    $this->sessao->salvar($this->chaveCarrinho, $carrinho);
+    $this->sessao->salvar(ChaveSessao::CARRINHO, $carrinho);
   }
 }
