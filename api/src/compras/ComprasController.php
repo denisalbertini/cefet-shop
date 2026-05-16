@@ -10,9 +10,9 @@ class ComprasController
   public function registrar(HttpRequest $req, HttpResponse $res): void
   {
     try {
-      $compra = $this->comprasService->registrar();
+      $id = $this->comprasService->registrar();
 
-      $res->json($compra);
+      $res->json(['id' => $id]);
     } catch (HttpException $e) {
       $res->status($e->obterStatus())->json($e->obterErros());
     } catch (Exception $e) {

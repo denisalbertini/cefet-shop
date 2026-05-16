@@ -7,12 +7,14 @@ class ComprasRepositoryBdr implements ComprasRepository
   public function registrar(Compra $compra): string
   {
     $ps = $this->pdo->prepare(
-      'INSERT INTO compra (numero_compra, timestamp, usuario_id) VALUES (?, ?, ?)',
+      'INSERT INTO compra (numero_compra, timestamp, total, usuario_id) 
+       VALUES (?, ?, ?, ?)',
     );
 
     $ps->execute([
       $compra->numeroCompra,
       $compra->data->timestamp,
+      $compra->total->valorCentavos,
       $compra->usuario->id,
     ]);
 
@@ -30,13 +32,32 @@ class ComprasRepositoryBdr implements ComprasRepository
     return $id;
   }
 
+  public function buscarPorId(string $id): Compra
+  {
+    $ps = $this->pdo->prepare(
+      'SELECT * FROM compra_para_hidratar WHERE id = ?',
+    );
+
+    $ps->execute([$id]);
+
+    $ps->setFetchMode(PDO::FETCH_CLASS, CompraParaHidratar::class);
+
+    $compraParaHidratar = $ps->fetch();
+
+    if (!($compraParaHidratar instanceof CompraParaHidratar)) {
+      throw new HttpException(404);
+    }
+
+    return $this->hidratar($compraParaHidratar);
+  }
+
   /**
    * @return Compra[]
    */
   public function buscarPorPeriodo(Data $inicio, Data $fim): array
   {
     $ps = $this->pdo->prepare(
-      'SELECT id, numero_compra AS numeroCompra, timestamp FROM compra 
+      'SELECT * FROM compra_para_hidratar 
        WHERE timestamp >= ? AND timestamp <= ?',
     );
 
@@ -67,6 +88,7 @@ class ComprasRepositoryBdr implements ComprasRepository
     $compra->id = $compraParaHidratar->id;
     $compra->numeroCompra = $compraParaHidratar->numeroCompra;
     $compra->data = new Data($compraParaHidratar->timestamp);
+    $compra->total = new Cefetin($compraParaHidratar->total);
 
     return $compra;
   }

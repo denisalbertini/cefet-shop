@@ -50,6 +50,7 @@ class ItensRepositoryBdr implements ItensRepository
     $item = new Item($itemParaHidratar->quantidade, $produto);
 
     $item->id = $itemParaHidratar->id;
+    $item->quantidade = $itemParaHidratar->quantidade;
 
     return $item;
   }

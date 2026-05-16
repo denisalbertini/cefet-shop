@@ -4,6 +4,8 @@ interface ComprasRepository
 {
   public function registrar(Compra $compra): string;
 
+  public function buscarPorId(string $id): Compra;
+
   /**
    * @return Compra[]
    */

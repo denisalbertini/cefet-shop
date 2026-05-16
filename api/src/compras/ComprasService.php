@@ -11,7 +11,7 @@ class ComprasService
     private ComprasRepository $comprasRepository,
   ) {}
 
-  public function registrar(): CompraParaExibir
+  public function registrar(): string
   {
     $usuarioId = $this->sessao->obter(ChaveSessao::USUARIO);
 
@@ -82,6 +82,7 @@ class ComprasService
     $compra->numeroCompra = $timestamp;
     $compra->data = new Data($timestamp);
     $compra->usuario = $usuario;
+    $compra->total = $carrinho->obterTotal();
 
     $compraId = $this->comprasRepository->registrar($compra);
 
@@ -96,12 +97,10 @@ class ComprasService
       $this->produtosRepository->atualizarPosCompra($produto);
     }
 
-    $compraParaExibir = new CompraParaExibir($compra, $carrinho->itens);
-
     $carrinho->esvaziar();
 
     $this->carrinhosRepository->salvar($carrinho);
 
-    return $compraParaExibir;
+    return $compraId;
   }
 }

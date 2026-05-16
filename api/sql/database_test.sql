@@ -71,6 +71,7 @@ CREATE TABLE compra (
   id CHAR(36) PRIMARY KEY DEFAULT UUID(),
   numero_compra INT NOT NULL UNIQUE,
   timestamp INT NOT NULL,
+  total INT NOT NULL,
   usuario_id CHAR(36) NOT NULL,
   CONSTRAINT fk_compra_usuario FOREIGN KEY (usuario_id) REFERENCES usuario(id)
 ) ENGINE=MEMORY;
@@ -104,3 +105,10 @@ FROM usuario u
 LEFT JOIN disciplina_cursada dc ON u.id = dc.usuario_id 
 LEFT JOIN disciplina d ON dc.disciplina_id = d.id 
 LEFT JOIN curso c ON d.curso_id = c.id;
+
+CREATE VIEW compra_para_hidratar AS 
+SELECT compra.id, 
+       compra.numero_compra AS numeroCompra, 
+       compra.timestamp, 
+       compra.total
+FROM compra;

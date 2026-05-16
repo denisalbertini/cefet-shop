@@ -232,11 +232,11 @@ describe('ComprasService', function () {
       $this->usuariosRepository = $usuariosRepository;
       $this->itensRepository = $itensRepository;
       $this->produtosRepository = $produtosRepository;
+      $this->comprasRepository = $comprasRepository;
 
-      $service->registrar();
+      $compraId = $service->registrar();
 
-      $ps = $this->pdo->query('SELECT * FROM compra');
-      $this->compra = $ps->fetch();
+      $this->compraId = $compraId;
     });
 
     it(
@@ -251,13 +251,19 @@ describe('ComprasService', function () {
     );
 
     it('deveria registrar a compra ao finalizar.', function () {
-      expect($this->compra['id'])->toBeA('string');
+      $compra = $this->comprasRepository->buscarPorId($this->compraId);
+
+      expect($compra->numeroCompra)->toBeA('int');
+      expect($compra->data)->toBeA('object');
+      expect($compra->total->valorCentavos)->toBe(10000);
     });
 
     it('deveria registrar os itens ao finalizar a compra.', function () {
-      $itens = $this->itensRepository->buscarPorCompraId($this->compra['id']);
+      $itens = $this->itensRepository->buscarPorCompraId($this->compraId);
 
-      expect($itens)->not->toBeEmpty();
+      $item = $itens[0];
+
+      expect($item->quantidade)->toBe(10);
     });
 
     it('deveria atualizar os produtos ao finalizar a compra.', function () {

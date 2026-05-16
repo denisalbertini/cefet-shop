@@ -6,6 +6,7 @@ class Compra
   public int $numeroCompra;
   public Data $data;
   public Usuario $usuario;
+  public Cefetin $total;
   /**
    * @var Item[]
    */
