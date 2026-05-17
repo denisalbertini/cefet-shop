@@ -11,10 +11,7 @@ class CompraParaExibir
    */
   public array $itens;
 
-  /**
-   * @param Item[] $itens
-   */
-  public function __construct(Compra $compra, array $itens)
+  public function __construct(Compra $compra)
   {
     $this->numeroCompra = $compra->numeroCompra;
     $this->nomeCompletoUsuario = $compra->usuario->obterNomeCompleto();
@@ -22,7 +19,7 @@ class CompraParaExibir
     $this->total = $compra->total->obterValorFormatado();
     $this->itens = [];
 
-    foreach ($itens as $item) {
+    foreach ($compra->itens as $item) {
       array_push($this->itens, new ItemParaListar($item));
     }
   }

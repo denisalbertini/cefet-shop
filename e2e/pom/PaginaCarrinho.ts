@@ -1,4 +1,5 @@
-import { Locator, Page } from 'playwright/test';
+import { expect, Locator, Page } from 'playwright/test';
+import { APP } from '../../src/util/constantes';
 
 export class PaginaCarrinho {
   public constructor(private page: Page) {}
@@ -39,6 +40,14 @@ export class PaginaCarrinho {
     return this.page.locator('.remover');
   }
 
+  public localizarBotaoFinalizar(): Locator {
+    return this.page.locator('#finalizar');
+  }
+
+  public localizarAlertas(): Locator {
+    return this.page.locator('.alert');
+  }
+
   public localizarPrimeiro(localizador: Locator): Locator {
     return localizador.first();
   }
@@ -48,7 +57,7 @@ export class PaginaCarrinho {
   }
 
   public localizarTexto(texto: string): Locator {
-    return this.page.locator(texto);
+    return this.page.getByText(texto);
   }
 
   public contar(localizador: Locator): Promise<number> {
@@ -73,5 +82,13 @@ export class PaginaCarrinho {
 
   public async clicar(localizador: Locator): Promise<void> {
     await localizador.click();
+  }
+
+  public async afirmarUrlLogin(): Promise<void> {
+    await expect(this.page).toHaveURL(APP.HOST + '/login?carrinho=true');
+  }
+
+  public async afirmarUrlCompraFinalizada(): Promise<void> {
+    await expect(this.page).toHaveURL(APP.HOST + '/compra/abc');
   }
 }

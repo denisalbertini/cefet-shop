@@ -37,7 +37,17 @@ export class VisaoLoginEmDom implements VisaoLogin {
   }
 
   redirecionar(): void {
-    navegarPara('/');
+    const parametrosPesquisa = new URLSearchParams(window.location.search);
+
+    const carrinho = parametrosPesquisa.get('carrinho') === 'true';
+
+    const destino = carrinho ? '/carrinho' : '/';
+
+    navegarPara(destino);
+
+    if (carrinho) {
+      this.controladoraUsuarios?.exibirMenu();
+    }
   }
 
   exibirErro(erro: string): void {

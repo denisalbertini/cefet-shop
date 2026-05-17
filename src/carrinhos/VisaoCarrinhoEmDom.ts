@@ -1,4 +1,5 @@
 import { buscarHtml } from '../util/buscarHtml';
+import { navegarPara } from '../util/navegarPara';
 import { ControladoraCarrinhos } from './ControladoraCarrinhos';
 import { CarrinhoAtualizado } from './dto/CarrinhoAtualizado';
 import { CarrinhoParaExibir } from './dto/CarrinhoParaExibir';
@@ -74,6 +75,16 @@ export class VisaoCarrinhoEmDom implements VisaoCarrinho {
     document.getElementById('lista')?.replaceChildren(fragmento);
 
     this.escreverTotal(carrinho.total);
+
+    const botaoFinalizar = document.getElementById(
+      'finalizar',
+    ) as HTMLButtonElement;
+
+    botaoFinalizar.addEventListener('click', (event) => {
+      event.preventDefault();
+
+      this.controladoraCarrinhos?.finalizarCompra();
+    });
   }
 
   async exibirCarrinhoVazio(): Promise<void> {
@@ -118,5 +129,39 @@ export class VisaoCarrinhoEmDom implements VisaoCarrinho {
     }
 
     return li;
+  }
+
+  redirecionarParaCompraFinalizada(compraId: string): void {
+    navegarPara(`/compra/${compraId}`);
+  }
+
+  redirecionarParaLogin(): void {
+    navegarPara('/login?carrinho=true');
+  }
+
+  retornarParaCarrinho(): void {
+    navegarPara('/carrinho');
+  }
+
+  exibirErros(erros: string[]): void {
+    const template = document.getElementById('alerta') as HTMLTemplateElement;
+
+    const fragmento = document.createDocumentFragment();
+
+    for (const erro of erros) {
+      const alerta = template.content.cloneNode(true) as HTMLDivElement;
+
+      const msgErro = alerta.querySelector('.msg-erro') as HTMLParagraphElement;
+
+      msgErro.textContent = erro;
+
+      fragmento.appendChild(alerta);
+    }
+
+    const alertas = document.getElementById('alertas');
+
+    alertas?.replaceChildren(fragmento);
+
+    alertas?.classList.remove('d-none');
   }
 }

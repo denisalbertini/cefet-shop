@@ -1,15 +1,19 @@
+import { GestorCompras } from '../compras/GestorCompras';
+import { HttpError } from '../error/HttpError';
 import { GestorCarrinhos } from './GestorCarrinhos';
 import { VisaoBadgeCarrinho } from './interface/VisaoBadgeCarrinho';
 import { VisaoCarrinho } from './interface/VisaoCarrinho';
 
 export class ControladoraCarrinhos {
   private gestorCarrinhos: GestorCarrinhos;
+  private gestorCompras: GestorCompras;
 
   public constructor(
     private visaoCarrinho: VisaoCarrinho,
     private visaoBadgeCarrinho: VisaoBadgeCarrinho,
   ) {
     this.gestorCarrinhos = new GestorCarrinhos();
+    this.gestorCompras = new GestorCompras();
   }
 
   public async exibir(): Promise<void> {
@@ -45,5 +49,28 @@ export class ControladoraCarrinhos {
 
   public exibirCarrinhoVazio(): void {
     this.visaoCarrinho.exibirCarrinhoVazio();
+  }
+
+  public async finalizarCompra(): Promise<void> {
+    try {
+      const compraId = await this.gestorCompras.registrar();
+
+      this.visaoCarrinho.redirecionarParaCompraFinalizada(compraId);
+    } catch (error: any) {
+      if (!(error instanceof HttpError)) {
+        console.error(error);
+        return;
+      }
+
+      switch (error.status) {
+        case 400:
+          this.visaoCarrinho.exibirErros(error.erros);
+          break;
+        case 401:
+          this.visaoCarrinho.redirecionarParaLogin();
+        default:
+          break;
+      }
+    }
   }
 }

@@ -6,4 +6,5 @@ class CompraParaHidratar
   public int $numeroCompra;
   public int $timestamp;
   public int $total;
+  public string $usuarioId;
 }

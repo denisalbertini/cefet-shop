@@ -135,9 +135,7 @@ test.describe('Carrinho', () => {
   });
 
   test('deveria remover um item', async () => {
-    const produtoId = await pagina!.obterValorInput(
-      pagina!.localizarPrimeiro(pagina!.localizarProdutoIds()),
-    );
+    const primeiraContagem = await pagina!.contar(pagina!.localizarItens());
 
     const botaoRemover = pagina!.localizarPrimeiro(
       pagina!.localizarBotoesRemover(),
@@ -145,8 +143,62 @@ test.describe('Carrinho', () => {
 
     await pagina!.clicar(botaoRemover);
 
-    const contagemId = await pagina!.contar(pagina!.localizarTexto(produtoId));
+    const segundaContagem = await pagina!.contar(pagina!.localizarItens());
 
-    expect(contagemId).toBe(0);
+    expect(primeiraContagem).toBe(2);
+    expect(segundaContagem).toBe(1);
+  });
+
+  test('deveria exibir um alerta ao tentar finalizar a compra caso o servidor retorne um erro', async ({
+    page,
+  }) => {
+    const erro = 'item alterado';
+
+    await page.route(
+      API.HOST + '/compras',
+      async (route) =>
+        await route.fulfill({ status: 400, json: { erros: [erro] } }),
+    );
+
+    const botaoFinalizar = pagina!.localizarBotaoFinalizar();
+
+    await pagina!.clicar(botaoFinalizar);
+
+    const contagemAlertas = await pagina!.contar(pagina!.localizarAlertas());
+    const mensagemAlerta = pagina!.localizarTexto(erro);
+
+    expect(contagemAlertas).toBe(1);
+    await expect(mensagemAlerta).toBeVisible();
+  });
+
+  test('deveria redirecionar para a página de login ao tentar finalizar a compra sem estar logado', async ({
+    page,
+  }) => {
+    await page.route(
+      API.HOST + '/compras',
+      async (route) =>
+        await route.fulfill({ status: 401, json: { erros: [] } }),
+    );
+
+    const botaoFinalizar = pagina!.localizarBotaoFinalizar();
+
+    await pagina!.clicar(botaoFinalizar);
+
+    await pagina!.afirmarUrlLogin();
+  });
+
+  test('deveria redirecionar para a página de compra finalizada quando a compra é finalizada com sucesso', async ({
+    page,
+  }) => {
+    await page.route(
+      API.HOST + '/compras',
+      async (route) => await route.fulfill({ json: { id: 'abc' } }),
+    );
+
+    const botaoFinalizar = pagina!.localizarBotaoFinalizar();
+
+    await pagina!.clicar(botaoFinalizar);
+
+    await pagina!.afirmarUrlCompraFinalizada();
   });
 });

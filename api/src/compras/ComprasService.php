@@ -103,4 +103,15 @@ class ComprasService
 
     return $compraId;
   }
+
+  public function buscarPorId(string $id): CompraParaExibir
+  {
+    $compra = $this->comprasRepository->buscarPorId($id);
+
+    $itens = $this->itensRepository->buscarPorCompraId($id);
+
+    $compra->itens = $itens;
+
+    return new CompraParaExibir($compra);
+  }
 }

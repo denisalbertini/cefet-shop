@@ -6,6 +6,8 @@ use phputil\cors\CorsOptions;
 use phputil\router\Router;
 use function phputil\cors\cors;
 
+date_default_timezone_set('America/Sao_Paulo');
+
 $pdo = Database::obterInstancia()->obterPdoProd();
 
 $sessao = new SessaoEmArquivo();
@@ -14,7 +16,7 @@ $produtosRepository = new ProdutosRepositoryBdr($pdo);
 $carrinhosRepository = new CarrinhosRepositorySessao($sessao);
 $usuariosRepository = new UsuariosRepositoryBdr($pdo);
 $itensRepository = new ItensRepositoryBdr($pdo, $produtosRepository);
-$comprasRepository = new ComprasRepositoryBdr($pdo);
+$comprasRepository = new ComprasRepositoryBdr($pdo, $usuariosRepository);
 
 $produtosService = new ProdutosService($produtosRepository);
 $carrinhosService = new CarrinhosService(
@@ -62,6 +64,7 @@ $app->get('/usuarios/logout', [$usuariosController, 'logout']);
 $app->get('/usuarios', [$usuariosController, 'buscarUsuarioLogado']);
 
 $app->post('/compras', [$comprasController, 'registrar']);
+$app->get('/compras/:id', [$comprasController, 'buscarPorId']);
 
 $app->delete('/sessao', function ($req, $res) {
   new SessaoEmArquivo()->destruir();

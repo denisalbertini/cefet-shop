@@ -2,7 +2,10 @@
 
 class ComprasRepositoryBdr implements ComprasRepository
 {
-  public function __construct(private PDO $pdo) {}
+  public function __construct(
+    private PDO $pdo,
+    private UsuariosRepository $usuariosRepository,
+  ) {}
 
   public function registrar(Compra $compra): string
   {
@@ -89,6 +92,12 @@ class ComprasRepositoryBdr implements ComprasRepository
     $compra->numeroCompra = $compraParaHidratar->numeroCompra;
     $compra->data = new Data($compraParaHidratar->timestamp);
     $compra->total = new Cefetin($compraParaHidratar->total);
+
+    $usuario = $this->usuariosRepository->buscarPorId(
+      $compraParaHidratar->usuarioId,
+    );
+
+    $compra->usuario = $usuario;
 
     return $compra;
   }

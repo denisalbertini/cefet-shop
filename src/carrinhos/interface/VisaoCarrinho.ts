@@ -7,4 +7,8 @@ export interface VisaoCarrinho {
   exibirCarrinhoVazio(): void;
   alterarQuantidadeItem(carrinho: CarrinhoAtualizado): void;
   removerItem(carrinho: CarrinhoAtualizado): void;
+  redirecionarParaCompraFinalizada(compraId: string): void;
+  redirecionarParaLogin(): void;
+  retornarParaCarrinho(): void;
+  exibirErros(erros: string[]): void;
 }

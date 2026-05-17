@@ -51,4 +51,6 @@ class MensagemErro
   public const string COMPRAS_SERVICE_SALDO_INSUFICIENTE = 'Você não possui saldo suficiente para realizar essa compra. Remova um ou mais itens.';
   public const string COMPRAS_SERVICE_ITEM_ALTERADO = 'A quantidade de um ou mais itens foi alterada devido à falta de estoque. Revise o carrinho e tente finalizar a compra novamente.';
   public const string COMPRAS_SERVICE_ITEM_REMOVIDO = 'Um ou mais itens foram removidos do carrinho devido à falta de estoque. Revise o carrinho e tente finalizar a compra novamente.';
+
+  public const string COMPRAS_CONTROLLER_ID = 'ID da compra não recebido.';
 }

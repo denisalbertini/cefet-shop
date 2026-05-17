@@ -110,5 +110,6 @@ CREATE VIEW compra_para_hidratar AS
 SELECT compra.id, 
        compra.numero_compra AS numeroCompra, 
        compra.timestamp, 
-       compra.total
+       compra.total, 
+       compra.usuario_id AS usuarioId 
 FROM compra;

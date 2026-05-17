@@ -214,10 +214,13 @@ describe('ComprasService', function () {
       ]);
       $usuariosRepository = new UsuariosRepositoryBdr($this->pdo);
       $produtosRepository = new ProdutosRepositoryBdr($this->pdo);
-      $comprasRepository = new ComprasRepositoryBdr($this->pdo);
       $itensRepository = new ItensRepositoryBdr(
         $this->pdo,
         $produtosRepository,
+      );
+      $comprasRepository = new ComprasRepositoryBdr(
+        $this->pdo,
+        $usuariosRepository,
       );
 
       $service = new ComprasService(

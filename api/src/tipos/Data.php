@@ -6,6 +6,6 @@ class Data
 
   public function obterValorFormatado(): string
   {
-    return date('d/m/Y', $this->timestamp);
+    return date('d/m/Y H:i:s', $this->timestamp);
   }
 }

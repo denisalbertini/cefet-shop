@@ -60,4 +60,17 @@ page('/login', async () => {
   visaoLogin.iniciar();
 });
 
+page('/compra/:id', async (ctx) => {
+  const html = await buscarHtml('/pages/compra-finalizada.html');
+
+  main.innerHTML = html;
+
+  const id = ctx.params.id as string;
+
+  const visao = (await import('./compras/VisaoCompraFinalizadaEmDom.js'))
+    .VisaoCompraFinalizadaEmDom;
+
+  new visao().iniciar(id);
+});
+
 page();
