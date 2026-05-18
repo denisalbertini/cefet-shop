@@ -31,16 +31,16 @@
               <label for="inicio" class="form-label m-auto pe-2"
                 >Início:
               </label>
-              <input type="date" class="form-control me-2" />
+              <input type="date" class="form-control me-2" id="inicio" />
             </div>
 
             <div class="d-flex mb-2 mb-sm-0">
               <label for="fim" class="form-label m-auto pe-2">Fim: </label>
-              <input type="date" class="form-control me-2" />
+              <input type="date" class="form-control me-2" id="fim" />
             </div>
 
             <div class="d-flex justify-content-center">
-              <button class="btn btn-primary">
+              <button class="btn btn-primary" id="btn-gerar">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -68,25 +68,41 @@
       <div class="row mt-5">
         <div class="col"></div>
 
-        <div class="col-10 col-sm-9 col-md-8 col-lg-7 col-xl-6 col-xxl-5">
-          <h2 class="text-center invisible">Vendas</h2>
+        <div class="col-10 col-sm-9 col-md-8 col-lg-7 col-xl-6 col-xxl-5 mb-5">
+          <h2 class="text-center invisible" id="titulo-vendas">Vendas</h2>
 
-          <div id="grafico-barras"></div>
+          <canvas id="grafico-barras"></canvas>
 
           <table id="tabela-vendas" class="table table-striped">
             <thead></thead>
             <tbody></tbody>
           </table>
 
-          <h2 class="text-center mt-5 invisible">Top 10 produtos</h2>
+          <h2 class="text-center mt-5 invisible" id="titulo-top-itens">
+            Top 10 produtos
+          </h2>
 
-          <div id="grafico-pizza"></div>
+          <canvas id="grafico-pizza"></canvas>
 
           <table id="tabela-produtos" class="table table-striped">
             <thead></thead>
             <tbody></tbody>
           </table>
         </div>
+
+        <template id="template-linha-vendas">
+          <tr>
+            <td></td>
+            <td></td>
+          </tr>
+        </template>
+
+        <template id="template-linha-top-itens">
+          <tr>
+            <td></td>
+            <td></td>
+          </tr>
+        </template>
 
         <div class="col"></div>
       </div>

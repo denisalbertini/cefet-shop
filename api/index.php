@@ -33,6 +33,14 @@ $comprasService = new ComprasService(
   $comprasRepository,
 );
 
+$relatoriosRepository = new RelatoriosRepositoryBdr($pdo);
+$relatoriosService = new RelatoriosService(
+  $sessao,
+  $usuariosRepository,
+  $relatoriosRepository,
+);
+$relatoriosController = new RelatoriosController($relatoriosService);
+
 $produtosController = new ProdutosController($produtosService);
 $carrinhosController = new CarrinhosController($carrinhosService);
 $usuariosController = new UsuariosController($usuariosService);
@@ -65,6 +73,9 @@ $app->get('/usuarios', [$usuariosController, 'buscarUsuarioLogado']);
 
 $app->post('/compras', [$comprasController, 'registrar']);
 $app->get('/compras/:id', [$comprasController, 'buscarPorId']);
+
+$app->get('/relatorios/vendas', [$relatoriosController, 'buscarVendas']);
+$app->get('/relatorios/top-itens', [$relatoriosController, 'buscarTopItens']);
 
 $app->delete('/sessao', function ($req, $res) {
   new SessaoEmArquivo()->destruir();

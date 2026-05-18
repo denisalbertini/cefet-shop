@@ -73,4 +73,15 @@ page('/compra/:id', async (ctx) => {
   new visao().iniciar(id);
 });
 
+page('/relatorios', async () => {
+  const html = await buscarHtml('/pages/relatorios.html');
+
+  main.innerHTML = html;
+
+  const visao = (await import('./relatorios/VisaoRelatoriosEmDom.js'))
+    .VisaoRelatoriosEmDom;
+
+  new visao().iniciar();
+});
+
 page();

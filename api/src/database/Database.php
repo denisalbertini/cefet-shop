@@ -12,14 +12,16 @@ class Database
       $this->pdoProd = new Pdo(
         'mysql:dbname=g7_prod;host=localhost;charset=utf8',
         'root',
+        'root',
       );
       $this->pdoTest = new Pdo(
         'mysql:dbname=g7_test;host=localhost;charset=utf8',
         'root',
+        'root',
       );
     } catch (Exception $e) {
       http_response_code(500);
-      die(MensagemErro::DATABASE_CONNECTION);
+      die(MensagemErro::DATABASE_CONNECTION . $e->getMessage());
     }
   }
 

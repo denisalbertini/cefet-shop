@@ -41,7 +41,10 @@
         "src/usuarios/entity",
         "src/usuarios/interface",
         "src/util",
-        "src/util/constantes"
+        "src/util/constantes",
+        "src/relatorios",
+        "src/relatorios/dto",
+        "src/relatorios/interface"
       ]
     }
   },

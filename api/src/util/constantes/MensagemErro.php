@@ -53,4 +53,6 @@ class MensagemErro
   public const string COMPRAS_SERVICE_ITEM_REMOVIDO = 'Um ou mais itens foram removidos do carrinho devido à falta de estoque. Revise o carrinho e tente finalizar a compra novamente.';
 
   public const string COMPRAS_CONTROLLER_ID = 'ID da compra não recebido.';
+
+  public const string RELATORIOS_CONTROLLER_PERIODO = 'Os parâmetros "inicio" e "fim" são obrigatórios e devem ser datas válidas.';
 }
