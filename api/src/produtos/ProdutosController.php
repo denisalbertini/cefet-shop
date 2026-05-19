@@ -7,7 +7,7 @@ class ProdutosController
 {
   public function __construct(private ProdutosService $produtosService) {}
 
-  public function listar(HttpRequest $req, HttpResponse $res): void
+  public function buscar(HttpRequest $req, HttpResponse $res): void
   {
     try {
       $queries = $req->queries();
@@ -18,7 +18,7 @@ class ProdutosController
       $pagina = is_numeric($paginaQuery) ? (int) $paginaQuery : 1;
       $limit = is_numeric($limitQuery) ? (int) $limitQuery : 6;
 
-      $produtosPaginados = $this->produtosService->listar($pagina, $limit);
+      $produtosPaginados = $this->produtosService->buscar($pagina, $limit);
 
       $res->json($produtosPaginados);
     } catch (Exception $e) {

@@ -4,7 +4,7 @@ class ProdutosService
 {
   public function __construct(private ProdutosRepository $produtosRepository) {}
 
-  public function listar(int $pagina, int $limit): ProdutosPaginados
+  public function buscar(int $pagina, int $limit): ProdutosPaginados
   {
     $paginacao = new Paginacao($pagina, $limit);
 

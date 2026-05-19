@@ -32,11 +32,11 @@ describe('ProdutosService', function () {
     $this->service = new ProdutosService($repository);
   });
 
-  describe('listar', function () {
+  describe('buscar', function () {
     it(
       'deveria retornar o dto de produtos paginados na primeira página',
       function () {
-        $produtosPaginados = $this->service->listar(1, 2);
+        $produtosPaginados = $this->service->buscar(1, 2);
 
         expect($produtosPaginados->paginaAtual)->toBe(1);
         expect($produtosPaginados->totalPaginas)->toBe(2);
@@ -48,7 +48,7 @@ describe('ProdutosService', function () {
     it(
       'deveria retornar o dto de produtos paginados na segunda página',
       function () {
-        $produtosPaginados = $this->service->listar(2, 2);
+        $produtosPaginados = $this->service->buscar(2, 2);
 
         expect($produtosPaginados->paginaAtual)->toBe(2);
         expect($produtosPaginados->totalPaginas)->toBe(2);

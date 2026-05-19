@@ -52,7 +52,7 @@ $corsOptions = new CorsOptions()->withAllowedHeaders(['Content-Type']);
 
 $app->use(cors($corsOptions));
 
-$app->get('/produtos', [$produtosController, 'listar']);
+$app->get('/produtos', [$produtosController, 'buscar']);
 $app->get('/produtos/:id', [$produtosController, 'buscarPorId']);
 
 $app->get('/carrinhos', [$carrinhosController, 'buscar']);
