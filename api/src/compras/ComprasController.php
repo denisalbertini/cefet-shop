@@ -39,6 +39,19 @@ class ComprasController
     }
   }
 
+  public function buscar(HttpRequest $req, HttpResponse $res): void
+  {
+    try {
+      $compras = $this->comprasService->buscarPorUsuario();
+
+      $res->json($compras);
+    } catch (HttpException $e) {
+      $res->status($e->obterStatus())->json($e->obterErros());
+    } catch (Exception $e) {
+      $this->tratarErro($e, $res);
+    }
+  }
+
   private function tratarErro(Exception $e, HttpResponse $res): void
   {
     $status = match ($e::class) {

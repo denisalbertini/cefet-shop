@@ -1,5 +1,5 @@
-import { buscarHtml } from '../util/buscarHtml';
 import { navegarPara } from '../util/navegarPara';
+import { preencherMain } from '../util/preencherMain';
 import { ControladoraCarrinhos } from './ControladoraCarrinhos';
 import { CarrinhoAtualizado } from './dto/CarrinhoAtualizado';
 import { CarrinhoParaExibir } from './dto/CarrinhoParaExibir';
@@ -87,12 +87,8 @@ export class VisaoCarrinhoEmDom implements VisaoCarrinho {
     });
   }
 
-  async exibirCarrinhoVazio(): Promise<void> {
-    const main = document.querySelector('main')!;
-
-    const html = await buscarHtml('/pages/carrinho-vazio.html');
-
-    main.innerHTML = html;
+  exibirCarrinhoVazio(): void {
+    preencherMain('/pages/carrinho-vazio.html');
   }
 
   alterarQuantidadeItem(carrinho: CarrinhoAtualizado): void {

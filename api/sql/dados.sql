@@ -123,7 +123,7 @@ INSERT INTO usuario (id, nome, sobrenome, matricula, email, senha, papel, saldo)
   'aluno@cefet-rj.br', 
   '$argon2id$v=19$m=65536,t=4,p=1$UVZ0SURZd0lPRkg0SUdFaA$IIrRCT+vCvGzM/27nqNwGRagl46XIo+JdcVH3uzChtQ', 
   'aluno', 
-  100000
+  100000000
 ),
 (
   '00f614f0-b866-4406-b1f3-15fd32a04384', 
@@ -133,7 +133,7 @@ INSERT INTO usuario (id, nome, sobrenome, matricula, email, senha, papel, saldo)
   'funcionario@cefet-rj.br', 
   '$argon2id$v=19$m=65536,t=4,p=1$Y09VdllnUEpvOHN4eW43Yg$pfgf2msCuEQ7Ol8KNAwXiFVA4OEjOQvy8zkAxAsU6tA', 
   'funcionario', 
-  100000
+  0
 );
 
 INSERT INTO curso (id, nome) VALUES 
@@ -177,4 +177,46 @@ INSERT INTO disciplina_cursada (id, periodo, media_final, disciplina_id, usuario
   10.0, 
   '6dd10dd1-78a1-4674-a1ad-1f6c3ee11849', 
   'd4314882-012b-4b84-9626-4208f4ed8264'
+);
+
+INSERT INTO compra (id, numero_compra, timestamp, total, usuario_id) VALUES 
+(
+  '9e8195ca-d190-46ac-8b24-cb49703e017b', 
+  1777939200, 
+  1777939200, 
+  31970, 
+  'd4314882-012b-4b84-9626-4208f4ed8264'
+), 
+(
+  '42acb306-9702-4574-81a0-d6855cfeb290', 
+  1778352000, 
+  1778352000, 
+  21450, 
+  'd4314882-012b-4b84-9626-4208f4ed8264'
+);
+
+INSERT INTO item (id, quantidade, produto_id, compra_id) VALUES 
+(
+  '77916fb1-272a-4ed4-b669-ef0a5d503290', 
+  1, 
+  '84490d7b-5f06-4443-b064-ef1cd76b9ced', 
+  '9e8195ca-d190-46ac-8b24-cb49703e017b'
+), 
+(
+  'efd5a703-6743-4b3f-aaa8-e76722aeb665', 
+  2, 
+  'ecfe344b-1437-4774-a4b5-580a2dc4ae7d', 
+  '9e8195ca-d190-46ac-8b24-cb49703e017b'
+), 
+(
+  'c65cd02e-5eaf-4004-a379-66501c74c4b1', 
+  2, 
+  'f5441968-58c0-41d8-a1ae-fff78c5a94b7', 
+  '42acb306-9702-4574-81a0-d6855cfeb290'
+), 
+(
+  '495e8079-3f65-4aef-9754-ec4f55c32bc4', 
+  3, 
+  '5c81a278-37e7-4d4f-959e-5f0fe3bc7264', 
+  '42acb306-9702-4574-81a0-d6855cfeb290'
 );

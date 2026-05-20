@@ -2,6 +2,7 @@ import { HttpError } from '../error/HttpError';
 import { API } from '../util/constantes';
 import { RepositorioCompras } from './interface/RepositorioCompras';
 import { CompraParaExibir } from './types/CompraParaExibir';
+import { ComprasRealizadas } from './types/ComprasRealizadas';
 
 export class RepositorioComprasEmHttp implements RepositorioCompras {
   private path: string;
@@ -33,6 +34,16 @@ export class RepositorioComprasEmHttp implements RepositorioCompras {
     const dados = await res.json();
 
     return dados as CompraParaExibir;
+  }
+
+  async buscar(): Promise<ComprasRealizadas> {
+    const res = await fetch(this.path, { credentials: 'include' });
+
+    await this.verificarRespostaRequisicao(res);
+
+    const dados = await res.json();
+
+    return dados as ComprasRealizadas;
   }
 
   private async verificarRespostaRequisicao(res: Response): Promise<void> {

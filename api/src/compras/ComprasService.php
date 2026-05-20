@@ -114,4 +114,25 @@ class ComprasService
 
     return new CompraParaExibir($compra);
   }
+
+  public function buscarPorUsuario(): ComprasRealizadas
+  {
+    $usuarioId = $this->sessao->obter(ChaveSessao::USUARIO);
+
+    $logado = is_string($usuarioId);
+
+    if (!$logado) {
+      throw new HttpException(401);
+    }
+
+    $compras = $this->comprasRepository->buscarPorUsuario($usuarioId);
+
+    foreach ($compras as $compra) {
+      $itens = $this->itensRepository->buscarPorCompraId($compra->id);
+
+      $compra->itens = $itens;
+    }
+
+    return new ComprasRealizadas($compras);
+  }
 }

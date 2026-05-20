@@ -57,14 +57,15 @@ class ComprasRepositoryBdr implements ComprasRepository
   /**
    * @return Compra[]
    */
-  public function buscarPorPeriodo(Data $inicio, Data $fim): array
+  public function buscarPorUsuario(string $usuarioId): array
   {
     $ps = $this->pdo->prepare(
       'SELECT * FROM compra_para_hidratar 
-       WHERE timestamp >= ? AND timestamp <= ?',
+       WHERE usuarioId = ? 
+       ORDER BY timestamp DESC',
     );
 
-    $ps->execute([$inicio, $fim]);
+    $ps->execute([$usuarioId]);
 
     /**
      * @var CompraParaHidratar[]

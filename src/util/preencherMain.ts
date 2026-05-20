@@ -1,4 +1,6 @@
-export async function buscarHtml(caminho: string): Promise<string> {
+const main = document.querySelector('main')!;
+
+export async function preencherMain(caminho: string): Promise<void> {
   const res = await fetch(caminho);
 
   if (!res.ok) {
@@ -7,5 +9,5 @@ export async function buscarHtml(caminho: string): Promise<string> {
 
   const html = await res.text();
 
-  return html;
+  main.innerHTML = html;
 }

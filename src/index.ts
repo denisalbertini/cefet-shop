@@ -1,8 +1,9 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import page from 'page';
-import { buscarHtml } from './util/buscarHtml';
 import { VISAO_PRODUTOS } from './util/constantes';
+import { navegarPara } from './util/navegarPara';
+import { preencherMain } from './util/preencherMain';
 import {
   visaoBadgeCarrinho,
   visaoCarrinho,
@@ -12,12 +13,15 @@ import {
   visaoMenuUsuario,
 } from './visoes';
 
-const main = document.querySelector('main')!;
+page('*', (_ctx, next) => {
+  visaoMenuUsuario.iniciar();
+  visaoBadgeCarrinho.iniciar();
+
+  next();
+});
 
 page('/', async (ctx) => {
-  const html = await buscarHtml('/pages/listagem.html');
-
-  main.innerHTML = html;
+  await preencherMain('/pages/listagem.html');
 
   const queries = ctx.querystring;
 
@@ -29,15 +33,11 @@ page('/', async (ctx) => {
       VISAO_PRODUTOS.PRODUTOS_POR_PAGINA.toString(),
   );
 
-  visaoMenuUsuario.iniciar();
-  visaoBadgeCarrinho.iniciar();
   visaoListagemProdutos.iniciar(pagina, limit);
 });
 
 page('/produto/:id', async (ctx) => {
-  const html = await buscarHtml('/pages/produto.html');
-
-  main.innerHTML = html;
+  await preencherMain('/pages/produto.html');
 
   const id = ctx.params.id as string;
 
@@ -45,25 +45,19 @@ page('/produto/:id', async (ctx) => {
 });
 
 page('/carrinho', async () => {
-  const html = await buscarHtml('/pages/carrinho.html');
-
-  main.innerHTML = html;
+  await preencherMain('/pages/carrinho.html');
 
   visaoCarrinho.iniciar();
 });
 
 page('/login', async () => {
-  const html = await buscarHtml('/pages/login.html');
-
-  main.innerHTML = html;
+  await preencherMain('/pages/login.html');
 
   visaoLogin.iniciar();
 });
 
 page('/compra/:id', async (ctx) => {
-  const html = await buscarHtml('/pages/compra-finalizada.html');
-
-  main.innerHTML = html;
+  await preencherMain('/pages/compra-finalizada.html');
 
   const id = ctx.params.id as string;
 
@@ -73,15 +67,24 @@ page('/compra/:id', async (ctx) => {
   new visao().iniciar(id);
 });
 
-page('/relatorios', async () => {
-  const html = await buscarHtml('/pages/relatorios.html');
+page('/compras', async () => {
+  await preencherMain('/pages/compras-realizadas.html');
 
-  main.innerHTML = html;
+  const visao = (await import('./compras/VisaoComprasRealizadasEmDom.js'))
+    .VisaoComprasRealizadasEmDom;
+
+  new visao().iniciar();
+});
+
+page('/relatorios', async () => {
+  await preencherMain('/pages/relatorios.html');
 
   const visao = (await import('./relatorios/VisaoRelatoriosEmDom.js'))
     .VisaoRelatoriosEmDom;
 
   new visao().iniciar();
 });
+
+page('*', () => navegarPara('/'));
 
 page();

@@ -9,5 +9,5 @@ interface ComprasRepository
   /**
    * @return Compra[]
    */
-  public function buscarPorPeriodo(Data $inicio, Data $fim): array;
+  public function buscarPorUsuario(string $usuarioId): array;
 }

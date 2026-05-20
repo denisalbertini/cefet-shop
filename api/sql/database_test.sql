@@ -107,9 +107,9 @@ LEFT JOIN disciplina d ON dc.disciplina_id = d.id
 LEFT JOIN curso c ON d.curso_id = c.id;
 
 CREATE VIEW compra_para_hidratar AS 
-SELECT compra.id, 
-       compra.numero_compra AS numeroCompra, 
-       compra.timestamp, 
-       compra.total, 
-       compra.usuario_id AS usuarioId 
+SELECT id, 
+       numero_compra AS numeroCompra, 
+       timestamp, 
+       total, 
+       usuario_id AS usuarioId 
 FROM compra;

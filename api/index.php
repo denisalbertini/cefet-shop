@@ -73,6 +73,7 @@ $app->get('/usuarios', [$usuariosController, 'buscarUsuarioLogado']);
 
 $app->post('/compras', [$comprasController, 'registrar']);
 $app->get('/compras/:id', [$comprasController, 'buscarPorId']);
+$app->get('/compras', [$comprasController, 'buscar']);
 
 $app->get('/relatorios/vendas', [$relatoriosController, 'buscarVendas']);
 $app->get('/relatorios/top-itens', [$relatoriosController, 'buscarTopItens']);
