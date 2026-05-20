@@ -9,12 +9,14 @@ import {
   visaoCarrinho,
   visaoDetalheProduto,
   visaoListagemProdutos,
-  visaoLogin,
-  visaoMenuUsuario,
 } from './visoes';
 
-page('*', (_ctx, next) => {
-  visaoMenuUsuario.iniciar();
+page('*', async (_ctx, next) => {
+  const visaoMenuUsuario = (await import('./usuarios/VisaoMenuUsuarioEmDom.js'))
+    .VisaoMenuUsuarioEmDom;
+
+  new visaoMenuUsuario().iniciar();
+
   visaoBadgeCarrinho.iniciar();
 
   next();
@@ -53,7 +55,9 @@ page('/carrinho', async () => {
 page('/login', async () => {
   await preencherMain('/pages/login.html');
 
-  visaoLogin.iniciar();
+  const visao = (await import('./usuarios/VisaoLoginEmDom.js')).VisaoLoginEmDom;
+
+  new visao().iniciar();
 });
 
 page('/compra/:id', async (ctx) => {

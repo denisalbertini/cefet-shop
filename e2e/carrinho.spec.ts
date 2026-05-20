@@ -47,26 +47,14 @@ test.describe('Carrinho', () => {
     pagina = null;
   });
 
-  test('deveria exibir os itens do carrinho', async () => {
-    const contagemItens = await pagina!.contar(pagina!.localizarItens());
-    const contagemIds = await pagina!.contar(pagina!.localizarProdutoIds());
-    const contagemFotos = await pagina!.contar(pagina!.localizarProdutoFotos());
-    const contagemNomes = await pagina!.contar(pagina!.localizarProdutoNomes());
-    const contagemQuantidades = await pagina!.contar(
-      pagina!.localizarQuantidades(),
-    );
-    const contagemSubTotais = await pagina!.contar(
-      pagina!.localizarSubTotais(),
-    );
-    const total = pagina!.obterConteudoTextual(pagina!.localizarTotal());
-
-    expect(contagemItens).not.toBe(0);
-    expect(contagemIds).toBe(contagemItens);
-    expect(contagemFotos).toBe(contagemItens);
-    expect(contagemNomes).toBe(contagemItens);
-    expect(contagemQuantidades).toBe(contagemItens);
-    expect(contagemSubTotais).toBe(contagemItens);
-    expect(total).not.toBe('');
+  test('deveria exibir os itens do carrinho', async ({ page }) => {
+    await expect(pagina!.localizarItens()).toHaveCount(2);
+    await expect(pagina!.localizarProdutoIds()).toHaveCount(2);
+    await expect(pagina!.localizarProdutoFotos()).toHaveCount(2);
+    await expect(pagina!.localizarProdutoNomes()).toHaveCount(2);
+    await expect(pagina!.localizarQuantidades()).toHaveCount(2);
+    await expect(pagina!.localizarSubTotais()).toHaveCount(2);
+    await expect(pagina!.localizarTotal()).not.toHaveText('');
   });
 
   test('deveria exibir os atributos de um item corretamente', async () => {
@@ -135,7 +123,7 @@ test.describe('Carrinho', () => {
   });
 
   test('deveria remover um item', async () => {
-    const primeiraContagem = await pagina!.contar(pagina!.localizarItens());
+    await expect(pagina!.localizarItens()).toHaveCount(2);
 
     const botaoRemover = pagina!.localizarPrimeiro(
       pagina!.localizarBotoesRemover(),
@@ -143,10 +131,7 @@ test.describe('Carrinho', () => {
 
     await pagina!.clicar(botaoRemover);
 
-    const segundaContagem = await pagina!.contar(pagina!.localizarItens());
-
-    expect(primeiraContagem).toBe(2);
-    expect(segundaContagem).toBe(1);
+    await expect(pagina!.localizarItens()).toHaveCount(1);
   });
 
   test('deveria exibir um alerta ao tentar finalizar a compra caso o servidor retorne um erro', async ({

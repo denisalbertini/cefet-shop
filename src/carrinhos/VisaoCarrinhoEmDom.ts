@@ -128,7 +128,7 @@ export class VisaoCarrinhoEmDom implements VisaoCarrinho {
   }
 
   redirecionarParaCompraFinalizada(compraId: string): void {
-    navegarPara(`/compra/${compraId}`);
+    location.href = `/compra/${compraId}`;
   }
 
   redirecionarParaLogin(): void {

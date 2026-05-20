@@ -45,41 +45,30 @@ test.describe('Produto', () => {
     });
 
     test('deveria exibir os elementos corretamente', async () => {
-      const id = await pagina!.obterValorInput(pagina!.localizarId());
-      const foto = pagina!.localizarFoto();
-      const nome = await pagina!.obterConteudoTextual(pagina!.localizarNome());
-      const lancamento = await pagina!.obterConteudoTextual(
-        pagina!.localizarLancamento(),
+      await expect(pagina!.localizarId()).toHaveAttribute('value', produto.id);
+      await expect(pagina!.localizarFoto()).toHaveAttribute(
+        'src',
+        produto.foto,
       );
-      const descricao = await pagina!.obterConteudoTextual(
-        pagina!.localizarDescricao(),
+      await expect(pagina!.localizarNome()).toHaveText(produto.nome);
+      await expect(pagina!.localizarLancamento()).toHaveText(
+        produto.lancamento,
       );
-      const precoSemDesconto = pagina!.localizarPrecoSemDesconto();
-      const valorPrecoSemDesconto =
-        await pagina!.obterConteudoTextual(precoSemDesconto);
-      const preco = await pagina!.obterConteudoTextual(
-        pagina!.localizarPreco(),
-      );
-      const quantidade = pagina!.localizarQuantidade();
-      const adicionarAoCarrinho = pagina!.localizarAdicionarAoCarrinho();
-      const esgotado = pagina!.localizarEsgotado();
-      const irParaCarrinho = pagina!.localizarIrParaCarrinho();
-
-      expect(id).toBe(produto.id);
-      await expect(foto).toHaveAttribute('src', produto.foto);
-      expect(nome).toBe(produto.nome);
-      expect(lancamento).toBe(produto.lancamento);
-      expect(descricao).toBe(produto.descricao);
-      await expect(precoSemDesconto).toHaveClass(
+      await expect(pagina!.localizarDescricao()).toHaveText(produto.descricao);
+      await expect(pagina!.localizarPrecoSemDesconto()).toHaveClass(
         'text-decoration-line-through',
       );
-      expect(valorPrecoSemDesconto).toBe(produto.preco);
-      expect(preco).toBe(produto.precoPromocional);
-      await expect(quantidade).toHaveAttribute('min', '1');
-      await expect(quantidade).toHaveAttribute('max', '10');
-      await expect(adicionarAoCarrinho).toBeVisible();
-      await expect(esgotado).not.toBeVisible();
-      await expect(irParaCarrinho).toBeVisible();
+      await expect(pagina!.localizarPrecoSemDesconto()).toHaveText(
+        produto.preco,
+      );
+      await expect(pagina!.localizarPreco()).toHaveText(
+        produto.precoPromocional!,
+      );
+      await expect(pagina!.localizarQuantidade()).toHaveAttribute('min', '1');
+      await expect(pagina!.localizarQuantidade()).toHaveAttribute('max', '10');
+      await expect(pagina!.localizarAdicionarAoCarrinho()).toBeVisible();
+      await expect(pagina!.localizarEsgotado()).not.toBeVisible();
+      await expect(pagina!.localizarIrParaCarrinho()).toBeVisible();
     });
 
     test('deveria adicionar ao carrinho', async () => {
@@ -134,39 +123,24 @@ test.describe('Produto', () => {
     });
 
     test('deveria exibir os elementos corretamente', async () => {
-      const id = await pagina!.obterValorInput(pagina!.localizarId());
-      const foto = pagina!.localizarFoto();
-      const nome = await pagina!.obterConteudoTextual(pagina!.localizarNome());
-      const lancamento = await pagina!.obterConteudoTextual(
-        pagina!.localizarLancamento(),
+      await expect(pagina!.localizarId()).toHaveAttribute('value', produto.id);
+      await expect(pagina!.localizarFoto()).toHaveAttribute(
+        'src',
+        produto.foto,
       );
-      const descricao = await pagina!.obterConteudoTextual(
-        pagina!.localizarDescricao(),
+      await expect(pagina!.localizarNome()).toHaveText(produto.nome);
+      await expect(pagina!.localizarLancamento()).toHaveText(
+        produto.lancamento,
       );
-      const precoSemDesconto = pagina!.localizarPrecoSemDesconto();
-      const valorPrecoSemDesconto =
-        await pagina!.obterConteudoTextual(precoSemDesconto);
-      const preco = await pagina!.obterConteudoTextual(
-        pagina!.localizarPreco(),
-      );
-      const quantidade = pagina!.localizarQuantidade();
-      const adicionarAoCarrinho = pagina!.localizarAdicionarAoCarrinho();
-      const esgotado = pagina!.localizarEsgotado();
-      const irParaCarrinho = pagina!.localizarIrParaCarrinho();
-
-      expect(id).toBe(produto.id);
-      await expect(foto).toHaveAttribute('src', produto.foto);
-      expect(nome).toBe(produto.nome);
-      expect(lancamento).toBe(produto.lancamento);
-      expect(descricao).toBe(produto.descricao);
-      await expect(precoSemDesconto).not.toBeVisible();
-      expect(valorPrecoSemDesconto).toBe('');
-      expect(preco).toBe(produto.preco);
-      await expect(quantidade).toHaveAttribute('min', '1');
-      await expect(quantidade).toHaveAttribute('max', '9');
-      await expect(adicionarAoCarrinho).toBeVisible();
-      await expect(esgotado).not.toBeVisible();
-      await expect(irParaCarrinho).toBeVisible();
+      await expect(pagina!.localizarDescricao()).toHaveText(produto.descricao);
+      await expect(pagina!.localizarPrecoSemDesconto()).not.toBeVisible();
+      await expect(pagina!.localizarPrecoSemDesconto()).toHaveText('');
+      await expect(pagina!.localizarPreco()).toHaveText(produto.preco);
+      await expect(pagina!.localizarQuantidade()).toHaveAttribute('min', '1');
+      await expect(pagina!.localizarQuantidade()).toHaveAttribute('max', '9');
+      await expect(pagina!.localizarAdicionarAoCarrinho()).toBeVisible();
+      await expect(pagina!.localizarEsgotado()).not.toBeVisible();
+      await expect(pagina!.localizarIrParaCarrinho()).toBeVisible();
     });
 
     test('deveria adicionar ao carrinho', async () => {
@@ -212,39 +186,26 @@ test.describe('Produto', () => {
     });
 
     test('deveria exibir os elementos corretamente', async () => {
-      const id = await pagina!.obterValorInput(pagina!.localizarId());
-      const foto = pagina!.localizarFoto();
-      const nome = await pagina!.obterConteudoTextual(pagina!.localizarNome());
-      const lancamento = await pagina!.obterConteudoTextual(
-        pagina!.localizarLancamento(),
+      await expect(pagina!.localizarId()).toHaveAttribute('value', produto.id);
+      await expect(pagina!.localizarFoto()).toHaveAttribute(
+        'src',
+        produto.foto,
       );
-      const descricao = await pagina!.obterConteudoTextual(
-        pagina!.localizarDescricao(),
+      await expect(pagina!.localizarNome()).toHaveText(produto.nome);
+      await expect(pagina!.localizarLancamento()).toHaveText(
+        produto.lancamento,
       );
-      const precoSemDesconto = pagina!.localizarPrecoSemDesconto();
-      const valorPrecoSemDesconto =
-        await pagina!.obterConteudoTextual(precoSemDesconto);
-      const preco = await pagina!.obterConteudoTextual(
-        pagina!.localizarPreco(),
+      await expect(pagina!.localizarDescricao()).toHaveText(produto.descricao);
+      await expect(pagina!.localizarPrecoSemDesconto()).not.toBeVisible();
+      await expect(pagina!.localizarPrecoSemDesconto()).toHaveText('');
+      await expect(pagina!.localizarPreco()).toHaveText(produto.preco);
+      await expect(pagina!.localizarQuantidade()).toHaveAttribute(
+        'disabled',
+        'true',
       );
-      const quantidade = pagina!.localizarQuantidade();
-      const adicionarAoCarrinho = pagina!.localizarAdicionarAoCarrinho();
-      const esgotado = pagina!.localizarEsgotado();
-      const irParaCarrinho = pagina!.localizarIrParaCarrinho();
-
-      expect(id).toBe(produto.id);
-      await expect(foto).toHaveAttribute('src', produto.foto);
-      expect(nome).toBe(produto.nome);
-      expect(lancamento).toBe(produto.lancamento);
-      expect(descricao).toBe(produto.descricao);
-      await expect(precoSemDesconto).not.toBeVisible();
-      expect(valorPrecoSemDesconto).toBe('');
-      expect(preco).toBe(produto.preco);
-      expect(await pagina!.obterAtributo(quantidade, 'min')).toBeNull();
-      expect(await pagina!.obterAtributo(quantidade, 'max')).toBeNull();
-      await expect(adicionarAoCarrinho).not.toBeVisible();
-      await expect(esgotado).toBeVisible();
-      await expect(irParaCarrinho).toBeVisible();
+      await expect(pagina!.localizarAdicionarAoCarrinho()).not.toBeVisible();
+      await expect(pagina!.localizarEsgotado()).toBeVisible();
+      await expect(pagina!.localizarIrParaCarrinho()).toBeVisible();
     });
 
     test('deveria ir para o carrinho', async ({ page }) => {

@@ -1,16 +1,16 @@
 import { navegarPara } from '../util/navegarPara';
-import { ControladoraUsuarios } from './ControladoraUsuarios';
+import { ControladoraLogin } from './ControladoraLogin';
 import { VisaoLogin } from './interface/VisaoLogin';
 
 export class VisaoLoginEmDom implements VisaoLogin {
-  private controladoraUsuarios?: ControladoraUsuarios;
+  private controladora: ControladoraLogin;
 
-  definirControladora(controladoraUsuarios: ControladoraUsuarios): void {
-    this.controladoraUsuarios = controladoraUsuarios;
+  constructor() {
+    this.controladora = new ControladoraLogin(this);
   }
 
   iniciar(): void {
-    this.controladoraUsuarios?.exibirLogin();
+    this.controladora.exibir();
   }
 
   exibir(): void {
@@ -29,10 +29,7 @@ export class VisaoLoginEmDom implements VisaoLogin {
       const identificador = formData.get('identificador')!;
       const senha = formData.get('senha')!;
 
-      this.controladoraUsuarios?.login(
-        identificador.toString(),
-        senha.toString(),
-      );
+      this.controladora.login(identificador.toString(), senha.toString());
     });
   }
 
@@ -44,10 +41,10 @@ export class VisaoLoginEmDom implements VisaoLogin {
     const destino = carrinho ? '/carrinho' : '/';
 
     navegarPara(destino);
+  }
 
-    if (carrinho) {
-      this.controladoraUsuarios?.exibirMenu();
-    }
+  recarregar(): void {
+    location.reload();
   }
 
   exibirErro(erro: string): void {

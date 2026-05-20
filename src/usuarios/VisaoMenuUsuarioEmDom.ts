@@ -1,18 +1,18 @@
 import { Papel } from '../enum/Papel';
 import { navegarPara } from '../util/navegarPara';
-import { ControladoraUsuarios } from './ControladoraUsuarios';
+import { ControladoraMenuUsuario } from './ControladoraMenuUsuario';
 import { VisaoMenuUsuario } from './interface/VisaoMenuUsuario';
 import { UsuarioParaExibir } from './types/UsuarioParaExibir';
 
 export class VisaoMenuUsuarioEmDom implements VisaoMenuUsuario {
-  private controladoraUsuarios?: ControladoraUsuarios;
+  private controladora: ControladoraMenuUsuario;
 
-  definirControladora(controladoraUsuarios: ControladoraUsuarios): void {
-    this.controladoraUsuarios = controladoraUsuarios;
+  constructor() {
+    this.controladora = new ControladoraMenuUsuario(this);
   }
 
   iniciar(): void {
-    this.controladoraUsuarios?.exibirMenu();
+    this.controladora.exibir();
   }
 
   exibir(usuario: UsuarioParaExibir): void {
@@ -57,7 +57,7 @@ export class VisaoMenuUsuarioEmDom implements VisaoMenuUsuario {
     botaoLogout.addEventListener('click', (event) => {
       event.preventDefault();
 
-      this.controladoraUsuarios?.logout();
+      this.controladora.logout();
     });
 
     const botaoLogin = document.getElementById('login');
