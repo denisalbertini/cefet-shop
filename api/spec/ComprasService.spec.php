@@ -20,7 +20,7 @@ describe('ComprasService', function () {
         'implements' => [CarrinhosRepository::class],
       ]);
       $itensRepository = Double::instance([
-        'implements' => [ItensRepository::class],
+        'implements' => [ItensCompraRepository::class],
       ]);
       $comprasRepository = Double::instance([
         'implements' => [ComprasRepository::class],
@@ -214,7 +214,7 @@ describe('ComprasService', function () {
       ]);
       $usuariosRepository = new UsuariosRepositoryBdr($this->pdo);
       $produtosRepository = new ProdutosRepositoryBdr($this->pdo);
-      $itensRepository = new ItensRepositoryBdr(
+      $itensRepository = new ItensCompraRepositoryBdr(
         $this->pdo,
         $produtosRepository,
       );

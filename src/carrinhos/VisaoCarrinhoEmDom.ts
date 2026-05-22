@@ -17,11 +17,6 @@ export class VisaoCarrinhoEmDom implements VisaoCarrinho {
   }
 
   exibir(carrinho: CarrinhoParaExibir): void {
-    const ancoraCarrinho = document.getElementById(
-      'carrinho',
-    ) as HTMLAnchorElement;
-    ancoraCarrinho.classList.add('invisible');
-
     if (carrinho.itens.length === 0) {
       this.exibirCarrinhoVazio();
       return;

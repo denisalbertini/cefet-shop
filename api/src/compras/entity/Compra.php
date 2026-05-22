@@ -8,7 +8,7 @@ class Compra
   public Usuario $usuario;
   public Cefetin $total;
   /**
-   * @var Item[]
+   * @var ItemCompra[]
    */
   public array $itens;
 }

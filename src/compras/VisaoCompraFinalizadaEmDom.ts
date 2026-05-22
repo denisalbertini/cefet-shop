@@ -41,7 +41,7 @@ export class VisaoCompraFinalizadaEmDom implements VisaoCompraFinalizada {
       img.src = item.produtoFoto;
       nomeProduto.textContent = item.produtoNome;
       quantidade.textContent = item.quantidade.toString();
-      subTotal.textContent = item.subTotal;
+      subTotal.textContent = item.subtotal;
 
       fragmento.appendChild(li);
     }

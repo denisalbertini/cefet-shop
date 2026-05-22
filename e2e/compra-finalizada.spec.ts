@@ -1,5 +1,5 @@
 import test from 'playwright/test';
-import { ItemParaListar } from '../src/carrinhos/itens/dto/ItemParaListar';
+import { ItemCompraParaListar } from '../src/compras/itens-compra/dto/ItemCompraParaListar';
 import { API } from '../src/util/constantes';
 import { PaginaCompraFinalizada } from './pom/PaginaCompraFinalizada';
 
@@ -9,14 +9,7 @@ test.describe('Compra Finalizada', () => {
   const data = '15/05/2026';
   const total = '100,00';
   const itens = [
-    new ItemParaListar(
-      2,
-      '100,00',
-      'produtoId',
-      'produtoFoto',
-      'produtoNome',
-      10,
-    ),
+    new ItemCompraParaListar(2, '100,00', 'produtoId', 'produtoNome'),
   ];
 
   let pagina: PaginaCompraFinalizada | null;

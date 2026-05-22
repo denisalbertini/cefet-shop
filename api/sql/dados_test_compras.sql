@@ -1,7 +1,7 @@
 DELETE FROM produto;
 DELETE FROM usuario;
 DELETE FROM compra;
-DELETE FROM item;
+DELETE FROM item_compra;
 
 INSERT INTO produto (id, nome, descricao, estoque, quantidade_total_vendida, lancamento, foto, preco, promocao_id) VALUES
 (

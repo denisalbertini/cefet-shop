@@ -24,6 +24,9 @@ export class ControladoraComprasRealizadas {
         case 401:
           this.visao.redirecionar();
           break;
+        case 404:
+          this.visao.exibirVazio();
+          break;
         default:
           break;
       }

@@ -1,5 +1,5 @@
 import { expect, Page } from 'playwright/test';
-import { ItemParaListar } from '../../src/carrinhos/itens/dto/ItemParaListar';
+import { ItemCompraParaListar } from '../../src/compras/itens-compra/dto/ItemCompraParaListar';
 import { APP } from '../../src/util/constantes';
 
 export class PaginaCompraFinalizada {
@@ -27,15 +27,15 @@ export class PaginaCompraFinalizada {
     await expect(localizador).toBeVisible();
   }
 
-  async afirmarItens(itens: ItemParaListar[]): Promise<void> {
+  async afirmarItens(itens: ItemCompraParaListar[]): Promise<void> {
     const lista = this.page.locator('#itens');
 
     await expect(lista).toHaveCount(itens.length);
   }
 
-  async afirmarItem(item: ItemParaListar): Promise<void> {
+  async afirmarItem(item: ItemCompraParaListar): Promise<void> {
     const quantidade = this.page.getByText(`x${item.quantidade.toString()}`);
-    const subtotal = this.page.getByText(item.subTotal);
+    const subtotal = this.page.getByText(item.subtotal);
     const produtoFoto = this.page.getByText(item.produtoFoto);
     const produtoNome = this.page.getByText(item.produtoNome);
 

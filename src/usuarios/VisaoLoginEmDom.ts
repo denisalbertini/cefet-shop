@@ -14,10 +14,6 @@ export class VisaoLoginEmDom implements VisaoLogin {
   }
 
   exibir(): void {
-    const botaoLogin = document.getElementById('login');
-
-    botaoLogin?.classList.add('invisible');
-
     const botaoEntrar = document.getElementById('entrar') as HTMLButtonElement;
 
     botaoEntrar.addEventListener('click', (event) => {

@@ -1,3 +1,5 @@
+USE g7_prod;
+
 INSERT INTO promocao (id, nome, desconto) VALUES
 ('518bb7dd-2dac-4c63-9131-d754443596c9', 'Black Friday', 0.2),
 ('35609774-d44b-4a95-be09-180326578f1f', 'Liquidação de Verão', 0.1);
@@ -195,28 +197,32 @@ INSERT INTO compra (id, numero_compra, timestamp, total, usuario_id) VALUES
   'd4314882-012b-4b84-9626-4208f4ed8264'
 );
 
-INSERT INTO item (id, quantidade, produto_id, compra_id) VALUES 
+INSERT INTO item_compra (id, quantidade, subtotal, produto_id, compra_id) VALUES 
 (
   '77916fb1-272a-4ed4-b669-ef0a5d503290', 
   1, 
+  5990, 
   '84490d7b-5f06-4443-b064-ef1cd76b9ced', 
   '9e8195ca-d190-46ac-8b24-cb49703e017b'
 ), 
 (
   'efd5a703-6743-4b3f-aaa8-e76722aeb665', 
   2, 
+  25980, 
   'ecfe344b-1437-4774-a4b5-580a2dc4ae7d', 
   '9e8195ca-d190-46ac-8b24-cb49703e017b'
 ), 
 (
   'c65cd02e-5eaf-4004-a379-66501c74c4b1', 
   2, 
+  12180, 
   'f5441968-58c0-41d8-a1ae-fff78c5a94b7', 
   '42acb306-9702-4574-81a0-d6855cfeb290'
 ), 
 (
   '495e8079-3f65-4aef-9754-ec4f55c32bc4', 
   3, 
+  9270, 
   '5c81a278-37e7-4d4f-959e-5f0fe3bc7264', 
   '42acb306-9702-4574-81a0-d6855cfeb290'
 );

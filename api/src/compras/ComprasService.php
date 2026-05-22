@@ -6,7 +6,7 @@ class ComprasService
     private Sessao $sessao,
     private UsuariosRepository $usuariosRepository,
     private CarrinhosRepository $carrinhosRepository,
-    private ItensRepository $itensRepository,
+    private ItensCompraRepository $itensCompraRepository,
     private ProdutosRepository $produtosRepository,
     private ComprasRepository $comprasRepository,
   ) {}
@@ -87,13 +87,21 @@ class ComprasService
     $compraId = $this->comprasRepository->registrar($compra);
 
     foreach ($carrinho->itens as $item) {
-      $produto = $item->produto;
       $quantidade = $item->quantidade;
+
+      $itemCompra = new ItemCompra();
+
+      $itemCompra->quantidade = $quantidade;
+      $itemCompra->subtotal = $item->obterSubTotal();
+      $itemCompra->produto = $item->produto;
+
+      $this->itensCompraRepository->registrar($itemCompra, $compraId);
+
+      $produto = $item->produto;
 
       $produto->estoque -= $quantidade;
       $produto->quantidadeTotalVendida += $quantidade;
 
-      $this->itensRepository->registrar($item, $compraId);
       $this->produtosRepository->atualizarPosCompra($produto);
     }
 
@@ -108,7 +116,7 @@ class ComprasService
   {
     $compra = $this->comprasRepository->buscarPorId($id);
 
-    $itens = $this->itensRepository->buscarPorCompraId($id);
+    $itens = $this->itensCompraRepository->buscarPorCompraId($id);
 
     $compra->itens = $itens;
 
@@ -128,7 +136,7 @@ class ComprasService
     $compras = $this->comprasRepository->buscarPorUsuario($usuarioId);
 
     foreach ($compras as $compra) {
-      $itens = $this->itensRepository->buscarPorCompraId($compra->id);
+      $itens = $this->itensCompraRepository->buscarPorCompraId($compra->id);
 
       $compra->itens = $itens;
     }

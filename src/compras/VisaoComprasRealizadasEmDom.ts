@@ -1,7 +1,7 @@
-import { ItemParaListar } from '../carrinhos/itens/dto/ItemParaListar';
 import { navegarPara } from '../util/navegarPara';
 import { ControladoraComprasRealizadas } from './ControladoraComprasRealizadas';
 import { VisaoComprasRealizadas } from './interface/VisaoComprasRealizadas';
+import { ItemCompraParaListar } from './itens-compra/dto/ItemCompraParaListar';
 import { CompraParaExibir } from './types/CompraParaExibir';
 import { ComprasRealizadas } from './types/ComprasRealizadas';
 
@@ -44,6 +44,16 @@ export class VisaoComprasRealizadasEmDom implements VisaoComprasRealizadas {
     navegarPara('/');
   }
 
+  exibirVazio(): void {
+    const listagem = document.getElementById('listagem-compras')!;
+
+    listagem.classList.add('d-none');
+
+    const alert = document.querySelector('.alert')!;
+
+    alert.classList.remove('d-none');
+  }
+
   private montarCompra(
     compraTemplate: HTMLTemplateElement,
     indice: number,
@@ -82,7 +92,7 @@ export class VisaoComprasRealizadasEmDom implements VisaoComprasRealizadas {
 
   private montarItem(
     itemTemplate: HTMLTemplateElement,
-    item: ItemParaListar,
+    item: ItemCompraParaListar,
   ): HTMLElement {
     const li = itemTemplate.content.cloneNode(true) as HTMLLIElement;
 
@@ -94,7 +104,7 @@ export class VisaoComprasRealizadasEmDom implements VisaoComprasRealizadas {
     foto.src = item.produtoFoto;
     nome.textContent = item.produtoNome;
     quantidade.textContent = item.quantidade.toString();
-    subtotal.textContent = item.subTotal;
+    subtotal.textContent = item.subtotal;
 
     return li;
   }

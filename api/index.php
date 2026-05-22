@@ -15,7 +15,7 @@ $sessao = new SessaoEmArquivo();
 $produtosRepository = new ProdutosRepositoryBdr($pdo);
 $carrinhosRepository = new CarrinhosRepositorySessao($sessao);
 $usuariosRepository = new UsuariosRepositoryBdr($pdo);
-$itensRepository = new ItensRepositoryBdr($pdo, $produtosRepository);
+$itensRepository = new ItensCompraRepositoryBdr($pdo, $produtosRepository);
 $comprasRepository = new ComprasRepositoryBdr($pdo, $usuariosRepository);
 
 $produtosService = new ProdutosService($produtosRepository);

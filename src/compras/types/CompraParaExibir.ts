@@ -1,9 +1,9 @@
-import { ItemParaListar } from '../../carrinhos/itens/dto/ItemParaListar';
+import { ItemCompraParaListar } from '../itens-compra/dto/ItemCompraParaListar';
 
 export type CompraParaExibir = {
   numeroCompra: number;
   nomeCompletoUsuario: string;
   data: string;
   total: string;
-  itens: ItemParaListar[];
+  itens: ItemCompraParaListar[];
 };

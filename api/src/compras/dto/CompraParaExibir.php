@@ -7,7 +7,7 @@ class CompraParaExibir
   public string $data;
   public string $total;
   /**
-   * @var ItemParaListar[]
+   * @var ItemCompraParaListar[]
    */
   public array $itens;
 
@@ -20,7 +20,7 @@ class CompraParaExibir
     $this->itens = [];
 
     foreach ($compra->itens as $item) {
-      array_push($this->itens, new ItemParaListar($item));
+      array_push($this->itens, new ItemCompraParaListar($item));
     }
   }
 }

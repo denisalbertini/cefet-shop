@@ -1,4 +1,6 @@
-CREATE DATABASE IF NOT EXISTS g7_prod DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+DROP DATABASE IF EXISTS g7_prod;
+
+CREATE DATABASE g7_prod DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE g7_prod;
 
 CREATE TABLE promocao (
@@ -76,9 +78,10 @@ CREATE TABLE compra (
   CONSTRAINT fk_compra_usuario FOREIGN KEY (usuario_id) REFERENCES usuario(id)
 );
 
-CREATE TABLE item (
+CREATE TABLE item_compra (
   id CHAR(36) PRIMARY KEY DEFAULT UUID(),
   quantidade INT NOT NULL,
+  subtotal INT NOT NULL, 
   produto_id CHAR(36) NOT NULL,
   compra_id CHAR(36) NOT NULL,
   CONSTRAINT fk_item_produto FOREIGN KEY (produto_id) REFERENCES produto(id),
