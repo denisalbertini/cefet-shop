@@ -16,7 +16,7 @@ class RelatoriosController
 
       $res->json($relatorio);
     } catch (HttpException $e) {
-      $res->status($e->obterStatus())->json($e->obterErros());
+      $res->status($e->obterStatus())->json(['erros' => $e->obterErros()]);
     } catch (Exception $e) {
       $this->tratarErro($e, $res);
     }
@@ -31,7 +31,7 @@ class RelatoriosController
 
       $res->json($relatorio);
     } catch (HttpException $e) {
-      $res->status($e->obterStatus())->json($e->obterErros());
+      $res->status($e->obterStatus())->json(['erros' => $e->obterErros()]);
     } catch (Exception $e) {
       $this->tratarErro($e, $res);
     }

@@ -154,5 +154,8 @@ export class VisaoCarrinhoEmDom implements VisaoCarrinho {
     alertas?.replaceChildren(fragmento);
 
     alertas?.classList.remove('d-none');
+
+    this.controladoraCarrinhos?.exibir();
+    this.controladoraCarrinhos?.exibirQuantidadeItens();
   }
 }

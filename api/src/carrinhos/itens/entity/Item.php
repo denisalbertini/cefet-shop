@@ -2,7 +2,6 @@
 
 class Item
 {
-  public string $id;
   public int $quantidade;
 
   public function __construct(int $quantidade, public Produto $produto)

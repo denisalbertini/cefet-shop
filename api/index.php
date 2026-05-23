@@ -80,7 +80,7 @@ $app->get('/relatorios/top-itens', [$relatoriosController, 'buscarTopItens']);
 
 $app->delete('/sessao', function ($req, $res) {
   new SessaoEmArquivo()->destruir();
-  $res->status(201)->json();
+  $res->status(201)->json(new stdClass());
 });
 
 $app->listen();

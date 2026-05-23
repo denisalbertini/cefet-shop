@@ -64,15 +64,20 @@ export class VisaoComprasRealizadasEmDom implements VisaoComprasRealizadas {
     const accordion = compraTemplate.content.cloneNode(true) as HTMLDivElement;
 
     const botao = accordion.querySelector('button')!;
+    const numeroCompra = accordion.querySelector(
+      '.numero-compra',
+    ) as HTMLSpanElement;
+    const dataCompra = accordion.querySelector(
+      '.data-compra',
+    ) as HTMLSpanElement;
     const expansao = accordion.querySelector('.expansao')!;
     const total = accordion.querySelector('.total') as HTMLSpanElement;
 
     botao.setAttribute('data-bs-target', '#' + accordionId);
     botao.setAttribute('aria-controls', accordionId);
-    botao.textContent = compra.data;
-
+    numeroCompra.textContent = compra.numeroCompra.toString();
+    dataCompra.textContent = compra.data;
     expansao.id = accordionId;
-
     total.textContent = compra.total;
 
     const itemTemplate = document.getElementById('item') as HTMLTemplateElement;

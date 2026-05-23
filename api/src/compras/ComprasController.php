@@ -14,7 +14,7 @@ class ComprasController
 
       $res->json(['id' => $id]);
     } catch (HttpException $e) {
-      $res->status($e->obterStatus())->json($e->obterErros());
+      $res->status($e->obterStatus())->json(['erros' => $e->obterErros()]);
     } catch (Exception $e) {
       $this->tratarErro($e, $res);
     }
@@ -33,7 +33,7 @@ class ComprasController
 
       $res->json($compra);
     } catch (HttpException $e) {
-      $res->status($e->obterStatus())->json($e->obterErros());
+      $res->status($e->obterStatus())->json(['erros' => $e->obterErros()]);
     } catch (Exception $e) {
       $this->tratarErro($e, $res);
     }
@@ -46,7 +46,7 @@ class ComprasController
 
       $res->json($compras);
     } catch (HttpException $e) {
-      $res->status($e->obterStatus())->json($e->obterErros());
+      $res->status($e->obterStatus())->json(['erros' => $e->obterErros()]);
     } catch (Exception $e) {
       $this->tratarErro($e, $res);
     }
