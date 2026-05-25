@@ -1,4 +1,3 @@
-pnpm run format
 pnpm run e2e
 pnpm test
 

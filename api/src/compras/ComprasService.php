@@ -72,9 +72,9 @@ class ComprasService
       throw new HttpException(400, ...$erros);
     }
 
-    $this->transacao->iniciar();
-
     try {
+      $this->transacao->iniciar();
+
       $usuario->saldo->subtrair($carrinho->obterTotal());
 
       $this->usuariosRepository->atualizarSaldo($usuario);
@@ -110,7 +110,7 @@ class ComprasService
       }
 
       $this->transacao->confirmar();
-    } catch (PDOException $e) {
+    } catch (Exception $e) {
       $this->transacao->reverter();
 
       throw $e;

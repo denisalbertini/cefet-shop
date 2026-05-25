@@ -18,13 +18,14 @@ $usuariosRepository = new UsuariosRepositoryBdr($pdo);
 $itensRepository = new ItensCompraRepositoryBdr($pdo, $produtosRepository);
 $comprasRepository = new ComprasRepositoryBdr($pdo, $usuariosRepository);
 
+$transacao = new UnidadeTransacionalPdo($pdo);
+
 $produtosService = new ProdutosService($produtosRepository);
 $carrinhosService = new CarrinhosService(
   $carrinhosRepository,
   $produtosRepository,
 );
 $usuariosService = new UsuariosService($usuariosRepository, $sessao);
-$transacao = new TransacaoRepositoryEmPDO($pdo);
 $comprasService = new ComprasService(
   $sessao,
   $usuariosRepository,
