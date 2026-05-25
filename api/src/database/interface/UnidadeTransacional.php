@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-interface TransacaoRepository
+interface UnidadeTransacional
 {
   public function iniciar(): void;
   public function confirmar(): void;

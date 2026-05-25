@@ -55,4 +55,7 @@ class MensagemErro
   public const string COMPRAS_CONTROLLER_ID = 'ID da compra não recebido.';
 
   public const string RELATORIOS_CONTROLLER_PERIODO = 'Os parâmetros "inicio" e "fim" são obrigatórios e devem ser datas válidas.';
+
+  public const string UNIDADE_TRANSACIONAL_TRANSACAO_EM_ANDAMENTO = 'Uma transação já está em andamento.';
+  public const string UNIDADE_TRANSACIONAL_TRANSACAO_INEXISTENTE = 'Não há uma transação em andamento.';
 }

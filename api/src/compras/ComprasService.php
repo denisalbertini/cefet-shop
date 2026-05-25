@@ -9,7 +9,7 @@ class ComprasService
     private ItensCompraRepository $itensCompraRepository,
     private ProdutosRepository $produtosRepository,
     private ComprasRepository $comprasRepository,
-    private TransacaoRepository $transacao,
+    private UnidadeTransacional $transacao,
   ) {}
 
   public function registrar(): string
@@ -114,7 +114,7 @@ class ComprasService
       $this->transacao->reverter();
 
       throw $e;
-    } 
+    }
 
     $carrinho->esvaziar();
 

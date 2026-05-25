@@ -19,6 +19,7 @@
         "src/cursos",
         "src/cursos/entity",
         "src/database",
+        "src/database/interface",
         "src/disciplinas",
         "src/disciplinas/entity",
         "src/disciplinas-cursadas",
@@ -45,7 +46,6 @@
         "src/usuarios/interface",
         "src/util",
         "src/util/constantes",
-        "src/util/interface",
         "src/relatorios",
         "src/relatorios/dto",
         "src/relatorios/interface"

@@ -27,6 +27,7 @@ describe('ComprasService', function () {
       ]);
       $usuariosRepository = new UsuariosRepositoryBdr($this->pdo);
       $produtosRepository = new ProdutosRepositoryBdr($this->pdo);
+      $transacao = new UnidadeTransacionalPdo($this->pdo);
 
       $this->service = new ComprasService(
         $sessao,
@@ -35,6 +36,7 @@ describe('ComprasService', function () {
         $itensRepository,
         $produtosRepository,
         $comprasRepository,
+        $transacao,
       );
 
       $this->sessao = $sessao;
@@ -222,6 +224,7 @@ describe('ComprasService', function () {
         $this->pdo,
         $usuariosRepository,
       );
+      $transacao = new UnidadeTransacionalPdo($this->pdo);
 
       $service = new ComprasService(
         $sessao,
@@ -230,6 +233,7 @@ describe('ComprasService', function () {
         $itensRepository,
         $produtosRepository,
         $comprasRepository,
+        $transacao,
       );
 
       $this->usuariosRepository = $usuariosRepository;
