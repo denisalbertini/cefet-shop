@@ -45,6 +45,7 @@
         "src/usuarios/interface",
         "src/util",
         "src/util/constantes",
+        "src/util/interface",
         "src/relatorios",
         "src/relatorios/dto",
         "src/relatorios/interface"

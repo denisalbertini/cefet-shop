@@ -12,7 +12,7 @@ class RelatoriosRepositoryBdr implements RelatoriosRepository
     $ps = $this->pdo->prepare(
       'SELECT 
          DATE(FROM_UNIXTIME(c.timestamp)) AS data,
-         CAST(SUM(c.total) AS UNSIGNED) AS total
+         SUM(c.total) AS total
        FROM compra c
        WHERE c.timestamp >= ? AND c.timestamp <= ?
        GROUP BY DATE(FROM_UNIXTIME(c.timestamp))
@@ -38,7 +38,7 @@ class RelatoriosRepositoryBdr implements RelatoriosRepository
       'SELECT 
          p.nome AS nomeProduto,
          COUNT(DISTINCT i.compra_id) AS quantidadeVendas
-       FROM item i
+       FROM item_compra i
        JOIN produto p ON p.id = i.produto_id
        JOIN compra c ON c.id = i.compra_id
        WHERE c.timestamp >= ? AND c.timestamp <= ?

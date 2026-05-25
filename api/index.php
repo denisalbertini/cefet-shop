@@ -24,6 +24,7 @@ $carrinhosService = new CarrinhosService(
   $produtosRepository,
 );
 $usuariosService = new UsuariosService($usuariosRepository, $sessao);
+$transacao = new TransacaoRepositoryEmPDO($pdo);
 $comprasService = new ComprasService(
   $sessao,
   $usuariosRepository,
@@ -31,6 +32,7 @@ $comprasService = new ComprasService(
   $itensRepository,
   $produtosRepository,
   $comprasRepository,
+  $transacao,
 );
 
 $relatoriosRepository = new RelatoriosRepositoryBdr($pdo);

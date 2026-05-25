@@ -9,6 +9,7 @@ class ComprasService
     private ItensCompraRepository $itensCompraRepository,
     private ProdutosRepository $produtosRepository,
     private ComprasRepository $comprasRepository,
+    private TransacaoRepository $transacao,
   ) {}
 
   public function registrar(): string
@@ -71,39 +72,49 @@ class ComprasService
       throw new HttpException(400, ...$erros);
     }
 
-    $usuario->saldo->subtrair($carrinho->obterTotal());
+    $this->transacao->iniciar();
 
-    $this->usuariosRepository->atualizarSaldo($usuario);
+    try {
+      $usuario->saldo->subtrair($carrinho->obterTotal());
 
-    $compra = new Compra();
+      $this->usuariosRepository->atualizarSaldo($usuario);
 
-    $timestamp = time();
+      $compra = new Compra();
 
-    $compra->numeroCompra = $timestamp;
-    $compra->data = new Data($timestamp);
-    $compra->usuario = $usuario;
-    $compra->total = $carrinho->obterTotal();
+      $timestamp = time();
 
-    $compraId = $this->comprasRepository->registrar($compra);
+      $compra->numeroCompra = $timestamp;
+      $compra->data = new Data($timestamp);
+      $compra->usuario = $usuario;
+      $compra->total = $carrinho->obterTotal();
 
-    foreach ($carrinho->itens as $item) {
-      $quantidade = $item->quantidade;
+      $compraId = $this->comprasRepository->registrar($compra);
 
-      $itemCompra = new ItemCompra();
+      foreach ($carrinho->itens as $item) {
+        $quantidade = $item->quantidade;
 
-      $itemCompra->quantidade = $quantidade;
-      $itemCompra->subtotal = $item->obterSubTotal();
-      $itemCompra->produto = $item->produto;
+        $itemCompra = new ItemCompra();
 
-      $this->itensCompraRepository->registrar($itemCompra, $compraId);
+        $itemCompra->quantidade = $quantidade;
+        $itemCompra->subtotal = $item->obterSubTotal();
+        $itemCompra->produto = $item->produto;
 
-      $produto = $item->produto;
+        $this->itensCompraRepository->registrar($itemCompra, $compraId);
 
-      $produto->estoque -= $quantidade;
-      $produto->quantidadeTotalVendida += $quantidade;
+        $produto = $item->produto;
 
-      $this->produtosRepository->atualizarPosCompra($produto);
-    }
+        $produto->estoque -= $quantidade;
+        $produto->quantidadeTotalVendida += $quantidade;
+
+        $this->produtosRepository->atualizarPosCompra($produto);
+      }
+
+      $this->transacao->confirmar();
+    } catch (PDOException $e) {
+      $this->transacao->reverter();
+
+      throw $e;
+    } 
 
     $carrinho->esvaziar();
 
