@@ -1,0 +1,8 @@
+pnpm run format
+pnpm run e2e
+pnpm test
+
+cd api
+
+composer analyze
+composer test
