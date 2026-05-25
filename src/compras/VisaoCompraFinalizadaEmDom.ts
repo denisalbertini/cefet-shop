@@ -53,5 +53,13 @@ export class VisaoCompraFinalizadaEmDom implements VisaoCompraFinalizada {
     const total = document.getElementById('total') as HTMLSpanElement;
 
     total.textContent = compra.total;
+
+    const botaoImprimir = document.getElementById('imprimir')!;
+
+    botaoImprimir.addEventListener('click', (event) => {
+      event.preventDefault();
+
+      window.print();
+    });
   }
 }
