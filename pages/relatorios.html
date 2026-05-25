@@ -13,7 +13,7 @@
         <div class="col-10 col-sm-9 col-md-8 col-lg-7 col-xl-6 col-xxl-5">
           <h2 class="text-center">Relatórios</h2>
 
-          <div
+          <form
             class="d-flex mt-5 flex-column flex-sm-row justify-content-center"
           >
             <div class="d-flex mb-2 mb-sm-0">
@@ -48,7 +48,7 @@
                 Gerar
               </button>
             </div>
-          </div>
+          </form>
         </div>
 
         <div class="col"></div>
@@ -62,8 +62,13 @@
 
           <canvas id="grafico-barras"></canvas>
 
-          <table id="tabela-vendas" class="table table-striped">
-            <thead></thead>
+          <table id="tabela-vendas" class="table table-striped d-none">
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Total em vendas</th>
+              </tr>
+            </thead>
             <tbody></tbody>
           </table>
 
@@ -73,8 +78,13 @@
 
           <canvas id="grafico-pizza"></canvas>
 
-          <table id="tabela-produtos" class="table table-striped">
-            <thead></thead>
+          <table id="tabela-produtos" class="table table-striped d-none">
+            <thead>
+              <tr>
+                <th>Produto</th>
+                <th>Participação em vendas</th>
+              </tr>
+            </thead>
             <tbody></tbody>
           </table>
         </div>

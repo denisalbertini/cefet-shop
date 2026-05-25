@@ -14,15 +14,20 @@ export class VisaoRelatoriosEmDom implements VisaoRelatorios {
   }
 
   iniciar(): void {
+    const form = document.querySelector('form')!;
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      this.enviarDados();
+    });
+
     const btnGerar = document.getElementById('btn-gerar') as HTMLButtonElement;
 
-    btnGerar.addEventListener('click', () => {
-      const inicio = (document.getElementById('inicio') as HTMLInputElement)
-        .value;
-      const fim = (document.getElementById('fim') as HTMLInputElement).value;
+    btnGerar.addEventListener('click', (event) => {
+      event.preventDefault();
 
-      this.controladora.buscarVendas(inicio, fim);
-      this.controladora.buscarTopItens(inicio, fim);
+      this.enviarDados();
     });
   }
 
@@ -79,11 +84,13 @@ export class VisaoRelatoriosEmDom implements VisaoRelatorios {
       fragmento.appendChild(tr);
     }
 
-    const tbody = document.querySelector(
-      '#tabela-vendas tbody',
-    ) as HTMLTableSectionElement;
+    const tabelaVendas = document.getElementById('tabela-vendas')!;
+
+    const tbody = tabelaVendas.querySelector('tbody')!;
 
     tbody.replaceChildren(fragmento);
+
+    tabelaVendas.classList.remove('d-none');
   }
 
   exibirTopItens(relatorio: RelatorioTopItens): void {
@@ -143,10 +150,21 @@ export class VisaoRelatoriosEmDom implements VisaoRelatorios {
       fragmento.appendChild(tr);
     }
 
-    const tbody = document.querySelector(
-      '#tabela-produtos tbody',
-    ) as HTMLTableSectionElement;
+    const tabelaProdutos = document.getElementById('tabela-produtos')!;
+
+    const tbody = tabelaProdutos.querySelector('tbody')!;
 
     tbody.replaceChildren(fragmento);
+
+    tabelaProdutos.classList.remove('d-none');
+  }
+
+  private enviarDados(): void {
+    const inicio = (document.getElementById('inicio') as HTMLInputElement)
+      .value;
+    const fim = (document.getElementById('fim') as HTMLInputElement).value;
+
+    this.controladora.buscarVendas(inicio, fim);
+    this.controladora.buscarTopItens(inicio, fim);
   }
 }
