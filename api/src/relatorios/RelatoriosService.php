@@ -3,8 +3,6 @@
 class RelatoriosService
 {
   public function __construct(
-    private Sessao $sessao,
-    private UsuariosRepository $usuariosRepository,
     private RelatoriosRepository $relatoriosRepository,
   ) {}
 
@@ -12,8 +10,6 @@ class RelatoriosService
     Data $inicio,
     Data $fim,
   ): RelatorioVendasParaExibir {
-    $this->verificarFuncionario();
-
     $linhas = $this->relatoriosRepository->buscarVendasPorPeriodo(
       $inicio,
       $fim,
@@ -39,8 +35,6 @@ class RelatoriosService
     Data $inicio,
     Data $fim,
   ): RelatorioTopItensParaExibir {
-    $this->verificarFuncionario();
-
     $linhas = $this->relatoriosRepository->buscarTopItensPorPeriodo(
       $inicio,
       $fim,
@@ -59,20 +53,5 @@ class RelatoriosService
     }
 
     return new RelatorioTopItensParaExibir($itens);
-  }
-
-  private function verificarFuncionario(): void
-  {
-    $usuarioId = $this->sessao->obter(ChaveSessao::USUARIO);
-
-    if (!is_string($usuarioId)) {
-      throw new HttpException(401);
-    }
-
-    $usuario = $this->usuariosRepository->buscarPorId($usuarioId);
-
-    if (!($usuario instanceof Funcionario)) {
-      throw new HttpException(403);
-    }
   }
 }

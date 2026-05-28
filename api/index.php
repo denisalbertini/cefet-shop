@@ -17,6 +17,7 @@ $carrinhosRepository = new CarrinhosRepositorySessao($sessao);
 $usuariosRepository = new UsuariosRepositoryBdr($pdo);
 $itensRepository = new ItensCompraRepositoryBdr($pdo, $produtosRepository);
 $comprasRepository = new ComprasRepositoryBdr($pdo, $usuariosRepository);
+$relatoriosRepository = new RelatoriosRepositoryBdr($pdo);
 
 $transacao = new UnidadeTransacionalPdo($pdo);
 
@@ -35,19 +36,19 @@ $comprasService = new ComprasService(
   $comprasRepository,
   $transacao,
 );
-
-$relatoriosRepository = new RelatoriosRepositoryBdr($pdo);
-$relatoriosService = new RelatoriosService(
-  $sessao,
-  $usuariosRepository,
-  $relatoriosRepository,
-);
-$relatoriosController = new RelatoriosController($relatoriosService);
+$relatoriosService = new RelatoriosService($relatoriosRepository);
 
 $produtosController = new ProdutosController($produtosService);
 $carrinhosController = new CarrinhosController($carrinhosService);
 $usuariosController = new UsuariosController($usuariosService);
 $comprasController = new ComprasController($comprasService);
+$relatoriosController = new RelatoriosController($relatoriosService);
+
+$usuarioLogadoMiddleware = new UsuarioLogadoMiddleware(
+  $sessao,
+  $usuariosRepository,
+);
+$funcionarioMiddleware = new FuncionarioMiddleware();
 
 $app = new Router();
 
@@ -55,35 +56,46 @@ $corsOptions = new CorsOptions()->withAllowedHeaders(['Content-Type']);
 
 $app->use(cors($corsOptions));
 
-$app->get('/produtos', [$produtosController, 'buscar']);
-$app->get('/produtos/:id', [$produtosController, 'buscarPorId']);
+$app
+  ->route('/produtos')
+  ->get('/', [$produtosController, 'buscar'])
+  ->get('/:id', [$produtosController, 'buscarPorId'])
+  ->end();
 
-$app->get('/carrinhos', [$carrinhosController, 'buscar']);
-$app->get('/carrinhos/itens/quantidade', [
-  $carrinhosController,
-  'buscarQuantidadeItens',
-]);
-$app->post('/carrinhos/itens', [$carrinhosController, 'adicionarItem']);
-$app->patch('/carrinhos/itens/:id', [
-  $carrinhosController,
-  'alterarQuantidadeItem',
-]);
-$app->delete('/carrinhos/itens/:id', [$carrinhosController, 'removerItem']);
+$app
+  ->route('/carrinhos')
+  ->get('/', [$carrinhosController, 'buscar'])
+  ->get('/itens/quantidade', [$carrinhosController, 'buscarQuantidadeItens'])
+  ->post('/itens', [$carrinhosController, 'adicionarItem'])
+  ->patch('/itens/:id', [$carrinhosController, 'alterarQuantidadeItem'])
+  ->delete('/itens/:id', [$carrinhosController, 'removerItem'])
+  ->end();
 
-$app->post('/usuarios/login', [$usuariosController, 'login']);
-$app->get('/usuarios/logout', [$usuariosController, 'logout']);
-$app->get('/usuarios', [$usuariosController, 'buscarUsuarioLogado']);
+$app
+  ->route('/usuarios')
+  ->post('/login', [$usuariosController, 'login'])
+  ->get('/logout', [$usuariosController, 'logout'])
+  ->get('/', [$usuariosController, 'buscarUsuarioLogado'])
+  ->end();
 
-$app->post('/compras', [$comprasController, 'registrar']);
-$app->get('/compras/:id', [$comprasController, 'buscarPorId']);
-$app->get('/compras', [$comprasController, 'buscar']);
+$app
+  ->route('/compras')
+  ->get('/:id', [$comprasController, 'buscarPorId'])
+  ->post('/', [$comprasController, 'registrar'])
+  ->get('/', [$comprasController, 'buscar'])
+  ->end();
 
-$app->get('/relatorios/vendas', [$relatoriosController, 'buscarVendas']);
-$app->get('/relatorios/top-itens', [$relatoriosController, 'buscarTopItens']);
+$app
+  ->route('/relatorios')
+  ->use([$usuarioLogadoMiddleware, 'executar'])
+  ->use([$funcionarioMiddleware, 'executar'])
+  ->get('/vendas', [$relatoriosController, 'buscarVendas'])
+  ->get('/top-itens', [$relatoriosController, 'buscarTopItens'])
+  ->end();
 
-$app->delete('/sessao', function ($req, $res) {
-  new SessaoEmArquivo()->destruir();
-  $res->status(201)->json(new stdClass());
+$app->delete('/sessao', function ($req, $res) use ($sessao) {
+  $sessao->destruir();
+  $res->status(204)->send(null);
 });
 
 $app->listen();
