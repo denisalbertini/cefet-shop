@@ -24,7 +24,7 @@ class CarrinhosService
     $produto = $this->produtosRepository->buscarPorId($produtoId);
 
     if ($produto->estoque === 0) {
-      throw new DomainException(MensagemErro::CARRINHOS_SERVICE_QUANTIDADE);
+      throw new HttpException(400, MensagemErro::CARRINHOS_SERVICE_QUANTIDADE);
     }
 
     $item = new Item($quantidade, $produto);

@@ -1,5 +1,5 @@
 import { API } from '../util/constantes';
-import { verificarRespostaRequisicao } from '../util/verificarRespostaRequisicao';
+import { verificarRespostaHttp } from '../util/verificarRespostaHttp';
 import { CarrinhoAtualizado } from './dto/CarrinhoAtualizado';
 import { CarrinhoParaExibir } from './dto/CarrinhoParaExibir';
 import { RepositorioCarrinhos } from './interface/RepositorioCarrinhos';
@@ -16,7 +16,7 @@ export class RepositorioCarrinhosEmHttp implements RepositorioCarrinhos {
   async buscar(): Promise<CarrinhoParaExibir> {
     const res = await fetch(this.path, { credentials: 'include' });
 
-    await verificarRespostaRequisicao(res);
+    await verificarRespostaHttp(res);
 
     return await this.instanciarCarrinhoParaExibir(res);
   }
@@ -26,7 +26,7 @@ export class RepositorioCarrinhosEmHttp implements RepositorioCarrinhos {
       credentials: 'include',
     });
 
-    await verificarRespostaRequisicao(res);
+    await verificarRespostaHttp(res);
 
     const dados = await res.json();
 
@@ -41,7 +41,7 @@ export class RepositorioCarrinhosEmHttp implements RepositorioCarrinhos {
       body: JSON.stringify({ produtoId, quantidade }),
     });
 
-    await verificarRespostaRequisicao(res);
+    await verificarRespostaHttp(res);
 
     const dados = await res.json();
 
@@ -59,7 +59,7 @@ export class RepositorioCarrinhosEmHttp implements RepositorioCarrinhos {
       body: JSON.stringify({ quantidade }),
     });
 
-    await verificarRespostaRequisicao(res);
+    await verificarRespostaHttp(res);
 
     return await this.instanciarCarrinhoAtualizado(res);
   }
@@ -70,7 +70,7 @@ export class RepositorioCarrinhosEmHttp implements RepositorioCarrinhos {
       credentials: 'include',
     });
 
-    await verificarRespostaRequisicao(res);
+    await verificarRespostaHttp(res);
 
     return await this.instanciarCarrinhoAtualizado(res);
   }

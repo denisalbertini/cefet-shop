@@ -50,10 +50,7 @@ class ProdutosRepositoryBdr implements ProdutosRepository
     $produtoParaHidratar = $ps->fetch();
 
     if (!($produtoParaHidratar instanceof ProdutoParaHidratar)) {
-      throw new RepositoryException(
-        MensagemErro::PRODUTOS_REPOSITORY_NOT_FOUND,
-        404,
-      );
+      throw new HttpException(404, MensagemErro::PRODUTOS_REPOSITORY_NOT_FOUND);
     }
 
     return $this->hidratar($produtoParaHidratar);

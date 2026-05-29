@@ -43,17 +43,23 @@ export class VisaoLoginEmDom implements VisaoLogin {
     location.reload();
   }
 
-  exibirErro(erro: string): void {
+  exibirErros(erros: string[]): void {
     const template = document.querySelector('template')!;
 
-    const alert = template.content.cloneNode(true) as HTMLElement;
+    const fragmento = document.createDocumentFragment();
 
-    const mensagem = alert.querySelector('p')!;
+    for (const erro of erros) {
+      const alert = template.content.cloneNode(true) as HTMLElement;
 
-    mensagem.textContent = erro;
+      const mensagem = alert.querySelector('p')!;
 
-    const alerta = document.getElementById('alerta')!;
+      mensagem.textContent = erro;
 
-    alerta.replaceChildren(alert);
+      fragmento.appendChild(alert);
+    }
+
+    const alertas = document.getElementById('alertas')!;
+
+    alertas.replaceChildren(fragmento);
   }
 }

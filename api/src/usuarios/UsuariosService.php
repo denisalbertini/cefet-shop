@@ -12,7 +12,7 @@ class UsuariosService
     $logado = is_string($this->sessao->obter(ChaveSessao::USUARIO));
 
     if ($logado) {
-      throw new DomainException(MensagemErro::USUARIOS_SERVICE_LOGADO);
+      throw new HttpException(400, MensagemErro::USUARIOS_SERVICE_LOGADO);
     }
 
     $usuario = $this->usuariosRepository->buscarPorMatriculaOuEmail(
@@ -20,7 +20,7 @@ class UsuariosService
     );
 
     if (!password_verify($senha, $usuario->senha)) {
-      throw new DomainException(MensagemErro::USUARIOS_SERVICE_LOGIN);
+      throw new HttpException(400, MensagemErro::USUARIOS_SERVICE_LOGIN);
     }
 
     $this->sessao->salvar(ChaveSessao::USUARIO, $usuario->id);
@@ -31,7 +31,7 @@ class UsuariosService
     $logado = is_string($this->sessao->obter(ChaveSessao::USUARIO));
 
     if (!$logado) {
-      throw new DomainException(MensagemErro::USUARIOS_SERVICE_NOT_FOUND);
+      throw new HttpException(400, MensagemErro::USUARIOS_SERVICE_NOT_FOUND);
     }
 
     $this->sessao->destruir();
@@ -44,7 +44,7 @@ class UsuariosService
     $logado = is_string($id);
 
     if (!$logado) {
-      throw new DomainException(MensagemErro::USUARIOS_SERVICE_NOT_FOUND);
+      throw new HttpException(404, MensagemErro::USUARIOS_SERVICE_NOT_FOUND);
     }
 
     $usuario = $this->usuariosRepository->buscarPorId($id);

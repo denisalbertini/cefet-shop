@@ -13,9 +13,58 @@
         width: auto;
         height: 8rem;
       }
+
+      .alert svg {
+        flex-shrink: 0;
+      }
     </style>
   </head>
   <body>
+    <div class="row mt-5">
+      <div class="col-xl-1 col-xxl-3"></div>
+
+      <div class="col">
+        <div class="row g-4">
+          <div class="col-12 col-lg-9">
+            <div id="alertas" class="mx-auto d-none"></div>
+
+            <ul id="lista" class="list-group"></ul>
+          </div>
+
+          <div class="col">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title text-center">
+                  Total: C$ <span id="total"></span>
+                </h5>
+
+                <button
+                  id="finalizar"
+                  class="btn btn-primary w-100 align-self-center mt-5"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-check-lg"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"
+                    />
+                  </svg>
+                  Finalizar Compra
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-1 col-xxl-3"></div>
+    </div>
+
     <template id="item"
       ><li class="list-group-item">
         <input class="produto-id" type="hidden" />
@@ -76,8 +125,8 @@
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="32"
-          height="32"
+          width="16"
+          height="16"
           fill="currentColor"
           class="bi bi-exclamation-triangle-fill"
           viewBox="0 0 16 16"
@@ -96,50 +145,5 @@
           aria-label="Close"
         ></button></div
     ></template>
-
-    <div class="row mt-5">
-      <div class="col-xl-1 col-xxl-3"></div>
-
-      <div class="col">
-        <div class="row g-4">
-          <div class="col-12 col-lg-9">
-            <div id="alertas" class="mx-auto d-none"></div>
-
-            <ul id="lista" class="list-group"></ul>
-          </div>
-
-          <div class="col">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title text-center">
-                  Total: C$ <span id="total"></span>
-                </h5>
-
-                <button
-                  id="finalizar"
-                  class="btn btn-primary w-100 align-self-center mt-5"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    class="bi bi-check-lg"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"
-                    />
-                  </svg>
-                  Finalizar Compra
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-xl-1 col-xxl-3"></div>
-    </div>
   </body>
 </html>

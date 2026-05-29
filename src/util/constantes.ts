@@ -29,6 +29,8 @@ export const MENSAGEM_ERRO = {
   REPOSITORIO_CARRINHOS: {
     ITENS: 'O carrinho não retornou um array de itens.',
   },
+
+  ERRO_INESPERADO: 'Um erro inesperado ocorreu.',
 } as const;
 
 export const VISAO_PRODUTOS = { PRODUTOS_POR_PAGINA: 6 } as const;

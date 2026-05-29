@@ -48,9 +48,9 @@ class CarrinhosRepositorySessao implements CarrinhosRepository
     $indiceItem = $carrinho->obterIndiceItem($item->produto->id);
 
     if (!is_numeric($indiceItem)) {
-      throw new RepositoryException(
-        MensagemErro::CARRINHOS_REPOSITORY_NOT_FOUND,
+      throw new HttpException(
         404,
+        MensagemErro::CARRINHOS_REPOSITORY_NOT_FOUND,
       );
     }
 
@@ -67,9 +67,9 @@ class CarrinhosRepositorySessao implements CarrinhosRepository
     $indiceItem = $carrinho->obterIndiceItem($produtoId);
 
     if (!is_numeric($indiceItem)) {
-      throw new RepositoryException(
-        MensagemErro::CARRINHOS_REPOSITORY_NOT_FOUND,
+      throw new HttpException(
         404,
+        MensagemErro::CARRINHOS_REPOSITORY_NOT_FOUND,
       );
     }
 

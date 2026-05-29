@@ -1,5 +1,7 @@
 import { GestorCompras } from '../compras/GestorCompras';
-import { HttpError } from '../error/HttpError';
+import { TipoErroRepositorio } from '../enum/TipoErroRepositorio';
+import { RepositorioError } from '../error/RepositorioError';
+import { MENSAGEM_ERRO } from '../util/constantes';
 import { GestorCarrinhos } from './GestorCarrinhos';
 import { VisaoBadgeCarrinho } from './interface/VisaoBadgeCarrinho';
 import { VisaoCarrinho } from './interface/VisaoCarrinho';
@@ -57,16 +59,20 @@ export class ControladoraCarrinhos {
 
       this.visaoCarrinho.redirecionarParaCompraFinalizada(compraId);
     } catch (error: any) {
-      if (!(error instanceof HttpError)) {
+      const erros: string[] = [];
+
+      if (!(error instanceof RepositorioError)) {
         console.error(error);
-        return;
+        erros.push(MENSAGEM_ERRO.ERRO_INESPERADO);
+      } else {
+        erros.push(...error.erros);
       }
 
-      switch (error.status) {
-        case 400:
-          this.visaoCarrinho.exibirErros(error.erros);
+      switch (error.tipo) {
+        case TipoErroRepositorio.DadosInvalidos:
+          this.visaoCarrinho.exibirErros(erros);
           break;
-        case 401:
+        case TipoErroRepositorio.NaoAutorizado:
           this.visaoCarrinho.redirecionarParaLogin();
         default:
           break;

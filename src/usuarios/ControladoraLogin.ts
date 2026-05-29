@@ -1,3 +1,5 @@
+import { RepositorioError } from '../error/RepositorioError';
+import { MENSAGEM_ERRO } from '../util/constantes';
 import { GestorUsuarios } from './GestorUsuarios';
 import { VisaoLogin } from './interface/VisaoLogin';
 
@@ -17,12 +19,17 @@ export class ControladoraLogin {
       await this.gestor.login(identificador, senha);
 
       this.visao.redirecionar();
-    } catch (erro) {
-      if (!(erro instanceof Error)) {
-        return;
+    } catch (error: any) {
+      const erros: string[] = [];
+
+      if (!(error instanceof RepositorioError)) {
+        console.error(error);
+        erros.push(MENSAGEM_ERRO.ERRO_INESPERADO);
+      } else {
+        erros.push(...error.erros);
       }
 
-      this.visao.exibirErro(erro.message);
+      this.visao.exibirErros(erros);
     }
   }
 }

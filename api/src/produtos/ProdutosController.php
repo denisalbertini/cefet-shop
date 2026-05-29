@@ -9,49 +9,29 @@ class ProdutosController
 
   public function buscar(HttpRequest $req, HttpResponse $res): void
   {
-    try {
-      $queries = $req->queries();
+    $queries = $req->queries();
 
-      $paginaQuery = $queries['pagina'];
-      $limitQuery = $queries['limit'];
+    $paginaQuery = $queries['pagina'];
+    $limitQuery = $queries['limit'];
 
-      $pagina = is_numeric($paginaQuery) ? (int) $paginaQuery : 1;
-      $limit = is_numeric($limitQuery) ? (int) $limitQuery : 6;
+    $pagina = is_numeric($paginaQuery) ? (int) $paginaQuery : 1;
+    $limit = is_numeric($limitQuery) ? (int) $limitQuery : 6;
 
-      $produtosPaginados = $this->produtosService->buscar($pagina, $limit);
+    $produtosPaginados = $this->produtosService->buscar($pagina, $limit);
 
-      $res->json($produtosPaginados);
-    } catch (Exception $e) {
-      $this->tratarErro($e, $res);
-    }
+    $res->json($produtosPaginados);
   }
 
   public function buscarPorId(HttpRequest $req, HttpResponse $res): void
   {
-    try {
-      $id = $req->param('id');
+    $id = $req->param('id');
 
-      if (!$id) {
-        throw new ControllerException(MensagemErro::PRODUTOS_CONTROLLER_ID);
-      }
-
-      $produto = $this->produtosService->buscarPorId($id);
-
-      $res->json($produto);
-    } catch (Exception $e) {
-      $this->tratarErro($e, $res);
+    if (!$id) {
+      throw new HttpException(400, MensagemErro::PRODUTOS_CONTROLLER_ID);
     }
-  }
 
-  private function tratarErro(Exception $e, HttpResponse $res): void
-  {
-    $status = match ($e::class) {
-      DomainException::class, ControllerException::class => 400,
-      RepositoryException::class => $e->getCode(),
-      PDOException::class => 500,
-      default => 500,
-    };
+    $produto = $this->produtosService->buscarPorId($id);
 
-    $res->status($status)->send($e->getMessage());
+    $res->json($produto);
   }
 }

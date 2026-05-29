@@ -1,5 +1,5 @@
-import { HttpError } from '../error/HttpError';
 import { API } from '../util/constantes';
+import { verificarRespostaHttp } from '../util/verificarRespostaHttp';
 import { RepositorioRelatorios } from './interface/RepositorioRelatorios';
 import { RelatorioTopItens } from './types/RelatorioTopItens';
 import { RelatorioVendas } from './types/RelatorioVendas';
@@ -16,7 +16,7 @@ export class RepositorioRelatoriosEmHttp implements RepositorioRelatorios {
       credentials: 'include',
     });
 
-    await this.verificarRespostaRequisicao(res);
+    await verificarRespostaHttp(res);
 
     const dados = await res.json();
 
@@ -32,20 +32,10 @@ export class RepositorioRelatoriosEmHttp implements RepositorioRelatorios {
       { credentials: 'include' },
     );
 
-    await this.verificarRespostaRequisicao(res);
+    await verificarRespostaHttp(res);
 
     const dados = await res.json();
 
     return dados as RelatorioTopItens;
-  }
-
-  private async verificarRespostaRequisicao(res: Response): Promise<void> {
-    if (res.ok) {
-      return;
-    }
-
-    const dados = await res.json();
-
-    throw new HttpError(res.status, dados.erros);
   }
 }

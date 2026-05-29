@@ -26,6 +26,13 @@ class ComprasService
 
     $carrinho = $this->carrinhosRepository->buscar();
 
+    if (empty($carrinho->itens)) {
+      throw new HttpException(
+        400,
+        MensagemErro::COMPRAS_SERVICE_CARRINHO_VAZIO,
+      );
+    }
+
     if (
       $usuario->saldo->valorCentavos < $carrinho->obterTotal()->valorCentavos
     ) {

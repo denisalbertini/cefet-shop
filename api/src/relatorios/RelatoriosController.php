@@ -9,32 +9,20 @@ class RelatoriosController
 
   public function buscarVendas(HttpRequest $req, HttpResponse $res): void
   {
-    try {
-      [$inicio, $fim] = $this->extrairPeriodo($req);
+    [$inicio, $fim] = $this->extrairPeriodo($req);
 
-      $relatorio = $this->relatoriosService->buscarVendas($inicio, $fim);
+    $relatorio = $this->relatoriosService->buscarVendas($inicio, $fim);
 
-      $res->json($relatorio);
-    } catch (HttpException $e) {
-      $res->status($e->obterStatus())->json(['erros' => $e->obterErros()]);
-    } catch (Exception $e) {
-      $this->tratarErro($e, $res);
-    }
+    $res->json($relatorio);
   }
 
   public function buscarTopItens(HttpRequest $req, HttpResponse $res): void
   {
-    try {
-      [$inicio, $fim] = $this->extrairPeriodo($req);
+    [$inicio, $fim] = $this->extrairPeriodo($req);
 
-      $relatorio = $this->relatoriosService->buscarTopItens($inicio, $fim);
+    $relatorio = $this->relatoriosService->buscarTopItens($inicio, $fim);
 
-      $res->json($relatorio);
-    } catch (HttpException $e) {
-      $res->status($e->obterStatus())->json(['erros' => $e->obterErros()]);
-    } catch (Exception $e) {
-      $this->tratarErro($e, $res);
-    }
+    $res->json($relatorio);
   }
 
   /**
@@ -59,17 +47,5 @@ class RelatoriosController
     }
 
     return [new Data($timestampInicio), new Data($timestampFim)];
-  }
-
-  private function tratarErro(Exception $e, HttpResponse $res): void
-  {
-    $status = match ($e::class) {
-      DomainException::class, ControllerException::class => 400,
-      RepositoryException::class => $e->getCode(),
-      PDOException::class => 500,
-      default => 500,
-    };
-
-    $res->status($status)->send($e->getMessage());
   }
 }

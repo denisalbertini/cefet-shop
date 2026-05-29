@@ -10,11 +10,11 @@ class Database
   {
     try {
       $this->pdoProd = new Pdo(
-        'mysql:dbname=g7_prod;host=localhost;charset=utf8',
+        'mysql:dbname=g10_prod;host=localhost;charset=utf8',
         'root',
       );
       $this->pdoTest = new Pdo(
-        'mysql:dbname=g7_test;host=localhost;charset=utf8',
+        'mysql:dbname=g10_test;host=localhost;charset=utf8',
         'root',
       );
     } catch (Exception $e) {

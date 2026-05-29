@@ -1,3 +1,4 @@
+import { TipoErroRepositorio } from '../enum/TipoErroRepositorio';
 import { RepositorioError } from '../error/RepositorioError';
 import { GestorUsuarios } from './GestorUsuarios';
 import { VisaoMenuUsuario } from './interface/VisaoMenuUsuario';
@@ -14,14 +15,15 @@ export class ControladoraMenuUsuario {
       const usuario = await this.gestor.buscarUsuarioLogado();
 
       this.visao.exibir(usuario);
-    } catch (erro: any) {
-      if (!(erro instanceof RepositorioError)) {
+    } catch (error: any) {
+      if (!(error instanceof RepositorioError)) {
+        console.error(error);
         return;
       }
 
-      switch (erro.status) {
-        case 400:
-        case 404:
+      switch (error.tipo) {
+        case TipoErroRepositorio.DadosInvalidos:
+        case TipoErroRepositorio.NaoEncontrado:
           this.visao.configurarOpcaoLogin();
           break;
         default:

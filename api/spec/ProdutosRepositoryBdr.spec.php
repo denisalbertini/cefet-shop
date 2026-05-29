@@ -30,9 +30,16 @@ describe('ProdutosRepositoryBdr', function () {
   });
 
   it('deveria lançar um erro ao não encontrar o produto por id', function () {
-    expect(function () {
+    try {
       $this->repository->buscarPorId('abc');
-    })->toThrow(MensagemErro::PRODUTOS_REPOSITORY_NOT_FOUND);
+    } catch (HttpException $e) {
+      expect($e->obterStatus())->toBe(404);
+      expect($e->obterErros())->toEqual([
+        MensagemErro::PRODUTOS_REPOSITORY_NOT_FOUND,
+      ]);
+    } catch (Exception $e) {
+      throw $e;
+    }
   });
 
   it('deveria retornar a contagem de produtos', function () {

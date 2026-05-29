@@ -1,5 +1,6 @@
 import { GestorCarrinhos } from '../carrinhos/GestorCarrinhos';
 import { VisaoBadgeCarrinho } from '../carrinhos/interface/VisaoBadgeCarrinho';
+import { TipoErroRepositorio } from '../enum/TipoErroRepositorio';
 import { RepositorioError } from '../error/RepositorioError';
 import { GestorProdutos } from './GestorProdutos';
 import { VisaoDetalheProduto } from './interface/VisaoDetalheProduto';
@@ -34,8 +35,8 @@ export class ControladoraProdutos {
         return;
       }
 
-      switch (erro.status) {
-        case 404:
+      switch (erro.tipo) {
+        case TipoErroRepositorio.NaoEncontrado:
           this.visaoDetalheProduto.exibirErro();
           break;
         default:

@@ -18,10 +18,7 @@ class UsuariosRepositoryBdr implements UsuariosRepository
     $linhas = $ps->fetchAll(PDO::FETCH_CLASS, UsuarioParaHidratar::class);
 
     if (empty($linhas)) {
-      throw new RepositoryException(
-        MensagemErro::USUARIOS_REPOSITORY_NOT_FOUND,
-        404,
-      );
+      throw new HttpException(404, MensagemErro::USUARIOS_REPOSITORY_NOT_FOUND);
     }
 
     return $this->hidratar($linhas);
@@ -41,10 +38,7 @@ class UsuariosRepositoryBdr implements UsuariosRepository
     $linhas = $ps->fetchAll(PDO::FETCH_CLASS, UsuarioParaHidratar::class);
 
     if (empty($linhas)) {
-      throw new RepositoryException(
-        MensagemErro::USUARIOS_REPOSITORY_NOT_FOUND,
-        404,
-      );
+      throw new HttpException(404, MensagemErro::USUARIOS_REPOSITORY_NOT_FOUND);
     }
 
     return $this->hidratar($linhas);
@@ -122,7 +116,7 @@ class UsuariosRepositoryBdr implements UsuariosRepository
         !$periodo ||
         !$mediaFinal
       ) {
-        throw new RepositoryException(MensagemErro::REPOSITORY_UNEXPECTED, 500);
+        throw new HttpException(500, MensagemErro::REPOSITORY_UNEXPECTED);
       }
 
       $curso = new Curso($cursoId, $cursoNome);

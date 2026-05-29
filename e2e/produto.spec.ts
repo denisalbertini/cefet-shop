@@ -77,10 +77,9 @@ test.describe('Produto', () => {
       await pagina!.pressionar(adicionarAoCarrinho);
 
       const badge = pagina!.localizarBadge();
-      const valorBadge = await pagina!.obterConteudoTextual(badge);
 
       await expect(badge).toBeVisible();
-      expect(valorBadge).toBe('1');
+      await expect(badge).toHaveText('1');
     });
 
     test('deveria ir para o carrinho', async ({ page }) => {
@@ -149,10 +148,9 @@ test.describe('Produto', () => {
       await pagina!.pressionar(adicionarAoCarrinho);
 
       const badge = pagina!.localizarBadge();
-      const valorBadge = await pagina!.obterConteudoTextual(badge);
 
       await expect(badge).toBeVisible();
-      expect(valorBadge).toBe('1');
+      await expect(badge).toHaveText('1');
     });
 
     test('deveria ir para o carrinho', async ({ page }) => {

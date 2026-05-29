@@ -1,5 +1,5 @@
-import { HttpError } from '../error/HttpError';
 import { API } from '../util/constantes';
+import { verificarRespostaHttp } from '../util/verificarRespostaHttp';
 import { RepositorioCompras } from './interface/RepositorioCompras';
 import { CompraParaExibir } from './types/CompraParaExibir';
 import { ComprasRealizadas } from './types/ComprasRealizadas';
@@ -17,7 +17,7 @@ export class RepositorioComprasEmHttp implements RepositorioCompras {
       credentials: 'include',
     });
 
-    await this.verificarRespostaRequisicao(res);
+    await verificarRespostaHttp(res);
 
     const dados = await res.json();
 
@@ -29,7 +29,7 @@ export class RepositorioComprasEmHttp implements RepositorioCompras {
   async buscarPorId(id: string): Promise<CompraParaExibir> {
     const res = await fetch(this.path + `/${id}`, { credentials: 'include' });
 
-    await this.verificarRespostaRequisicao(res);
+    await verificarRespostaHttp(res);
 
     const dados = await res.json();
 
@@ -39,20 +39,10 @@ export class RepositorioComprasEmHttp implements RepositorioCompras {
   async buscar(): Promise<ComprasRealizadas> {
     const res = await fetch(this.path, { credentials: 'include' });
 
-    await this.verificarRespostaRequisicao(res);
+    await verificarRespostaHttp(res);
 
     const dados = await res.json();
 
     return dados as ComprasRealizadas;
-  }
-
-  private async verificarRespostaRequisicao(res: Response): Promise<void> {
-    if (res.ok) {
-      return;
-    }
-
-    const dados = await res.json();
-
-    throw new HttpError(res.status, dados.erros);
   }
 }

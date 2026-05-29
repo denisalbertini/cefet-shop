@@ -1,4 +1,5 @@
-import { HttpError } from '../error/HttpError';
+import { TipoErroRepositorio } from '../enum/TipoErroRepositorio';
+import { RepositorioError } from '../error/RepositorioError';
 import { GestorCompras } from './GestorCompras';
 import { VisaoComprasRealizadas } from './interface/VisaoComprasRealizadas';
 
@@ -15,16 +16,16 @@ export class ControladoraComprasRealizadas {
 
       this.visao.exibir(comprasRealizadas);
     } catch (error) {
-      if (!(error instanceof HttpError)) {
+      if (!(error instanceof RepositorioError)) {
         console.error(error);
         return;
       }
 
-      switch (error.status) {
-        case 401:
+      switch (error.tipo) {
+        case TipoErroRepositorio.NaoAutorizado:
           this.visao.redirecionar();
           break;
-        case 404:
+        case TipoErroRepositorio.NaoEncontrado:
           this.visao.exibirVazio();
           break;
         default:

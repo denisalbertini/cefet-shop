@@ -1,4 +1,4 @@
-USE g7_prod;
+USE g10_prod;
 
 INSERT INTO promocao (id, nome, desconto) VALUES
 ('518bb7dd-2dac-4c63-9131-d754443596c9', 'Black Friday', 0.2),

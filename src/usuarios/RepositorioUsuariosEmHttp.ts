@@ -1,5 +1,5 @@
 import { API } from '../util/constantes';
-import { verificarRespostaRequisicao } from '../util/verificarRespostaRequisicao';
+import { verificarRespostaHttp } from '../util/verificarRespostaHttp';
 import { RepositorioUsuarios } from './interface/RepositorioUsuarios';
 import { UsuarioParaExibir } from './types/UsuarioParaExibir';
 
@@ -18,19 +18,19 @@ export class RepositorioUsuariosEmHttp implements RepositorioUsuarios {
       credentials: 'include',
     });
 
-    await verificarRespostaRequisicao(res);
+    await verificarRespostaHttp(res);
   }
 
   async logout(): Promise<void> {
     const res = await fetch(this.path + '/logout', { credentials: 'include' });
 
-    await verificarRespostaRequisicao(res);
+    await verificarRespostaHttp(res);
   }
 
   async buscarUsuarioLogado(): Promise<UsuarioParaExibir> {
     const res = await fetch(this.path, { credentials: 'include' });
 
-    await verificarRespostaRequisicao(res);
+    await verificarRespostaHttp(res);
 
     const dados = await res.json();
 

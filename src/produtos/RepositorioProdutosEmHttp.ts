@@ -1,6 +1,6 @@
 import { Paginacao } from '../tipos/Paginacao';
 import { API } from '../util/constantes';
-import { verificarRespostaRequisicao } from '../util/verificarRespostaRequisicao';
+import { verificarRespostaHttp } from '../util/verificarRespostaHttp';
 import { ProdutoParaDetalhar } from './dto/ProdutoParaDetalhar';
 import { ProdutosPaginados } from './dto/ProdutosPaginados';
 import { ProdutoParaListar } from './dto/ProdutosParaListar';
@@ -19,7 +19,7 @@ export class RepositorioProdutosEmHttp implements RepositorioProdutos {
       { credentials: 'include' },
     );
 
-    await verificarRespostaRequisicao(res);
+    await verificarRespostaHttp(res);
 
     const dados = await res.json();
 
@@ -49,7 +49,7 @@ export class RepositorioProdutosEmHttp implements RepositorioProdutos {
   async buscarPorId(id: string): Promise<ProdutoParaDetalhar> {
     const res = await fetch(this.path + `/${id}`, { credentials: 'include' });
 
-    await verificarRespostaRequisicao(res);
+    await verificarRespostaHttp(res);
 
     const dados = await res.json();
 

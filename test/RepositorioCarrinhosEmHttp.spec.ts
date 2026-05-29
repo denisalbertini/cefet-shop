@@ -41,7 +41,7 @@ describe('RepositorioCarrinhosEmHttp', () => {
       fetchMock.mockReturnValueOnce({
         ok: false,
         status: 404,
-        text: async () => '',
+        json: async () => ({ erros: [] }),
       });
 
       await expect(() => repositorio.buscar()).rejects.toThrow(
@@ -63,7 +63,7 @@ describe('RepositorioCarrinhosEmHttp', () => {
       fetchMock.mockReturnValueOnce({
         ok: false,
         status: 404,
-        text: async () => '',
+        json: async () => ({ erros: [] }),
       });
 
       await expect(() => repositorio.adicionarItem('', 0)).rejects.toThrow(
@@ -85,7 +85,7 @@ describe('RepositorioCarrinhosEmHttp', () => {
       fetchMock.mockReturnValueOnce({
         ok: false,
         status: 404,
-        text: async () => '',
+        json: async () => ({ erros: [] }),
       });
 
       await expect(() =>
@@ -107,7 +107,7 @@ describe('RepositorioCarrinhosEmHttp', () => {
       fetchMock.mockReturnValueOnce({
         ok: false,
         status: 404,
-        text: async () => '',
+        json: async () => ({ erros: [] }),
       });
 
       await expect(() => repositorio.removerItem('')).rejects.toThrow(

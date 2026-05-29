@@ -1,10 +1,12 @@
-export class RepositorioError extends Error {
-  public readonly status: number;
+import { TipoErroRepositorio } from '../enum/TipoErroRepositorio';
 
-  public constructor(mensagem: string, status: number) {
-    super(mensagem);
+export class RepositorioError extends Error {
+  public constructor(
+    public readonly tipo: TipoErroRepositorio,
+    public readonly erros: string[],
+  ) {
+    super();
 
     this.name = 'RepositorioError';
-    this.status = status;
   }
 }
