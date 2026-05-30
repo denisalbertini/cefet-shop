@@ -24,7 +24,7 @@ class CarrinhosRepositorySessao implements CarrinhosRepository
     return sizeof($carrinho->itens);
   }
 
-  public function adicionar(Item $item): int
+  public function adicionar(Item $item): void
   {
     $carrinho = $this->buscar();
     $indiceItem = $carrinho->obterIndiceItem($item->produto->id);
@@ -38,8 +38,6 @@ class CarrinhosRepositorySessao implements CarrinhosRepository
     }
 
     $this->salvar($carrinho);
-
-    return sizeof($carrinho->itens);
   }
 
   public function alterar(Item $item): Carrinho

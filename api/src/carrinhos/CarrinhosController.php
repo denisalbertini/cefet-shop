@@ -43,14 +43,9 @@ class CarrinhosController
       $quantidade = (int) $quantidade;
     }
 
-    $quantidadeItensCarrinho = $this->carrinhosService->adicionarItem(
-      $produtoId,
-      $quantidade,
-    );
+    $this->carrinhosService->adicionarItem($produtoId, $quantidade);
 
-    $res
-      ->status(200)
-      ->json(['quantidadeItensCarrinho' => $quantidadeItensCarrinho]);
+    $res->status(204)->send(null);
   }
 
   public function alterarQuantidadeItem(

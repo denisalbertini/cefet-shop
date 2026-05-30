@@ -4,7 +4,7 @@ import { CarrinhoParaExibir } from '../dto/CarrinhoParaExibir';
 export interface RepositorioCarrinhos {
   buscar(): Promise<CarrinhoParaExibir>;
   buscarQuantidadeItens(): Promise<number>;
-  adicionarItem(produtoId: string, quantidade: number): Promise<number>;
+  adicionarItem(produtoId: string, quantidade: number): Promise<void>;
   alterarQuantidadeItem(
     produtoId: string,
     quantidade: number,

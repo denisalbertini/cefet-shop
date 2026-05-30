@@ -33,7 +33,7 @@ export class RepositorioCarrinhosEmHttp implements RepositorioCarrinhos {
     return dados.quantidade;
   }
 
-  async adicionarItem(produtoId: string, quantidade: number): Promise<number> {
+  async adicionarItem(produtoId: string, quantidade: number): Promise<void> {
     const res = await fetch(this.itensPath, {
       method: 'POST',
       credentials: 'include',
@@ -42,10 +42,6 @@ export class RepositorioCarrinhosEmHttp implements RepositorioCarrinhos {
     });
 
     await verificarRespostaHttp(res);
-
-    const dados = await res.json();
-
-    return dados.quantidadeItensCarrinho;
   }
 
   async alterarQuantidadeItem(

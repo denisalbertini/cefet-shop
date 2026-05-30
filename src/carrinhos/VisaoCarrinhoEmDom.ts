@@ -1,3 +1,4 @@
+import { EVENTOS } from '../util/constantes';
 import { navegarPara } from '../util/navegarPara';
 import { preencherMain } from '../util/preencherMain';
 import { ControladoraCarrinhos } from './ControladoraCarrinhos';
@@ -6,19 +7,19 @@ import { CarrinhoParaExibir } from './dto/CarrinhoParaExibir';
 import { VisaoCarrinho } from './interface/VisaoCarrinho';
 
 export class VisaoCarrinhoEmDom implements VisaoCarrinho {
-  private controladoraCarrinhos?: ControladoraCarrinhos;
+  private controladora: ControladoraCarrinhos;
 
-  definirControladora(controladora: ControladoraCarrinhos): void {
-    this.controladoraCarrinhos = controladora;
+  constructor() {
+    this.controladora = new ControladoraCarrinhos(this);
   }
 
   iniciar(): void {
-    this.controladoraCarrinhos?.exibir();
+    this.controladora.exibir();
   }
 
   exibir(carrinho: CarrinhoParaExibir): void {
     if (carrinho.itens.length === 0) {
-      this.exibirCarrinhoVazio();
+      preencherMain('/pages/carrinho-vazio.html');
       return;
     }
 
@@ -33,7 +34,6 @@ export class VisaoCarrinhoEmDom implements VisaoCarrinho {
       const foto = li.querySelector('.foto') as HTMLImageElement;
       const nome = li.querySelector('.nome') as HTMLParagraphElement;
       const quantidade = li.querySelector('.quantidade') as HTMLInputElement;
-      const subTotal = li.querySelector('.sub-total') as HTMLSpanElement;
       const botaoRemover = li.querySelector('.remover') as HTMLButtonElement;
 
       id.value = item.produtoId;
@@ -50,18 +50,15 @@ export class VisaoCarrinhoEmDom implements VisaoCarrinho {
 
         const novaQuantidade = input.value;
 
-        this.controladoraCarrinhos?.alterarQuantidadeItem(
-          item.produtoId,
-          novaQuantidade,
-        );
+        this.controladora.alterarQuantidadeItem(item.produtoId, novaQuantidade);
       });
 
-      subTotal.textContent = item.subTotal;
+      this.escreverSubtotal(li, item.subTotal);
 
       botaoRemover.addEventListener('click', (event) => {
         event.preventDefault();
 
-        this.controladoraCarrinhos?.removerItem(item.produtoId);
+        this.controladora.removerItem(item.produtoId);
       });
 
       fragmento.appendChild(li);
@@ -78,48 +75,33 @@ export class VisaoCarrinhoEmDom implements VisaoCarrinho {
     botaoFinalizar.addEventListener('click', (event) => {
       event.preventDefault();
 
-      this.controladoraCarrinhos?.finalizarCompra();
+      this.controladora.finalizarCompra();
     });
-  }
-
-  exibirCarrinhoVazio(): void {
-    preencherMain('/pages/carrinho-vazio.html');
   }
 
   alterarQuantidadeItem(carrinho: CarrinhoAtualizado): void {
     const li = this.buscarItemLista(carrinho.produtoId);
 
-    (li?.querySelector('.sub-total') as HTMLSpanElement).textContent =
-      carrinho.subTotal;
-
+    this.escreverSubtotal(li, carrinho.subTotal);
     this.escreverTotal(carrinho.total);
   }
 
   removerItem(carrinho: CarrinhoAtualizado): void {
     const li = this.buscarItemLista(carrinho.produtoId);
 
-    li?.remove();
+    li.remove();
 
+    if (parseInt(carrinho.total) === 0) {
+      this.exibirCarrinhoVazio();
+      return;
+    }
+
+    this.escreverSubtotal(li, carrinho.subTotal);
     this.escreverTotal(carrinho.total);
   }
 
-  private escreverTotal(total: string): void {
-    (document.getElementById('total') as HTMLSpanElement).textContent = total;
-  }
-
-  private buscarItemLista(produtoId: string): HTMLElement | null {
-    const inputs = document.querySelectorAll('.produto-id');
-
-    let li: HTMLElement | null = null;
-
-    for (const input of inputs) {
-      if ((input as HTMLInputElement).value === produtoId) {
-        li = input.parentElement as HTMLElement;
-        break;
-      }
-    }
-
-    return li;
+  dispararCarrinhoAtualizado(): void {
+    window.dispatchEvent(new CustomEvent(EVENTOS.CARRINHO.ATUALIZADO));
   }
 
   redirecionarParaCompraFinalizada(compraId: string): void {
@@ -128,10 +110,6 @@ export class VisaoCarrinhoEmDom implements VisaoCarrinho {
 
   redirecionarParaLogin(): void {
     navegarPara('/login?carrinho=true');
-  }
-
-  retornarParaCarrinho(): void {
-    navegarPara('/carrinho');
   }
 
   exibirErros(erros: string[]): void {
@@ -149,13 +127,45 @@ export class VisaoCarrinhoEmDom implements VisaoCarrinho {
       fragmento.appendChild(alerta);
     }
 
-    const alertas = document.getElementById('alertas');
+    const alertas = document.getElementById('alertas')!;
 
-    alertas?.replaceChildren(fragmento);
+    alertas.replaceChildren(fragmento);
 
-    alertas?.classList.remove('d-none');
+    alertas.classList.remove('d-none');
 
-    this.controladoraCarrinhos?.exibir();
-    this.controladoraCarrinhos?.exibirQuantidadeItens();
+    this.controladora.exibir();
+  }
+
+  private buscarItemLista(produtoId: string): HTMLElement {
+    const inputs = document.querySelectorAll(
+      '.produto-id',
+    ) as NodeListOf<HTMLInputElement>;
+
+    let li: HTMLElement;
+
+    for (const input of inputs) {
+      if (input.value === produtoId) {
+        li = input.parentElement as HTMLElement;
+        break;
+      }
+    }
+
+    return li!;
+  }
+
+  private escreverSubtotal(li: HTMLElement, subtotal: string): void {
+    const span = li.querySelector('.sub-total') as HTMLSpanElement;
+
+    span.textContent = subtotal;
+  }
+
+  private escreverTotal(total: string): void {
+    const span = document.getElementById('total') as HTMLSpanElement;
+
+    span.textContent = total;
+  }
+
+  private exibirCarrinhoVazio(): void {
+    preencherMain('/pages/carrinho-vazio.html');
   }
 }

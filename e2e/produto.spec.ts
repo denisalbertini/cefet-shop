@@ -34,11 +34,12 @@ test.describe('Produto', () => {
 
       await page.route(
         API.HOST + '/carrinhos/itens',
-        async (route) =>
-          await route.fulfill({
-            status: 201,
-            json: { quantidadeItensCarrinho: 1 },
-          }),
+        async (route) => await route.fulfill(),
+      );
+
+      await page.route(
+        API.HOST + '/carrinhos/itens/quantidade',
+        async (route) => await route.fulfill({ json: { quantidade: 1 } }),
       );
 
       await pagina!.abrirProdutoComEstoqueMaiorQueDez();
@@ -111,11 +112,12 @@ test.describe('Produto', () => {
 
       await page.route(
         API.HOST + '/carrinhos/itens',
-        async (route) =>
-          await route.fulfill({
-            status: 201,
-            json: { quantidadeItensCarrinho: 1 },
-          }),
+        async (route) => await route.fulfill(),
+      );
+
+      await page.route(
+        API.HOST + '/carrinhos/itens/quantidade',
+        async (route) => await route.fulfill({ json: { quantidade: 1 } }),
       );
 
       await pagina!.abrirProdutoComEstoqueMenorQueDez();

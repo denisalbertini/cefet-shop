@@ -1,19 +1,14 @@
 import { GestorCompras } from '../compras/GestorCompras';
 import { TipoErroRepositorio } from '../enum/TipoErroRepositorio';
 import { RepositorioError } from '../error/RepositorioError';
-import { MENSAGEM_ERRO } from '../util/constantes';
 import { GestorCarrinhos } from './GestorCarrinhos';
-import { VisaoBadgeCarrinho } from './interface/VisaoBadgeCarrinho';
 import { VisaoCarrinho } from './interface/VisaoCarrinho';
 
 export class ControladoraCarrinhos {
   private gestorCarrinhos: GestorCarrinhos;
   private gestorCompras: GestorCompras;
 
-  public constructor(
-    private visaoCarrinho: VisaoCarrinho,
-    private visaoBadgeCarrinho: VisaoBadgeCarrinho,
-  ) {
+  public constructor(private visao: VisaoCarrinho) {
     this.gestorCarrinhos = new GestorCarrinhos();
     this.gestorCompras = new GestorCompras();
   }
@@ -21,13 +16,7 @@ export class ControladoraCarrinhos {
   public async exibir(): Promise<void> {
     const carrinho = await this.gestorCarrinhos.buscar();
 
-    this.visaoCarrinho.exibir(carrinho);
-  }
-
-  public async exibirQuantidadeItens(): Promise<void> {
-    const quantidade = await this.gestorCarrinhos.buscarQuantidadeItens();
-
-    this.visaoBadgeCarrinho.exibir(quantidade);
+    this.visao.exibir(carrinho);
   }
 
   public async alterarQuantidadeItem(
@@ -39,41 +28,34 @@ export class ControladoraCarrinhos {
       quantidade,
     );
 
-    this.visaoCarrinho.alterarQuantidadeItem(carrinho);
+    this.visao.alterarQuantidadeItem(carrinho);
   }
 
   public async removerItem(produtoId: string): Promise<void> {
     const carrinho = await this.gestorCarrinhos.removerItem(produtoId);
 
-    this.visaoCarrinho.removerItem(carrinho);
-    this.visaoBadgeCarrinho.decrementar();
-  }
-
-  public exibirCarrinhoVazio(): void {
-    this.visaoCarrinho.exibirCarrinhoVazio();
+    this.visao.removerItem(carrinho);
+    this.visao.dispararCarrinhoAtualizado();
   }
 
   public async finalizarCompra(): Promise<void> {
     try {
       const compraId = await this.gestorCompras.registrar();
 
-      this.visaoCarrinho.redirecionarParaCompraFinalizada(compraId);
+      this.visao.redirecionarParaCompraFinalizada(compraId);
     } catch (error: any) {
-      const erros: string[] = [];
-
       if (!(error instanceof RepositorioError)) {
         console.error(error);
-        erros.push(MENSAGEM_ERRO.ERRO_INESPERADO);
-      } else {
-        erros.push(...error.erros);
+        return;
       }
 
       switch (error.tipo) {
         case TipoErroRepositorio.DadosInvalidos:
-          this.visaoCarrinho.exibirErros(erros);
+          this.visao.exibirErros(error.erros);
+          this.visao.dispararCarrinhoAtualizado();
           break;
         case TipoErroRepositorio.NaoAutorizado:
-          this.visaoCarrinho.redirecionarParaLogin();
+          this.visao.redirecionarParaLogin();
         default:
           break;
       }

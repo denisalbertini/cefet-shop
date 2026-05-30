@@ -1,15 +1,18 @@
-import { ControladoraCarrinhos } from './ControladoraCarrinhos';
+import { EVENTOS } from '../util/constantes';
+import { ControladoraBadgeCarrinho } from './ControladoraBadgeCarrinho';
 import { VisaoBadgeCarrinho } from './interface/VisaoBadgeCarrinho';
 
 export class VisaoBadgeCarrinhoEmDom implements VisaoBadgeCarrinho {
-  private controladoraCarrinhos?: ControladoraCarrinhos;
+  private controladora: ControladoraBadgeCarrinho;
 
-  definirControladora(controladoraCarrinhos: ControladoraCarrinhos): void {
-    this.controladoraCarrinhos = controladoraCarrinhos;
+  constructor() {
+    this.controladora = new ControladoraBadgeCarrinho(this);
+
+    this.configurarEventos();
   }
 
   iniciar(): void {
-    this.controladoraCarrinhos?.exibirQuantidadeItens();
+    this.controladora.exibirQuantidadeItens();
   }
 
   exibir(quantidade: number): void {
@@ -18,31 +21,14 @@ export class VisaoBadgeCarrinhoEmDom implements VisaoBadgeCarrinho {
     if (quantidade !== 0) {
       badge.textContent = quantidade.toString();
       badge.classList.remove('invisible');
-    }
-  }
-
-  atualizar(quantidade: number): void {
-    const badge = document.getElementById('badge') as HTMLSpanElement;
-
-    badge.textContent = quantidade.toString();
-
-    if (quantidade === 1) {
-      badge.classList.remove('invisible');
-    }
-  }
-
-  decrementar(): void {
-    const badge = document.getElementById('badge') as HTMLSpanElement;
-
-    const valor = parseInt(badge.textContent);
-    const novoValor = valor - 1;
-
-    badge.textContent = novoValor.toString();
-
-    if (novoValor === 0) {
+    } else {
       badge.classList.add('invisible');
-
-      this.controladoraCarrinhos?.exibirCarrinhoVazio();
     }
+  }
+
+  private configurarEventos(): void {
+    window.addEventListener(EVENTOS.CARRINHO.ATUALIZADO, () =>
+      this.controladora.exibirQuantidadeItens(),
+    );
   }
 }

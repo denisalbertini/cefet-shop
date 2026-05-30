@@ -1,23 +1,22 @@
+import { EVENTOS } from '../util/constantes';
 import { navegarPara } from '../util/navegarPara';
-import { ControladoraProdutos } from './ControladoraProdutos';
+import { ControladoraDetalheProduto } from './ControladoraDetalheProduto';
 import { ProdutoParaDetalhar } from './dto/ProdutoParaDetalhar';
 import { VisaoDetalheProduto } from './interface/VisaoDetalheProduto';
 
 export class VisaoDetalheProdutoEmDom implements VisaoDetalheProduto {
-  private controladoraProdutos?: ControladoraProdutos;
+  private controladora: ControladoraDetalheProduto;
 
-  definirControladora(controladoraProdutos: ControladoraProdutos): void {
-    this.controladoraProdutos = controladoraProdutos;
+  constructor() {
+    this.controladora = new ControladoraDetalheProduto(this);
   }
 
   iniciar(id: string): void {
-    this.controladoraProdutos?.detalhar(id);
+    this.controladora.detalhar(id);
   }
 
   detalhar(produto: ProdutoParaDetalhar): void {
-    const ancoraCarrinho = document.getElementById(
-      'carrinho',
-    ) as HTMLAnchorElement;
+    const ancoraCarrinho = document.getElementById('carrinho')!;
 
     ancoraCarrinho.classList.remove('invisible');
 
@@ -77,10 +76,7 @@ export class VisaoDetalheProdutoEmDom implements VisaoDetalheProduto {
       botaoAdicionar.addEventListener('click', (event) => {
         event.preventDefault();
 
-        this.controladoraProdutos?.adicionarAoCarrinho(
-          produto.id,
-          quantidade.value,
-        );
+        this.controladora.adicionarAoCarrinho(produto.id, quantidade.value);
       });
     } else {
       quantidade.setAttribute('disabled', 'true');
@@ -95,6 +91,10 @@ export class VisaoDetalheProdutoEmDom implements VisaoDetalheProduto {
 
       navegarPara('/carrinho');
     });
+  }
+
+  dispararCarrinhoAtualizado(): void {
+    window.dispatchEvent(new CustomEvent(EVENTOS.CARRINHO.ATUALIZADO));
   }
 
   exibirErro(): void {

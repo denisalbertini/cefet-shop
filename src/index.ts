@@ -4,20 +4,17 @@ import page from 'page';
 import { VISAO_PRODUTOS } from './util/constantes';
 import { navegarPara } from './util/navegarPara';
 import { preencherMain } from './util/preencherMain';
-import {
-  visaoBadgeCarrinho,
-  visaoCarrinho,
-  visaoDetalheProduto,
-  visaoListagemProdutos,
-} from './visoes';
 
 page('*', async (_ctx, next) => {
   const visaoMenuUsuario = (await import('./usuarios/VisaoMenuUsuarioEmDom.js'))
     .VisaoMenuUsuarioEmDom;
 
-  new visaoMenuUsuario().iniciar();
+  const visaoBadgeCarrinho = (
+    await import('./carrinhos/VisaoBadgeCarrinhoEmDom.js')
+  ).VisaoBadgeCarrinhoEmDom;
 
-  visaoBadgeCarrinho.iniciar();
+  new visaoMenuUsuario().iniciar();
+  new visaoBadgeCarrinho().iniciar();
 
   next();
 });
@@ -35,7 +32,10 @@ page('/', async (ctx) => {
       VISAO_PRODUTOS.PRODUTOS_POR_PAGINA.toString(),
   );
 
-  visaoListagemProdutos.iniciar(pagina, limit);
+  const visao = (await import('./produtos/VisaoListagemProdutosEmDom.js'))
+    .VisaoListagemProdutosEmDom;
+
+  new visao().iniciar(pagina, limit);
 });
 
 page('/produto/:id', async (ctx) => {
@@ -43,13 +43,19 @@ page('/produto/:id', async (ctx) => {
 
   const id = ctx.params.id as string;
 
-  visaoDetalheProduto.iniciar(id);
+  const visao = (await import('./produtos/VisaoDetalheProdutoEmDom.js'))
+    .VisaoDetalheProdutoEmDom;
+
+  new visao().iniciar(id);
 });
 
 page('/carrinho', async () => {
   await preencherMain('/pages/carrinho.html');
 
-  visaoCarrinho.iniciar();
+  const visao = (await import('./carrinhos/VisaoCarrinhoEmDom.js'))
+    .VisaoCarrinhoEmDom;
+
+  new visao().iniciar();
 });
 
 page('/login', async () => {

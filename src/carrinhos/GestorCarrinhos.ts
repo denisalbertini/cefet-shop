@@ -16,7 +16,7 @@ export class GestorCarrinhos {
     return this.repositorioCarrinhos.buscarQuantidadeItens();
   }
 
-  public adicionarItem(produtoId: string, quantidade: string): Promise<number> {
+  public adicionarItem(produtoId: string, quantidade: string): Promise<void> {
     return this.repositorioCarrinhos.adicionarItem(
       produtoId,
       parseInt(quantidade),

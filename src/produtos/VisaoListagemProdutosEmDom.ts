@@ -1,22 +1,22 @@
 import { VISAO_PRODUTOS } from '../util/constantes';
 import { navegarPara } from '../util/navegarPara';
-import { ControladoraProdutos } from './ControladoraProdutos';
+import { ControladoraListagemProdutos } from './ControladoraListagemProdutos';
 import { ProdutosPaginados } from './dto/ProdutosPaginados';
 import { ProdutoParaListar } from './dto/ProdutosParaListar';
 import { VisaoListagemProdutos } from './interface/VisaoListagemProdutos';
 
 export class VisaoListagemProdutosEmDom implements VisaoListagemProdutos {
-  private controladoraProdutos?: ControladoraProdutos;
+  private controladora: ControladoraListagemProdutos;
 
-  definirControladora(controladoraProdutos: ControladoraProdutos): void {
-    this.controladoraProdutos = controladoraProdutos;
+  constructor() {
+    this.controladora = new ControladoraListagemProdutos(this);
   }
 
   iniciar(
     pagina: number = 1,
     limit: number = VISAO_PRODUTOS.PRODUTOS_POR_PAGINA,
   ): void {
-    this.controladoraProdutos?.listar(pagina, limit);
+    this.controladora.listar(pagina, limit);
   }
 
   listar(produtosPaginados: ProdutosPaginados): void {

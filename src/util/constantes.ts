@@ -34,3 +34,7 @@ export const MENSAGEM_ERRO = {
 } as const;
 
 export const VISAO_PRODUTOS = { PRODUTOS_POR_PAGINA: 6 } as const;
+
+export const EVENTOS = {
+  CARRINHO: { ATUALIZADO: 'carrinhoAtualizado' },
+} as const;
