@@ -44,11 +44,13 @@ class UsuariosRepositoryBdr implements UsuariosRepository
     return $this->hidratar($linhas);
   }
 
-  public function atualizarSaldo(Usuario $usuario): void
+  public function subtrairSaldo(Usuario $usuario, int $valor): void
   {
-    $ps = $this->pdo->prepare('UPDATE usuario SET saldo = ? WHERE id = ?');
+    $ps = $this->pdo->prepare(
+      'UPDATE usuario SET saldo = saldo - ? WHERE id = ?',
+    );
 
-    $ps->execute([$usuario->saldo->valorCentavos, $usuario->id]);
+    $ps->execute([$valor, $usuario->id]);
   }
 
   /**

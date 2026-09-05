@@ -82,9 +82,10 @@ class ComprasService
     try {
       $this->transacao->iniciar();
 
-      $usuario->saldo->subtrair($carrinho->obterTotal());
-
-      $this->usuariosRepository->atualizarSaldo($usuario);
+      $this->usuariosRepository->subtrairSaldo(
+        $usuario,
+        $carrinho->obterTotal()->valorCentavos,
+      );
 
       $compra = new Compra();
 
